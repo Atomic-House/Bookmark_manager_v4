@@ -1,0 +1,94 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("NEXT_PUBLIC_DATABASE_URL")
+  directUrl = env("NEXT_PUBLIC_DIRECT_DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String      @id @default(cuid())
+  name          String?
+  email         String?     @unique
+  emailVerified DateTime?
+  image         String?
+  defaultWs     String?
+  accounts      Account[]
+  sessions      Session[]
+  workspaces    Workspace[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Workspace {
+  name   String
+  userId String
+  id     String  @id @default(cuid())
+  email  String?
+  boards Board[]
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Board {
+  name      String
+  id        String    @id @default(cuid())
+  isDeleted Boolean   @default(false)
+  wsId      String
+  workspace Workspace @relation(fields: [wsId], references: [id], onDelete: Cascade)
+  lists     List[]
+}
+
+model List {
+  name      String
+  id        String     @id @default(cuid())
+  isDeleted Boolean    @default(false)
+  boardId   String
+  bookmarks Bookmark[]
+  board     Board      @relation(fields: [boardId], references: [id], onDelete: Cascade)
+}
+
+model Bookmark {
+  name        String?
+  title       String?
+  description String?
+  url         String
+  id          String  @id @default(cuid())
+  isDeleted   Boolean @default(false)
+  listId      String
+  favicon     String?
+  list        List    @relation(fields: [listId], references: [id], onDelete: Cascade)
+}

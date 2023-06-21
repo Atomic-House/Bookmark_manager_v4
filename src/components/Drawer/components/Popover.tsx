@@ -11,11 +11,11 @@ import {
   PopoverAnchor,
   Button,
 } from "@chakra-ui/react";
-export default function PopoverButton({ onCancel, onConfim }: { onCancel: any; onConfim: any }) {
+export default function PopoverButton({ onCancel, onConfim }: any ) {
   return (
     <Popover>
       <PopoverTrigger>
-        <Button>Trigger</Button>
+        <Button>Delete</Button>
       </PopoverTrigger>
       <PopoverContent>
         <PopoverArrow />
