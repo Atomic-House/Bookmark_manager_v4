@@ -10,6 +10,7 @@ import {
   useDisclosure,
   Button,
   useColorModeValue,
+  useColorMode,
 } from "@chakra-ui/react";
 import UserTabs from "../Tabs";
 import PopoverButton from "./components/Popover";
@@ -19,19 +20,22 @@ import SwitchButton from "../ThemeSwitch";
 import Image from "next/image";
 import ProfileMenu from "../Navbar/components/ProfileMenu";
 import NavSearch from "../Search";
+import Svg1 from "@/../public/Svg-01.svg";
+import Svg2 from "@/../public/Svg-02.svg";
+import { useSession } from "next-auth/react";
 export default function DrawerMenu() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { width } = useWindowDimension();
+  const { colorMode } = useColorMode();
+  const { data: session } = useSession();
   return (
     <div>
       <div onClick={onOpen}>
         <Image
-          src={
-            "https://images.unsplash.com/photo-1573865526739-10659fec78a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=415&q=80"
-          }
+          src={session?.user?.image ? session.user.image : colorMode === "light" ? Svg1 : Svg2}
           alt="logo"
           className="rounded-full"
-          width={40}
+          width={30}
           height={30}
         />
       </div>
@@ -47,7 +51,7 @@ export default function DrawerMenu() {
           <DrawerHeader className="flex justify-between">
             <div>
               {" "}
-              <div>Hello Mir!</div>
+              <div>Hello {session?.user?.name?.substring(0,  7).concat("...")}!</div>
               <div>
                 <ProfileMenu display={<div>Account</div>} />
               </div>

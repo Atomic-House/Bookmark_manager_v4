@@ -4,8 +4,15 @@ import NavSearch from "../Search";
 import Notification from "./components/Notification";
 import ProfileMenu from "./components/ProfileMenu";
 import Image from "next/image";
+import Svg1 from "@/../public/Svg-01.svg";
+import Svg2 from "@/../public/Svg-02.svg";
+import { useColorMode } from "@chakra-ui/react";
+import { useSession } from "next-auth/react";
 export default function Navbar() {
   const { width } = useWindowDimension();
+  const { data: session } = useSession();
+  const { colorMode } = useColorMode();
+
   if (width < 768) {
     return <div></div>;
   }
@@ -17,9 +24,7 @@ export default function Navbar() {
         <ProfileMenu
           display={
             <Image
-              src={
-                "https://images.unsplash.com/photo-1573865526739-10659fec78a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=415&q=80"
-              }
+              src={session?.user?.image ? session.user.image : colorMode === "light" ? Svg1 : Svg2}
               alt="image"
               width={40}
               height={30}
