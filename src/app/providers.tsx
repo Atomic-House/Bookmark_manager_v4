@@ -6,12 +6,12 @@ import store from "@/store/store";
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <Provider store={store}>
-      {/* <NextAuthProvider> */}
+      <NextAuthProvider>
         <ChakraProvider>{children}</ChakraProvider>
-      {/* </NextAuthProvider> */}
+      </NextAuthProvider>
     </Provider>
   );
 }
-function NextAuthProvider({ children}: { children: React.ReactNode }) {
+function NextAuthProvider({ children }: { children: React.ReactNode }) {
   return <SessionProvider>{children}</SessionProvider>;
 }
