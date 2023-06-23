@@ -7,6 +7,7 @@ import Svg1 from "@/../public/Svg-02.svg";
 import Boards from "./Boards";
 import { useState } from "react";
 import SwitchButton from "@/components/ThemeSwitch";
+import { BsTrashFill } from "react-icons/bs";
 export default function MySidebar() {
   const [closed, setClosed] = useState(false);
 
@@ -14,13 +15,13 @@ export default function MySidebar() {
     <div
       className={`h-screen ${
         closed ? "w-16" : "w-64"
-      } bg-white dark:bg-slate-900 flex flex-col transition-all duration-300 ease-in-out`}
+      } bg-white dark:bg-slate-900 flex flex-col transition-all duration-300 ease-in-out `}
     >
       <Link
         href={`/`}
         className="flex bg-blue-500 dark:bg-blue-800 dark:text-white justify-center items-center py-[60px] flex-col transition-all text-xl font-bold duration-300"
       >
-        <Image src={Svg1} alt="atomic house logo" width={30} height={30} className="" />
+        <Image src={Svg1} alt="atomic house logo" width={30} height={30} />
         {!closed && (
           <>
             <div>Atomic</div>
@@ -28,23 +29,29 @@ export default function MySidebar() {
           </>
         )}
       </Link>
-      <ul className="text-black dark:text-white transition-all duration-300">
-        <li className="flex justify-around items-center py-4 text-xl">
+      <ul className="text-black dark:text-white transition-all duration-300 mx-2 px-2">
+        <li className="flex justify-between items-center py-4 text-xl">
           {" "}
           {!closed && (
             <span className="transition-all ease-in-out duration-300">
               <Boards />
             </span>
           )}
-          <span>
+          <span className="px-2">
             <MdOutlineDashboard />
           </span>
         </li>
 
-        <li className="flex justify-around items-center py-4 text-xl transition-all ease-in ">
+        <li className="flex justify-between items-center py-4 text-xl transition-all ease-in ">
           {!closed && <span>Inbox</span>}
-          <span>
+          <span className="px-2">
             <MdOutlineInbox />
+          </span>
+        </li>
+        <li className="flex justify-between items-center py-4 text-xl transition-all ease-in ">
+          {!closed && <span>Trash</span>}
+          <span className="px-2">
+            <BsTrashFill />
           </span>
         </li>
       </ul>
