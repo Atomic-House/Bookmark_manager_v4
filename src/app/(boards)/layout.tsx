@@ -11,6 +11,11 @@ export const metadata = {
 };
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions);
+  const workspace = await fetch("http://localhost:3000/api/data/workspace/read", {
+    cache: "no-store",
+    method: "GET",
+  });
+  console.log(await workspace.json());
   if (!session) redirect("/auth/signin");
   return (
     <html lang="en">

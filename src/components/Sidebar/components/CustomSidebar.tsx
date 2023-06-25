@@ -4,7 +4,6 @@ import { HiArrowCircleRight } from "react-icons/hi";
 import Link from "next/link";
 import Image from "next/image";
 import Svg1 from "@/../public/Svg-02.svg";
-import Boards from "./Boards";
 import { useState } from "react";
 import SwitchButton from "@/components/ThemeSwitch";
 import { BsTrashFill } from "react-icons/bs";
