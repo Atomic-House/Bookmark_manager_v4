@@ -1,3 +1,4 @@
+"use client"
 import { Menu, MenuButton, MenuList, MenuItem, MenuGroup, MenuDivider } from "@chakra-ui/react";
 import { useSession, signOut } from "next-auth/react";
 export default function ProfileMenu({ display }: { display: JSX.Element }) {

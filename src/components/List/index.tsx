@@ -1,3 +1,4 @@
+"use client";
 import Bookmark from "../Bookmark";
 import { BsPencilFill } from "react-icons/bs";
 export default function List({

@@ -1,14 +1,18 @@
+"use client";
 import List from "@/components/List";
 import { lists } from "@/file";
+import AddClass from "@/components/Create/create";
 export default function Page({ params }: { params: { id: string } }) {
   const id = params.id;
   return (
     <div>
       <h1 className="text-3xl m-5">Board</h1>
-      <button className="bg-blue-500 p-2 m-2 flex justify-center items-center text-xl">
-        <span>Add new List </span>
+      <div className="bg-blue-500 p-2 m-2 w-fit flex justify-center items-center text-xl">
+        <span>
+          <AddClass category="list" placeholder="Add a list" buttonStyles="" positionStyles=""/>
+        </span>
         <span className="mx-2 "> +</span>
-      </button>
+      </div>
       {/* Lists*/}
 
       <div

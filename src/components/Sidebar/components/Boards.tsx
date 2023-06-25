@@ -10,10 +10,10 @@ import {
 import Link from "next/link";
 export default function Boards() {
   return <div>
-    <Accordion allowToggle border={"none"}>
+    <Accordion allowToggle borderY={0}>
   <AccordionItem>
     <h2>
-      <AccordionButton fontSize={"xl"}>
+      <AccordionButton  fontSize={"xl"} textAlign={'left'}>
               Boards
         <AccordionIcon />
       </AccordionButton>
