@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import themeReducer from "@/slices/themeSlice";
-import screenReducer from "@/slices/screenSlice"
+import screenReducer from "@/slices/screenSlice";
 const store = configureStore({
   reducer: {
     theme: themeReducer,
@@ -9,4 +9,4 @@ const store = configureStore({
 });
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-export default store
+export default store;
