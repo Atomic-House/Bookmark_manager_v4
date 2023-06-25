@@ -26,7 +26,7 @@ export default function Navbar() {
             <Image
               src={session?.user?.image ? session.user.image : colorMode === "light" ? Svg1 : Svg2}
               alt="image"
-              width={40}
+              width={30}
               height={30}
               className="rounded-full"
             />
