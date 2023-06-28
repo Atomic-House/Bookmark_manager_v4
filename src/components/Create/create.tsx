@@ -20,7 +20,6 @@ export default function AddClass({
   buttonStyles,
   onSubmit,
   onChange,
-  isLoading
 }: {
   category: string;
   placeholder: string;
@@ -28,7 +27,6 @@ export default function AddClass({
   buttonStyles: string;
   onSubmit: FormEventHandler<HTMLFormElement>;
   onChange: ChangeEventHandler<HTMLInputElement>;
-    isLoading: boolean
 }) {
   const initRef = useRef();
 
@@ -56,7 +54,7 @@ export default function AddClass({
                       onChange={onChange}
                     />
                     <Button mt={4} mx={2} colorScheme="blue" ref={initRef.current} type="submit">
-                    {isLoading?<Spinner/>:"" }  Add
+                      Add
                     </Button>
                     <Button
                       type="button"

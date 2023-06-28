@@ -32,7 +32,6 @@ export default function MySidebar({ ws }: { ws: any[] }) {
     wsId,
     "POST"
   );
-
   return (
     <div className="relative">
       {" "}
@@ -58,7 +57,6 @@ export default function MySidebar({ ws }: { ws: any[] }) {
           +
         </div>
         <AddClass
-          isLoading={isBoardLoading}
           category="boards"
           placeholder="new board"
           buttonStyles=""
@@ -105,7 +103,6 @@ export default function MySidebar({ ws }: { ws: any[] }) {
         </div>
 
         <AddClass
-          isLoading={isLoading}
           category="workspaces"
           placeholder="+"
           positionStyles="absolute bottom-0 right-0"
