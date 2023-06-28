@@ -11,10 +11,11 @@ export function useFetchWorkspace() {
     isLoading,
     isLoadingError,
     refetch,
+    error,
   } = useQuery({
     queryKey: ["workspaces"],
     queryFn: async () => {
-      const data = await fetch("/api/data/workspace/read", {
+      const data = await fetch("/api/data/workspaces/read", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -34,9 +35,10 @@ export function useFetchWorkspace() {
     isLoading,
     isLoadingError,
     refetch,
+    error,
   };
 }
-export async function useFetchData(category: string) {
+export function useFetchData(category: string, parentId: string) {
   const {
     data,
     isError,
@@ -44,12 +46,13 @@ export async function useFetchData(category: string) {
     isPaused,
     isSuccess,
     isFetching,
+    error,
     isLoading,
     isLoadingError,
     refetch,
   } = useQuery({
-    queryKey: [category],
-    queryFn: async (parentId) => {
+    queryKey: [category, parentId],
+    queryFn: async () => {
       const data = await fetch(`/api/data/${category}/${parentId}`, {
         method: "GET",
         headers: {
@@ -69,6 +72,7 @@ export async function useFetchData(category: string) {
     isFetching,
     isLoading,
     isLoadingError,
+    error,
     refetch,
   };
 }

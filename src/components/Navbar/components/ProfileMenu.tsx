@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Menu, MenuButton, MenuList, MenuItem, MenuGroup, MenuDivider } from "@chakra-ui/react";
 import { useSession, signOut } from "next-auth/react";
 export default function ProfileMenu({ display }: { display: JSX.Element }) {
@@ -10,7 +10,7 @@ export default function ProfileMenu({ display }: { display: JSX.Element }) {
         <MenuGroup title={session?.user?.name ? session.user.name : "Profile"}>
           <MenuItem>My Account</MenuItem>
           <MenuItem>Payments </MenuItem>
-          <MenuItem>Trash</MenuItem>
+          <MenuItem>Delete Workspace</MenuItem>
         </MenuGroup>
         <MenuDivider />
         <MenuGroup title="Help">

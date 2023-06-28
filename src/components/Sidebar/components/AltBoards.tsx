@@ -1,23 +1,45 @@
+import { Spinner } from "@chakra-ui/react";
 import { Disclosure, Transition } from "@headlessui/react";
-import { Collapse } from "@chakra-ui/react";
 import Link from "next/link";
-import { Fragment } from "react";
 import { BsChevronDown } from "react-icons/bs";
-const boards = [
-  {
-    id: "1",
-    name: "Board 1",
-  },
-  {
-    id: "2",
-    name: "Board 2",
-  },
-  {
-    id: "3",
-    name: "Board 3",
-  },
-];
-export default function MyDisclosure() {
+import { useEffect } from "react";
+import { useFetchData } from "@/functions/queries";
+import { useAppSelector } from "@/store/hooks";
+// const boards = [
+//   {
+//     id: "1",
+//     name: "Board 1",
+//   },
+//   {
+//     id: "2",
+//     name: "Board 2",
+//   },
+//   {
+//     id: "3",
+//     name: "Board 3",
+//   },
+// ];
+export default function AltBoards() {
+  const wsId = useAppSelector((state) => state.workspace.id);
+  const {
+    data: boards,
+    isLoading,
+    isError,
+    isSuccess,
+    isFetching,
+    refetch,
+    error,
+    isLoadingError,
+  } = useFetchData("boards", wsId);
+  useEffect(() => {
+    refetch();
+  }, [wsId]);
+  if (isError || isLoadingError) {
+    console.error(error);
+  }
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
     <Disclosure>
       {({ open, close }) => (
@@ -40,8 +62,8 @@ export default function MyDisclosure() {
             leaveTo="transform opacity-0 "
           >
             <Disclosure.Panel as={`div`} className={`flex flex-col text-l gap-2`}>
-              {boards.map((board) => (
-                <Link key={board.id} href={`/board/${board.id}`}>
+              {boards?.map((board: { id: string; name: string }) => (
+                <Link key={board.id} href={`/home/board/${board.id}`}>
                   {board.name}
                 </Link>
               ))}

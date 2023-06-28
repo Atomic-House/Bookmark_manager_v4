@@ -13,7 +13,7 @@ export default function Page() {
   const { data: session } = useSession();
   const [email, setEmail] = useState("");
   if (session) {
-    redirect("/");
+    redirect("/home/boards/some");
   }
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e: FormEvent) => {
     e.preventDefault();

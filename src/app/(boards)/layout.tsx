@@ -24,7 +24,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       </Head>
       <body>
         <Providers>
-          <Sidebar>
+          <Sidebar ws={[""]}>
             {children}
             <Navbar />
           </Sidebar>
