@@ -5,6 +5,7 @@ export const useMutations = (
   mutationKey: string,
   category: string,
   name: string,
+  url: string,
   additionalParams: string | null | undefined,
   fetchType: "GET" | "POST" | "PUT" | "DELETE" | "PATCH"
 ) => {
@@ -26,11 +27,11 @@ export const useMutations = (
       e.preventDefault();
       await fetch(`/api/data/${category}/${additionalParams}`, {
         method: fetchType,
-        body: JSON.stringify({ name: name }),
+        body: JSON.stringify({ name: name, url: url }),
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries([category === "boards" ? "workspaces" : category]);
+      queryClient.invalidateQueries([category]);
     },
   });
 

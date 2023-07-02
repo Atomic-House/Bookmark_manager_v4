@@ -15,14 +15,20 @@ export async function GET(req: NextRequest, { params }: { params: { data: string
 }
 export async function POST(req: NextRequest, { params }: { params: { data: string[] } }) {
   const body: { name: string | null; url: string } = await req.json();
+  const url = new URL(body.url).hostname;
   const [id] = params.data;
-  await fetch("https://api.peekalink.io", {
+  const json = await fetch("https://api.peekalink.io", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "X-API-KEY": process.env.NEXT_PUBLIC_PEEKALINK_KEY!,
     },
+    body: JSON.stringify({
+      link: url,
+    }),
   });
+  const data: any = await json.json();
+
   const bookmark = await prisma.list.update({
     where: {
       id: id,
@@ -34,6 +40,9 @@ export async function POST(req: NextRequest, { params }: { params: { data: strin
             {
               name: body.name,
               url: body.url,
+              favicon: ` https://www.google.com/s2/favicons?domain=${url}&sz=20`,
+              title: data.title,
+              description: data.description,
             },
           ],
         },
@@ -52,7 +61,7 @@ export async function PATCH(req: Request, { params }: { params: { data: string[]
     data: {
       name: body.name,
       url: body.url,
-      favicon:body.favicon
+      favicon: body.favicon,
     },
   });
   return NextResponse.json(bookmark);
@@ -60,13 +69,13 @@ export async function PATCH(req: Request, { params }: { params: { data: string[]
 //to change it to deleted or not
 export async function DELETE(req: Request, { params }: { params: { data: any[] } }) {
   const [id, deleted] = params.data;
-  const lists = await prisma.list.update({
+  const bookmarks = await prisma.bookmark.update({
     where: {
       id: id,
     },
     data: {
-      isDeleted: deleted,
+      isDeleted: true,
     },
   });
-  return NextResponse.json(lists);
+  return NextResponse.json(bookmarks);
 }

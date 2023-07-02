@@ -6,24 +6,15 @@ import { AiFillCheckCircle, AiOutlineSelect } from "react-icons/ai";
 import { HiChevronUpDown } from "react-icons/hi2";
 import { useAppDispatch } from "@/store/hooks";
 import { setArray, setId } from "@/slices/workspaceSlice";
-const workspaceDefault = [
-  { name: "workspace  1" },
-  { name: "workspace  2" },
-  { name: "workspace  3" },
-  { name: "workspace  4" },
-  { name: "workspace  5" },
-  { name: "workspace  6" },
-];
-
 export default function Select({ collapsed, ws: workspaces }: { collapsed: boolean; ws: any[] }) {
+  const dispatch = useAppDispatch();
   const [selected, setSelected] = useState<{ name: string; id: string; boards: any[] }>(
     workspaces[0]
   );
-  const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(setArray(selected.boards));
-    dispatch(setId(selected.id));
-  }, [selected]);
+    dispatch(setArray(selected?.boards));
+    dispatch(setId(selected?.id));
+  }, [selected, dispatch]);
   return (
     <Listbox value={selected} onChange={setSelected}>
       <div className="relative mt-1">
@@ -68,7 +59,7 @@ export default function Select({ collapsed, ws: workspaces }: { collapsed: boole
           </Listbox.Options>
         </Transition>
         <Listbox.Button className="relative   cursor-default dark:bg-black dark:text-white bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-          <span className="block truncate">{collapsed ? <AiOutlineSelect /> : selected.name}</span>
+          <span className="block truncate">{collapsed ? <AiOutlineSelect /> : selected?.name}</span>
           <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
             <HiChevronUpDown className="h-5 w-5 text-gray-400" aria-hidden="true" />
           </span>

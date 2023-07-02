@@ -5,7 +5,6 @@ import Navbar from "@/components/Navbar";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
-import Head from "next/head";
 export const metadata = {
   title: "Bookmark Manager",
   description: "Created by Mir Saheb Ali",
@@ -19,9 +18,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang="en">
-      <Head>
-        <link rel="icon" href="/favicon.ico" type="image/png" sizes="32x32" />
-      </Head>
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any"/>
+      </head>
       <body>
         <Providers>
           <Sidebar ws={[""]}>

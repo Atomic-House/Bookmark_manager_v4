@@ -17,11 +17,11 @@ export default function MySidebar({ ws }: { ws: any[] }) {
   const [name, setName] = useState("");
   const [boardName, setBoardName] = useState("");
   const wsId = useAppSelector((state) => state.workspace.id);
-
   const { mutateAsync, isLoading } = useMutations(
     "create workspace",
     "workspaces",
     name,
+    "",
     "create",
     "POST"
   );
@@ -29,6 +29,7 @@ export default function MySidebar({ ws }: { ws: any[] }) {
     "create board",
     "boards",
     boardName,
+    "",
     wsId,
     "POST"
   );
@@ -41,7 +42,8 @@ export default function MySidebar({ ws }: { ws: any[] }) {
         } bg-white dark:bg-slate-900  flex flex-col transition-all duration-300 ease-in-out `}
       >
         <Link
-          href={`/home`}
+          href={`/home/boards/inbox`}
+          passHref
           className="flex bg-blue-500 dark:bg-blue-800 dark:text-white justify-center items-center py-[60px] flex-col transition-all text-xl font-bold duration-300"
         >
           <Image src={Svg1} alt="atomic house logo" width={30} height={30} />
@@ -53,14 +55,12 @@ export default function MySidebar({ ws }: { ws: any[] }) {
           )}
         </Link>
 
-        <div className=" dark:bg-white bg-black dark:text-black text-white border-y-white flex justify-center text-xl font-bold">
-          +
-        </div>
         <AddClass
+          isLoading={isBoardLoading}
           category="boards"
-          placeholder="new board"
-          buttonStyles=""
-          positionStyles=""
+          placeholder="+"
+          buttonStyles="text-black p-1 "
+          positionStyles="flex bg-white justify-center items-center"
           onSubmit={addBoad}
           onChange={(e) => setBoardName(e.target.value)}
         />
@@ -73,7 +73,7 @@ export default function MySidebar({ ws }: { ws: any[] }) {
           </li>
 
           <li className="flex justify-between items-center py-4 text-xl transition-all ease-in ">
-            {!closed && <Link href={`/board/inbox`}>Inbox</Link>}
+            {!closed && <Link href={`/home/board/inbox`}>Inbox</Link>}
             <span className="px-2">
               <MdOutlineInbox />
             </span>
@@ -103,10 +103,11 @@ export default function MySidebar({ ws }: { ws: any[] }) {
         </div>
 
         <AddClass
+          isLoading={isLoading}
           category="workspaces"
           placeholder="+"
           positionStyles="absolute bottom-0 right-0"
-          buttonStyles="py-[0.4rem] px-7"
+          buttonStyles="py-[0.4rem] px-7 bg-blue-500"
           onChange={(e) => setName(e.target.value)}
           onSubmit={mutateAsync}
         />

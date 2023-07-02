@@ -13,7 +13,7 @@ export default function Page() {
   const { data: session } = useSession();
   const [email, setEmail] = useState("");
   if (session) {
-    redirect("/home/boards/some");
+    redirect("/home/board/inbox");
   }
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e: FormEvent) => {
     e.preventDefault();
@@ -27,7 +27,10 @@ export default function Page() {
       <div className=" m-14">
         <h1 className="text-2xl font-bold">Sign In</h1>
         <h2 className="text-xl">Subtitle</h2>
-        <div className="flex justify-center rounded-s items-center gap-3 bg-blue-200 my-4 py-6 cursor-pointer" onClick={() => signIn("google")}>
+        <div
+          className="flex justify-center rounded-s items-center gap-3 bg-blue-200 my-4 py-6 cursor-pointer"
+          onClick={() => signIn("google")}
+        >
           <span>
             {" "}
             <FcGoogle />

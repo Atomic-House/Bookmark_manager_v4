@@ -1,5 +1,5 @@
 "use client";
-
+import { useMutations } from "@/functions/mutations";
 import {
   Popover,
   PopoverTrigger,
@@ -12,26 +12,42 @@ import {
   Button,
   Spinner,
 } from "@chakra-ui/react";
-import { ChangeEventHandler, FormEventHandler, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { BsFillPlusCircleFill } from "react-icons/bs";
 export default function AddClass({
   category,
-  placeholder,
   positionStyles,
   buttonStyles,
-  onSubmit,
-  onChange,
-  isLoading,
+  listId,
 }: {
   category: string;
-  isLoading: boolean;
-  placeholder: string;
   positionStyles: string;
   buttonStyles: string;
-  onSubmit: FormEventHandler<HTMLFormElement>;
-  onChange: ChangeEventHandler<HTMLInputElement>;
+  listId: string;
 }) {
   const initRef = useRef();
-
+  const [name, setName] = useState("");
+  const [url, setUrl] = useState("");
+  const { mutateAsync, isLoading, error, isError, isSuccess } = useMutations(
+    "create bookmarks",
+    "bookmarks",
+    name,
+    url,
+    listId,
+    "POST"
+  );
+  useEffect(() => {
+    if (isSuccess) {
+      setName("");
+    }
+    setName(name);
+  }, [mutateAsync, isSuccess, name]);
+  if (isError) {
+    console.error(error);
+  }
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
     <div className={positionStyles}>
       <Popover closeOnBlur={false} placement="bottom" initialFocusRef={initRef.current}>
@@ -39,7 +55,7 @@ export default function AddClass({
           <>
             <PopoverTrigger>
               <button className={` ${buttonStyles} w-fit duration-300 transition-all`}>
-                {placeholder}
+                <BsFillPlusCircleFill className="text-xs cursor-pointer" />
               </button>
             </PopoverTrigger>
             <Portal>
@@ -47,14 +63,23 @@ export default function AddClass({
                 <PopoverHeader>Add a {category}</PopoverHeader>
                 <PopoverCloseButton />
                 <PopoverBody>
-                  <form onSubmit={onSubmit}>
-                    <Input
-                      type="text"
-                      name="name"
-                      id="name"
-                      placeholder={category + " name"}
-                      onChange={onChange}
-                    />
+                  <form onSubmit={mutateAsync}>
+                    <div className="flex flex-col gap-2">
+                      <Input
+                        type="text"
+                        name="name"
+                        id="name"
+                        placeholder={"Add custom name"}
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                      <Input
+                        type="url"
+                        name="url"
+                        id="url"
+                        placeholder={"Add url"}
+                        onChange={(e) => setUrl(e.target.value)}
+                      />
+                    </div>
                     <Button mt={4} mx={2} colorScheme="blue" ref={initRef.current} type="submit">
                       {isLoading ? <Spinner /> : ""} Add
                     </Button>

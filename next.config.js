@@ -10,11 +10,15 @@ const nextConfig = {
         protocol: "https",
         hostname: "lh3.googleusercontent.com",
       },
+      {
+        protocol: "https",
+        hostname: "www.google.com",
+      },
     ],
   },
   experimental: {
-    appDir: true
-  }
+    appDir: true,
+  },
 };
 
 module.exports = nextConfig;
