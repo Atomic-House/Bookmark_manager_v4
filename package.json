@@ -43,6 +43,7 @@
   "devDependencies": {
     "@types/react-beautiful-dnd": "^13.1.4",
     "eslint": "^8.43.0",
+    "eslint-config-next": "^13.4.7",
     "prisma": "^4.16.1"
   }
 }
