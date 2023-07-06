@@ -4,6 +4,7 @@ import { AiFillDelete } from "react-icons/ai";
 import Image from "next/image";
 import { useMutations } from "@/functions/mutations";
 import { Spinner } from "@chakra-ui/react";
+import { Draggable } from "react-beautiful-dnd";
 export default function Bookmark({
   name,
   id,
@@ -11,6 +12,7 @@ export default function Bookmark({
   image,
   title,
   description,
+  index,
 }: {
   name: string;
   id: string;
@@ -18,6 +20,7 @@ export default function Bookmark({
   image: string;
   title: string;
   description: string;
+  index: number;
 }) {
   const { mutateAsync, isError, error, isLoading, isSuccess } = useMutations(
     "delete bookmark",
@@ -35,25 +38,34 @@ export default function Bookmark({
   }
 
   return (
-    <div className=" flex justify-between items-center m-2 gap-1">
-      <div className="mr-5 flex gap-3 ">
-        {" "}
-        <Image
-          src={image ? image : ""}
-          width={20}
-          alt={name ? name : title ? title : description}
-          height={20}
-        />
-        <Link href={link} target="_blank">
-          {name ? name : title ? title : ""}
-        </Link>
-      </div>
-      <div className="flex ">
-        {" "}
-        <BsPencilSquare />
-        <AiFillDelete className="text-red-500" onClick={mutateAsync} />
-        {isLoading ? <Spinner /> : null}
-      </div>
-    </div>
+    <Draggable draggableId={id} index={index} key={id}>
+      {(provided) => (
+        <div
+          className=" flex justify-between items-center m-2 gap-3"
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+        >
+          <Image
+            src={image ? image : ""}
+            width={30}
+            alt={name ? name : title ? title : description}
+            height={30}
+          />
+          <div className=" ">
+            {" "}
+            <Link href={link} target="_blank">
+              {name ? name : title ? title.slice(0, 9) + "..." : ""}
+            </Link>
+          </div>
+          <div className="flex ">
+            {" "}
+            <BsPencilSquare />
+            <AiFillDelete className="text-red-500" onClick={mutateAsync} />
+            {isLoading ? <Spinner /> : null}
+          </div>
+        </div>
+      )}
+    </Draggable>
   );
 }

@@ -48,3 +48,29 @@ export const useMutations = (
     isIdle,
   };
 };
+export function useDnd(source: string, destination: string, bookmarkId: string) {
+  const queryClient = useQueryClient();
+  const { mutateAsync, mutate, isSuccess, isError, isLoading, error, reset } = useMutation({
+    mutationKey: [source, destination, bookmarkId],
+    mutationFn: async () => {
+      await fetch(`/api/data/dnd/${source}/${destination}/${bookmarkId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["lists", source]);
+    },
+  });
+  return {
+    mutateAsync,
+    mutate,
+    isSuccess,
+    isError,
+    isLoading,
+    error,
+    reset,
+  };
+}

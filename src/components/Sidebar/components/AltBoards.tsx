@@ -31,7 +31,7 @@ export default function AltBoards() {
     error,
     isLoadingError,
     isStale,
-  } = useFetchData("boards", wsId);
+  } = useFetchData("boards", wsId, 0);
   useEffect(() => {
     refetch();
   }, [wsId, refetch]);

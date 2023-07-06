@@ -15,9 +15,9 @@ export async function GET(req: NextRequest, { params }: { params: { data: string
 }
 export async function POST(req: NextRequest, { params }: { params: { data: string[] } }) {
   const body: { name: string | null; url: string } = await req.json();
-  const url = new URL(body.url).hostname;
+  const url = new URL(body.url);
   const [id] = params.data;
-  const json = await fetch("https://api.peekalink.io", {
+  const data = await fetch("https://api.peekalink.io", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -27,8 +27,9 @@ export async function POST(req: NextRequest, { params }: { params: { data: strin
       link: url,
     }),
   });
-  const data: any = await json.json();
+  const metadata: any = await data.json();
 
+  const d = JSON.stringify(metadata);
   const bookmark = await prisma.list.update({
     where: {
       id: id,
@@ -40,9 +41,9 @@ export async function POST(req: NextRequest, { params }: { params: { data: strin
             {
               name: body.name,
               url: body.url,
-              favicon: ` https://www.google.com/s2/favicons?domain=${url}&sz=20`,
-              title: data.title,
-              description: data.description,
+              favicon: `https://www.google.com/s2/favicons?domain=${url.hostname}&sz=40`,
+              title: metadata.title,
+              description: metadata.description,
             },
           ],
         },

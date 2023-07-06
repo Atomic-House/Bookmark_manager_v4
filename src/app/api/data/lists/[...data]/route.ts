@@ -2,13 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 export async function GET(req: NextRequest, { params }: { params: { data: string[] } }) {
   const [id] = params.data;
-  const lists = await prisma.board.findFirst({
+  const lists = await prisma.list.findMany({
     where: {
-      id: id,
+      boardId: id,
     },
     include: {
-      lists: true,
-    }
+      bookmarks: true,
+    },
   });
   return NextResponse.json(lists);
 }
