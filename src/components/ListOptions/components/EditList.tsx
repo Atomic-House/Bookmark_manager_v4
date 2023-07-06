@@ -16,6 +16,7 @@ export default function EditList({ id, name }: { id: string; name: string }) {
     console.error(error);
   }
   return (
+    <div className="m-2 hover:opacity-95 duration-300">
     <AddClass
       category="lists"
       isLoading={isLoading}
@@ -25,5 +26,6 @@ export default function EditList({ id, name }: { id: string; name: string }) {
       buttonStyles="w-fit duration-300 transition-all"
       positionStyles=""
     />
+</div>
   );
 }

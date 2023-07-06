@@ -33,12 +33,13 @@ export async function POST(req: NextRequest, { params }: { params: { data: strin
 }
 export async function PATCH(req: Request, { params }: { params: { data: string[] } }) {
   const [id, name] = params.data;
+  const body: { name: string } = await req.json();
   const lists = await prisma.list.update({
     where: {
       id: id,
     },
     data: {
-      name: name,
+      name: body.name,
     },
   });
   return NextResponse.json(lists);
