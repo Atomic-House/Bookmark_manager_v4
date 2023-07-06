@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
+import NextTopLoader from "nextjs-toploader";
 export const metadata = {
   title: "Bookmark Manager",
   description: "Created by Mir Saheb Ali",
@@ -19,11 +20,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any"/>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body>
         <Providers>
-          <Sidebar ws={[""]}>
+          <Sidebar>
+            <NextTopLoader />
             {children}
             <Navbar />
           </Sidebar>

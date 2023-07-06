@@ -44,14 +44,23 @@ export async function PATCH(req: Request, { params }: { params: { data: string[]
   return NextResponse.json(lists);
 }
 //to change it to deleted or not
-export async function DELETE(req: Request, { params }: { params: { data: any[] } }) {
-  const [id, deleted] = params.data;
+export async function PUT(req: Request, { params }: { params: { data: any[] } }) {
+  const [id] = params.data;
   const lists = await prisma.list.update({
     where: {
       id: id,
     },
     data: {
-      isDeleted: deleted,
+      isDeleted: true,
+    },
+  });
+  return NextResponse.json(lists);
+}
+export async function DELETE(req: Request, { params }: { params: { data: any[] } }) {
+  const [id] = params.data;
+  const lists = await prisma.list.delete({
+    where: {
+      id: id,
     },
   });
   return NextResponse.json(lists);

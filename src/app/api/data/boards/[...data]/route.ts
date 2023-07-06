@@ -44,14 +44,14 @@ export async function PATCH(req: Request, { params }: { params: { data: string[]
   return NextResponse.json(boards);
 }
 //to change it to deleted or not
-export async function DELETE(req: Request, { params }: { params: { data: any[] } }) {
-  const [id, deleted] = params.data;
+export async function PUT(req: Request, { params }: { params: { data: any[] } }) {
+  const [id] = params.data;
   const workspace = await prisma.board.update({
     where: {
       id: id,
     },
     data: {
-      isDeleted: deleted,
+      isDeleted: true,
     },
   });
   return NextResponse.json(workspace);

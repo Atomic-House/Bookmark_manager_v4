@@ -48,7 +48,11 @@ export const useMutations = (
     isIdle,
   };
 };
-export function useDnd(source: string, destination: string, bookmarkId: string) {
+export function useDnd(
+  source: string | undefined,
+  destination: string | undefined,
+  bookmarkId: string | undefined
+) {
   const queryClient = useQueryClient();
   const { mutateAsync, mutate, isSuccess, isError, isLoading, error, reset } = useMutation({
     mutationKey: [source, destination, bookmarkId],

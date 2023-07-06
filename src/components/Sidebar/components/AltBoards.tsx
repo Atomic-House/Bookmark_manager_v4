@@ -5,20 +5,6 @@ import { BsChevronDown } from "react-icons/bs";
 import { useEffect } from "react";
 import { useFetchData } from "@/functions/queries";
 import { useAppSelector } from "@/store/hooks";
-// const boards = [
-//   {
-//     id: "1",
-//     name: "Board 1",
-//   },
-//   {
-//     id: "2",
-//     name: "Board 2",
-//   },
-//   {
-//     id: "3",
-//     name: "Board 3",
-//   },
-// ];
 export default function AltBoards() {
   const wsId = useAppSelector((state) => state.workspace.id);
   const {
@@ -64,15 +50,17 @@ export default function AltBoards() {
               leaveTo="transform opacity-0 "
             >
               <Disclosure.Panel as={`div`} className={`flex flex-col text-l gap-2`}>
-                {boards?.boards?.map((board: { id: string; name: string }) => (
-                  <Link
-                    key={board.id}
-                    as={`/home/board/${board.id}`}
-                    href={`/home/board/${board.id}`}
-                  >
-                    {board.name}
-                  </Link>
-                ))}
+                {boards?.boards
+                  ?.filter((x: { isDeleted: Boolean }) => !x.isDeleted)
+                  ?.map((board: { id: string; name: string }) => (
+                    <Link
+                      key={board.id}
+                      as={`/home/board/${board.id}`}
+                      href={`/home/board/${board.id}`}
+                    >
+                      {board.name}
+                    </Link>
+                  ))}
               </Disclosure.Panel>
             </Transition>
           </div>

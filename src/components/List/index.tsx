@@ -6,17 +6,8 @@ import { Spinner } from "@chakra-ui/react";
 import { useEffect } from "react";
 import AddClass from "@/components/Create/bookmark";
 import { StrictModeDroppable } from "@/components/Dnd/StrictModeDroppable";
-export default function List({
-  name,
-  id,
-  bookmarks,
-  isLoading,
-}: {
-  name: string;
-  id: string;
-  bookmarks: { id: string; name: string; link: string }[];
-  isLoading: boolean;
-}) {
+import ListOptions from "../ListOptions";
+export default function List({ name, id }: { name: string; id: string }) {
   const {
     data,
     isLoading: isLoadingBookmarks,
@@ -50,8 +41,8 @@ export default function List({
           >
             <div className="flex  justify-between items-center gap-2">
               <div>{name}</div>
-              <BsPencilFill className="text-xs  cursor-pointer" />
               <AddClass listId={id} buttonStyles="" positionStyles="" category="bookmarks" />
+              <ListOptions key={id} id={id} name={name}/>
             </div>
             <div>
               {data?.bookmarks

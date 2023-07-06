@@ -12,11 +12,16 @@ import AddClass from "@/components/Create/create";
 import MyBoards from "./AltBoards";
 import { useMutations } from "@/functions/mutations";
 import { useAppSelector } from "@/store/hooks";
+import DialogModal from "@/components/Modal";
+import { usePathname,useRouter } from "next/navigation";
 export default function MySidebar({ ws }: { ws: any[] }) {
   const [closed, setClosed] = useState(false);
   const [name, setName] = useState("");
   const [boardName, setBoardName] = useState("");
   const wsId = useAppSelector((state) => state.workspace.id);
+  const pathname = usePathname();
+  const router = useRouter()
+  const boardId = pathname.replace("/home/board/", "");
   const { mutateAsync, isLoading } = useMutations(
     "create workspace",
     "workspaces",
@@ -33,6 +38,16 @@ export default function MySidebar({ ws }: { ws: any[] }) {
     wsId,
     "POST"
   );
+  const {
+    mutateAsync: deleteBoard,
+    isLoading: isDeleteLoading,
+    isSuccess: isDeleteSuccess,
+    error: deleteError,
+    isError: isDeleteError,
+  } = useMutations("delete board", "boards", "", "",boardId, "PUT");
+if (isDeleteSuccess) {
+ router.push("/home/board/inbox") 
+}
   return (
     <div className="relative">
       {" "}
@@ -63,6 +78,14 @@ export default function MySidebar({ ws }: { ws: any[] }) {
           positionStyles="flex bg-white justify-center items-center"
           onSubmit={addBoad}
           onChange={(e) => setBoardName(e.target.value)}
+        />
+        <DialogModal
+          type="button"
+          desc={"Delete"}
+          func={deleteBoard}
+          confirmation={"Move board to trash?"}
+          isLoading={isDeleteLoading}
+          isSuccess={isDeleteSuccess}
         />
         <ul className="text-black dark:text-white transition-all duration-300 mx-2 px-2">
           <li className="flex justify-between items-center py-4 text-xl transition-all ease-in gap-2">

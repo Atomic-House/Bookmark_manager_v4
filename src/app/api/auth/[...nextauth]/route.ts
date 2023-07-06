@@ -19,6 +19,43 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/auth/signin",
   },
+  callbacks: {
+    async jwt({ trigger, token, user }) {
+      if (trigger === "signUp") {
+        const defaultWorkspace = await prisma.user.update({
+          where: {
+            email: user?.email!,
+          },
+          data: {
+            workspaces: {
+              create: [
+                {
+                  name: "Default",
+                },
+              ],
+            },
+          },
+        });
+        const inbox = await prisma.workspace.update({
+          where: {
+            id: defaultWorkspace?.id,
+          },
+          data: {
+            boards: {
+              create: [
+                {
+                  id: "inbox",
+                  name: "Inbox",
+                },
+              ],
+            },
+          },
+        });
+        return { inbox, defaultWorkspace };
+      }
+      return token;
+    },
+  },
 };
 
 const handler = NextAuth(authOptions);
