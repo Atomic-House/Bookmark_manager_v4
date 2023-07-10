@@ -38,7 +38,7 @@ export function useFetchWorkspace() {
     error,
   };
 }
-export function useFetchData(category: string, parentId: string, interval: number) {
+export function useFetchData(category: string, parentId: string, interval: number | false) {
   const {
     data,
     isError,

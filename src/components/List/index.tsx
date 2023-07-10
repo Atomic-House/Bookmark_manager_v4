@@ -9,7 +9,7 @@ import { StrictModeDroppable } from "@/components/Dnd/StrictModeDroppable";
 import ListOptions from "../ListOptions";
 export default function List({ name, id }: { name: string; id: string }) {
   const {
-    data,
+    data: lists,
     isLoading: isLoadingBookmarks,
     isSuccess,
     isError,
@@ -19,10 +19,10 @@ export default function List({ name, id }: { name: string; id: string }) {
     isLoadingError,
     refetch,
     error,
-  } = useFetchData("bookmarks", id, 100);
+  } = useFetchData("bookmarks", id, false);
   useEffect(() => {
     refetch();
-  }, [refetch, data]);
+  }, [refetch, lists]);
   if (isError || isLoadingError) {
     console.error(error);
   }
@@ -39,13 +39,13 @@ export default function List({ name, id }: { name: string; id: string }) {
             {...provided.droppableProps}
             className="m-5 bg-slate-100 dark:bg-slate-900 p-4"
           >
-            <div className="flex  justify-between items-center gap-2">
+            <div className="flex  justify-between items-center gap-2 sticky">
               <div>{name}</div>
               <AddClass listId={id} buttonStyles="" positionStyles="" category="bookmarks" />
-              <ListOptions key={id} id={id} name={name}/>
+              <ListOptions key={id} id={id} name={name} />
             </div>
             <div>
-              {data?.bookmarks
+              {lists?.bookmarks
                 ?.filter((data: { isDeleted: boolean }) => !data.isDeleted)
                 ?.map(
                   (

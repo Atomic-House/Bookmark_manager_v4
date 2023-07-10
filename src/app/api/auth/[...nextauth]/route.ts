@@ -18,11 +18,12 @@ export const authOptions: NextAuthOptions = {
   ],
   pages: {
     signIn: "/auth/signin",
-    newUser: "/auth/signin"
+    newUser: "/auth/signin",
   },
   callbacks: {
     async jwt({ trigger, token, user }) {
       if (trigger === "signUp") {
+        console.log("New user");
         const defaultWorkspace = await prisma.user.update({
           where: {
             email: user?.email!,
@@ -37,7 +38,7 @@ export const authOptions: NextAuthOptions = {
             },
           },
         });
-        const inbox = await prisma.workspace.update({
+        await prisma.workspace.update({
           where: {
             id: defaultWorkspace?.id,
           },
@@ -45,14 +46,13 @@ export const authOptions: NextAuthOptions = {
             boards: {
               create: [
                 {
-                  id: "inbox",
                   name: "Inbox",
                 },
               ],
             },
           },
         });
-        return { inbox, defaultWorkspace };
+        return token;
       }
       return token;
     },

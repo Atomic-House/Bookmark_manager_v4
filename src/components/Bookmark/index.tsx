@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { BsPencilSquare } from "react-icons/bs";
 import { AiFillDelete } from "react-icons/ai";

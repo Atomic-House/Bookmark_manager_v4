@@ -4,7 +4,7 @@ export async function GET(req: NextRequest, { params }: { params: { data: string
   const [id] = params.data;
   const lists = await prisma.list.findMany({
     where: {
-      boardId: id,
+      tabId: id,
     },
     include: {
       bookmarks: true,
@@ -14,18 +14,21 @@ export async function GET(req: NextRequest, { params }: { params: { data: string
 }
 export async function POST(req: NextRequest, { params }: { params: { data: string[] } }) {
   const body = await req.json();
-  const [id] = params.data;
-  const lists = await prisma.board.update({
+  const [tabId, boardId] = params.data;
+  const lists = await prisma.tab.update({
     where: {
-      id: id,
+      id: tabId,
     },
     data: {
       lists: {
-        create: [
-          {
-            name: body.name,
-          },
-        ],
+        createMany: {
+          data: [
+            {
+              name: body.name,
+              boardId: boardId,
+            },
+          ],
+        },
       },
     },
   });

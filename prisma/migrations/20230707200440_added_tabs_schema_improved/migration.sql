@@ -1,0 +1,7 @@
+-- AlterTable
+ALTER TABLE "Tab" ADD COLUMN     "email" TEXT,
+ADD COLUMN     "isPublic" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "userId" TEXT;
+
+-- AddForeignKey
+ALTER TABLE "Tab" ADD CONSTRAINT "Tab_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;

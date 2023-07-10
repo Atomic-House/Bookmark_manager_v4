@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import fetch from "node-fetch";
+import { Client } from "peekalink";
 export async function GET(req: NextRequest, { params }: { params: { data: string[] } }) {
   const [id] = params.data;
   const bookmarks = await prisma.list.findFirst({
@@ -13,11 +14,12 @@ export async function GET(req: NextRequest, { params }: { params: { data: string
   });
   return NextResponse.json(bookmarks);
 }
+
 export async function POST(req: NextRequest, { params }: { params: { data: string[] } }) {
   const body: { name: string | null; url: string } = await req.json();
   const url = new URL(body.url);
   const [id] = params.data;
-  const data = await fetch("https://api.peekalink.io", {
+  const data: any = await fetch("https://api.peekalink.io", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -27,9 +29,14 @@ export async function POST(req: NextRequest, { params }: { params: { data: strin
       link: url,
     }),
   });
-  const metadata: any = await data.json();
+  if (!data.ok) {
+    throw { error: "Something went wrong", status: data.statusText };
+  }
 
-  const d = JSON.stringify(metadata);
+  const metadata: { title: string; description: string } = await data.json();
+
+  const md = JSON.parse(metadata);
+
   const bookmark = await prisma.list.update({
     where: {
       id: id,
@@ -41,9 +48,9 @@ export async function POST(req: NextRequest, { params }: { params: { data: strin
             {
               name: body.name,
               url: body.url,
-              favicon: `https://www.google.com/s2/favicons?domain=${url.hostname}&sz=40`,
-              title: metadata.title,
-              description: metadata.description,
+              favicon: `https://www.google.com/s2/favicons?domain=${url.hostname}&sz=55`,
+              title: md.title,
+              description: md.description,
             },
           ],
         },
@@ -69,7 +76,7 @@ export async function PATCH(req: Request, { params }: { params: { data: string[]
 }
 //to change it to deleted or not
 export async function DELETE(req: Request, { params }: { params: { data: any[] } }) {
-  const [id, deleted] = params.data;
+  const [id] = params.data;
   const bookmarks = await prisma.bookmark.update({
     where: {
       id: id,

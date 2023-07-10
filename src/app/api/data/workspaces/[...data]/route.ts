@@ -13,6 +13,7 @@ export async function GET(req: NextRequest) {
       boards: true,
     },
   });
+
   return NextResponse.json(workspace);
 }
 export async function POST(req: NextRequest, { params }: { params: { data: string[] } }) {
@@ -28,12 +29,12 @@ export async function POST(req: NextRequest, { params }: { params: { data: strin
         create: [
           {
             name: body.name,
-            email: session.user?.email!,
           },
         ],
       },
     },
   });
+
   return NextResponse.json(workspace);
 }
 export async function PATCH(req: Request, { params }: { params: { data: string[] } }) {

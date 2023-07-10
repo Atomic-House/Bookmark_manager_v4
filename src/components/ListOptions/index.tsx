@@ -1,3 +1,4 @@
+"use client"
 import { Menu, MenuButton, MenuList, MenuItem, Spinner } from "@chakra-ui/react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useMutations } from "@/functions/mutations";

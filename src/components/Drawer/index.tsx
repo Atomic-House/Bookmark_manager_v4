@@ -51,7 +51,7 @@ export default function DrawerMenu() {
           <DrawerHeader className="flex justify-between">
             <div>
               {" "}
-              <div>Hello {session?.user?.name?.substring(0,  7).concat("...")}!</div>
+              <div>Hello {session?.user?.name?.substring(0, 7).concat("...")}!</div>
               <div>
                 <ProfileMenu display={<div>Account</div>} />
               </div>
@@ -63,7 +63,7 @@ export default function DrawerMenu() {
           </DrawerHeader>
 
           <DrawerBody>
-            <UserTabs />
+            <UserTabs variant={"unstyled"}>{}</UserTabs>
           </DrawerBody>
 
           <DrawerFooter>

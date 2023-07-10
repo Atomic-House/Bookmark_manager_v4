@@ -1,3 +1,4 @@
+"use client";
 import { Spinner } from "@chakra-ui/react";
 import { Disclosure, Transition } from "@headlessui/react";
 import Link from "next/link";
@@ -17,14 +18,14 @@ export default function AltBoards() {
     error,
     isLoadingError,
     isStale,
-  } = useFetchData("boards", wsId, 0);
+  } = useFetchData("boards", wsId, false);
   useEffect(() => {
     refetch();
   }, [wsId, refetch]);
   if (isError || isLoadingError) {
     console.error(error);
   }
-  if (isLoading || isFetching) {
+  if (isLoading ) {
     return <Spinner />;
   }
   if (isSuccess && isStale)

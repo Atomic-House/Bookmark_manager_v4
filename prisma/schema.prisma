@@ -48,6 +48,8 @@ model User {
   sessions      Session[]
   workspaces    Workspace[]
   lists         List[]
+  Tab           Tab[]
+  Inbox         Inbox[]
 }
 
 model VerificationToken {
@@ -67,6 +69,14 @@ model Workspace {
   user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model Inbox {
+  id     String  @id @default(cuid())
+  userId String
+  email  String?
+  tabs   Tab[]
+  user   User    @relation(fields: [userId], references: [id])
+}
+
 model Board {
   name      String
   id        String    @id @default(cuid())
@@ -76,6 +86,22 @@ model Board {
   lists     List[]
   email     String?
   isPublic  Boolean   @default(false)
+  tabs      Tab[]
+}
+
+model Tab {
+  id        String  @id @default(cuid())
+  name      String
+  lists     List[]
+  isDeleted Boolean @default(false)
+  boardId   String
+  board     Board   @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  User      User?   @relation(fields: [userId], references: [id])
+  userId    String?
+  email     String?
+  isPublic  Boolean @default(false)
+  Inbox     Inbox?  @relation(fields: [inboxId], references: [id])
+  inboxId   String?
 }
 
 model List {
@@ -84,11 +110,13 @@ model List {
   isDeleted Boolean    @default(false)
   boardId   String
   bookmarks Bookmark[]
-  board     Board      @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  board     Board?     @relation(fields: [boardId], references: [id], onDelete: Cascade)
   email     String?
   isPublic  Boolean    @default(false)
   User      User?      @relation(fields: [userId], references: [id])
   userId    String?
+  tab       Tab?       @relation(fields: [tabId], references: [id], onDelete: Cascade)
+  tabId     String?
 }
 
 model Bookmark {
@@ -96,9 +124,10 @@ model Bookmark {
   title       String?
   description String?
   url         String
-  id          String  @id @default(cuid())
-  isDeleted   Boolean @default(false)
+  id          String   @id @default(cuid())
+  isDeleted   Boolean  @default(false)
   listId      String
   favicon     String?
-  list        List    @relation(fields: [listId], references: [id], onDelete: Cascade)
+  list        List     @relation(fields: [listId], references: [id], onDelete: Cascade)
+  tags        String[]
 }

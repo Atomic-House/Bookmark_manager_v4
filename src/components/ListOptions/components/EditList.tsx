@@ -1,3 +1,4 @@
+"use client"
 import AddClass from "@/components/Create/create";
 import { useMutations } from "@/functions/mutations";
 import { useState } from "react";
