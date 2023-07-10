@@ -7,6 +7,8 @@ import { useMutations } from "@/functions/mutations";
 import { useState } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import AddClass from "@/components/Create/create";
+import { FaSortAmountDownAlt } from "react-icons/fa";
+import { BiFilterAlt } from "react-icons/bi";
 export default function PanelTab({ id, boardId }: { id: string; boardId: string }) {
   const [name, setName] = useState("");
   const {
@@ -33,26 +35,35 @@ export default function PanelTab({ id, boardId }: { id: string; boardId: string 
   }
   if (isListLoading) {
     return (
-      <TabPanel>
-        <Spinner />
-      </TabPanel>
+      <>
+        <TabPanel>
+          <Spinner />
+        </TabPanel>
+      </>
     );
   }
 
   return (
     <>
-           <TabPanel key={id}>
- <AddClass
-        onSubmit={createList}
-        onChange={(e) => setName(e.target.value)}
-        isLoading={isCreateListLoading}
-        placeholder="Add list"
-        category="lists"
-        positionStyles="flex justify-center items-center"
-        buttonStyles="dark:bg-blue-800 p-2 flex justify-center items-center rounded-md"
-      />
+      <TabPanel key={id}>
+        <div className="sticky flex items-center gap-5">
+          <AddClass
+            onSubmit={createList}
+            onChange={(e) => setName(e.target.value)}
+            isLoading={isCreateListLoading}
+            placeholder="+  Add a new list"
+            category="lists"
+            positionStyles="sticky"
+            buttonStyles="dark:bg-blue-800  bg-blue-700  text-white p-2 flex justify-center items-center rounded-lg"
+          />
+          <div className="p-1  bg-slate-200">
+            <FaSortAmountDownAlt className="text-slate-800" />
+          </div>
 
-
+          <div className="p-1  bg-slate-200">
+            <BiFilterAlt className="text-slate-800" />
+          </div>
+        </div>
         <div className="flex">
           <DragDropContext onDragEnd={handleDragEnd}>
             {lists?.map((list: Lists) => (

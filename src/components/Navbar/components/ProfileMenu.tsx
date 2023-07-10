@@ -13,7 +13,9 @@ import { useMutations } from "@/functions/mutations";
 import { useAppSelector } from "@/store/hooks";
 import { Progress } from "@chakra-ui/react";
 import { AiOutlineCheck } from "react-icons/ai";
+import Link from "next/link";
 import DialogModal from "@/components/Modal";
+import { redirect } from "next/navigation";
 export default function ProfileMenu({ display }: { display: JSX.Element }) {
   const { data: session } = useSession();
   const id = useAppSelector((state) => state.workspace.id);
@@ -31,7 +33,10 @@ export default function ProfileMenu({ display }: { display: JSX.Element }) {
       <MenuButton>{display}</MenuButton>
       <MenuList>
         <MenuGroup title={session?.user?.name ? session.user.name : "Profile"}>
-          <MenuItem>My Account</MenuItem>
+          <MenuItem>
+            {" "}
+            <Link href="/profile"> My Account</Link>
+          </MenuItem>
           <MenuItem>Payments </MenuItem>
           <DialogModal
             desc={"Delete Workspace"}

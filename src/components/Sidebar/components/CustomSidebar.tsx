@@ -1,6 +1,5 @@
 "use client";
-import { MdOutlineDashboard, MdOutlineInbox } from "react-icons/md";
-import { HiArrowCircleRight } from "react-icons/hi";
+import { MdKeyboardDoubleArrowLeft, MdOutlineDashboard, MdOutlineInbox } from "react-icons/md";
 import Link from "next/link";
 import Image from "next/image";
 import Svg1 from "@/../public/Svg-02.svg";
@@ -12,15 +11,15 @@ import AddClass from "@/components/Create/create";
 import MyBoards from "./AltBoards";
 import { useMutations } from "@/functions/mutations";
 import { useAppSelector } from "@/store/hooks";
-import DialogModal from "@/components/Modal";
-import { usePathname,useRouter } from "next/navigation";
+import DeleteBoardModal from "@/components/Modal";
+import { usePathname, useRouter } from "next/navigation";
 export default function MySidebar({ ws }: { ws: any[] }) {
   const [closed, setClosed] = useState(false);
   const [name, setName] = useState("");
   const [boardName, setBoardName] = useState("");
   const wsId = useAppSelector((state) => state.workspace.id);
   const pathname = usePathname();
-  const router = useRouter()
+  const router = useRouter();
   const boardId = pathname.replace("/home/board/", "");
   const { mutateAsync, isLoading } = useMutations(
     "create workspace",
@@ -44,17 +43,17 @@ export default function MySidebar({ ws }: { ws: any[] }) {
     isSuccess: isDeleteSuccess,
     error: deleteError,
     isError: isDeleteError,
-  } = useMutations("delete board", "boards", "", "",boardId, "PUT");
-if (isDeleteSuccess) {
- router.push("/home/board/inbox") 
-}
+  } = useMutations("delete board", "boards", "", "", boardId, "PUT");
+  if (isDeleteSuccess) {
+    router.push("/home/board/inbox");
+  }
   return (
     <div className="relative">
       {" "}
       <div
         className={`h-screen ${
           closed ? "w-16" : "w-64"
-        } bg-white dark:bg-slate-900  flex flex-col transition-all duration-300 ease-in-out `}
+        } bg-white dark:bg-slate-900  flex flex-col transition-all duration-300 ease-in-out`}
       >
         <Link
           href={`/home/boards/inbox`}
@@ -79,9 +78,9 @@ if (isDeleteSuccess) {
           onSubmit={addBoad}
           onChange={(e) => setBoardName(e.target.value)}
         />
-        <DialogModal
+        <DeleteBoardModal
           type="button"
-          desc={"Delete"}
+          desc={<BsTrashFill />}
           func={deleteBoard}
           confirmation={"Move board to trash?"}
           isLoading={isDeleteLoading}
@@ -108,21 +107,18 @@ if (isDeleteSuccess) {
             </span>
           </li>
         </ul>
-        <div className="flex flex-col justify-center items-center dark:text-white py-2 text-black transition-all duration-300 min-w-fit sticky top-96 text-2xl">
-          <div className="hover:bg-cyan-400  p-2 rounded-full duration-300 ">
-            {" "}
-            <HiArrowCircleRight
-              onClick={() => setClosed(!closed)}
-              className={`${closed ? "rotate-180" : ""}`}
-            />
-          </div>
-          <div>
-            {" "}
-            <SwitchButton />
-          </div>
-        </div>
+        <div className="flex flex-col justify-center items-center dark:text-white py-2 text-black transition-all duration-300 min-w-fit sticky top-96 text-2xl"></div>
         <div className="flex justify-between gap-9 absolute bottom-0">
           <Select collapsed={closed} ws={ws} />
+        </div>
+        <div
+          onClick={() => setClosed(!closed)}
+          className="hover:bg-cyan-400 w-fit p-2 rounded-full duration-300 transition-all"
+        >
+          {" "}
+          <MdKeyboardDoubleArrowLeft
+            className={`${closed ? "rotate-180" : ""} duration-300 transition-all`}
+          />
         </div>
 
         <AddClass

@@ -37,7 +37,7 @@ export default function List({ name, id }: { name: string; id: string }) {
             key={id}
             ref={provided.innerRef}
             {...provided.droppableProps}
-            className="m-5 bg-slate-100 dark:bg-slate-900 p-4"
+            className="m-1 bg-slate-200 dark:bg-slate-900 p-4 "
           >
             <div className="flex  justify-between items-center gap-2 sticky">
               <div>{name}</div>

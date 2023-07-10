@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import fetch from "node-fetch";
-import { Client } from "peekalink";
+import getMetaData from "metadata-scraper";
 export async function GET(req: NextRequest, { params }: { params: { data: string[] } }) {
   const [id] = params.data;
   const bookmarks = await prisma.list.findFirst({
@@ -19,24 +19,9 @@ export async function POST(req: NextRequest, { params }: { params: { data: strin
   const body: { name: string | null; url: string } = await req.json();
   const url = new URL(body.url);
   const [id] = params.data;
-  const data: any = await fetch("https://api.peekalink.io", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-API-KEY": process.env.NEXT_PUBLIC_PEEKALINK_KEY!,
-    },
-    body: JSON.stringify({
-      link: url,
-    }),
+  const md = await getMetaData(body.url, {
+    maxRedirects: 7,
   });
-  if (!data.ok) {
-    throw { error: "Something went wrong", status: data.statusText };
-  }
-
-  const metadata: { title: string; description: string } = await data.json();
-
-  const md = JSON.parse(metadata);
-
   const bookmark = await prisma.list.update({
     where: {
       id: id,
@@ -48,7 +33,7 @@ export async function POST(req: NextRequest, { params }: { params: { data: strin
             {
               name: body.name,
               url: body.url,
-              favicon: `https://www.google.com/s2/favicons?domain=${url.hostname}&sz=55`,
+              favicon: `https://www.google.com/s2/favicons?domain=${url.hostname}&sz=256`,
               title: md.title,
               description: md.description,
             },
@@ -75,7 +60,7 @@ export async function PATCH(req: Request, { params }: { params: { data: string[]
   return NextResponse.json(bookmark);
 }
 //to change it to deleted or not
-export async function DELETE(req: Request, { params }: { params: { data: any[] } }) {
+export async function PUT(req: Request, { params }: { params: { data: any[] } }) {
   const [id] = params.data;
   const bookmarks = await prisma.bookmark.update({
     where: {

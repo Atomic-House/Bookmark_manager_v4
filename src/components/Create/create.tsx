@@ -13,6 +13,7 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { ChangeEventHandler, FormEventHandler, useRef, useState } from "react";
+ 
 export default function AddClass({
   category,
   placeholder,

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import {
   Modal,
   ModalOverlay,
@@ -22,7 +22,7 @@ export default function DialogModal({
   isLoading,
   type,
 }: {
-  desc: string | null;
+  desc: string | undefined | JSX.Element;
   func: MouseEventHandler<HTMLButtonElement>;
   confirmation: string | null;
   isLoading: boolean;
@@ -42,7 +42,7 @@ export default function DialogModal({
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>Confirmation</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <p>{confirmation}</p>

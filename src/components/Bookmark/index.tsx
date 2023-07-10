@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { BsPencilSquare } from "react-icons/bs";
 import { AiFillDelete } from "react-icons/ai";
+import { BiPencil } from "react-icons/bi";
 import Image from "next/image";
 import { useMutations } from "@/functions/mutations";
 import { Spinner } from "@chakra-ui/react";
@@ -11,6 +12,7 @@ export default function Bookmark({
   id,
   link,
   image,
+
   title,
   description,
   index,
@@ -61,7 +63,7 @@ export default function Bookmark({
           </div>
           <div className="flex ">
             {" "}
-            <BsPencilSquare />
+            <BiPencil />
             <AiFillDelete className="text-red-500" onClick={mutateAsync} />
             {isLoading ? <Spinner /> : null}
           </div>

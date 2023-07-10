@@ -8,6 +8,7 @@ import Svg1 from "@/../public/Svg-01.svg";
 import Svg2 from "@/../public/Svg-02.svg";
 import { useColorMode } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
+import { AiFillSetting } from "react-icons/ai";
 export default function Navbar() {
   const { width } = useWindowDimension();
   const { data: session } = useSession();
@@ -18,9 +19,11 @@ export default function Navbar() {
   }
   return (
     <div className="absolute right-0 top-0 m-0 md:mx-8 md:my-6 ">
-      <div className="flex md:gap-3">
+      <div className="flex md:gap-3 items-center">
         {" "}
         <NavSearch iconPosition="left" />
+        <Notification />
+        <AiFillSetting className="text-2xl"/>
         <ProfileMenu
           display={
             <Image
@@ -32,7 +35,6 @@ export default function Navbar() {
             />
           }
         />
-        <Notification />
       </div>
     </div>
   );
