@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import fetch from "node-fetch";
-import { unfurl } from "unfurl.js";
+import urlMetadata from "url-metadata";
 export async function GET(req: NextRequest, { params }: { params: { data: string[] } }) {
   const [id] = params.data;
   const bookmarks = await prisma.list.findFirst({
@@ -19,7 +19,10 @@ export async function POST(req: NextRequest, { params }: { params: { data: strin
   const body: { name: string | null; url: string } = await req.json();
   const url = new URL(body.url);
   const [id] = params.data;
-  const md = await unfurl(body.url);
+  const md = await urlMetadata(body.url);
+  const json: { description: string; jsonld: Array<{ name: string }> } = JSON.parse(
+    JSON.stringify(md.jsonld)
+  );
   const bookmark = await prisma.list.update({
     where: {
       id: id,
@@ -32,8 +35,8 @@ export async function POST(req: NextRequest, { params }: { params: { data: strin
               name: body.name,
               url: body.url,
               favicon: `https://www.google.com/s2/favicons?domain=${url.hostname}&sz=256`,
-              title: md.title,
-              description: md.description,
+              title: json?.jsonld[0].name,
+              description: json?.description,
             },
           ],
         },
