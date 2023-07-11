@@ -33,9 +33,8 @@ export default function ProfileMenu({ display }: { display: JSX.Element }) {
       <MenuButton>{display}</MenuButton>
       <MenuList>
         <MenuGroup title={session?.user?.name ? session.user.name : "Profile"}>
-          <MenuItem>
-            {" "}
-            <Link href="/profile"> My Account</Link>
+          <MenuItem as={Link} href={"/profile"}>
+            My Account
           </MenuItem>
           <MenuItem>Payments </MenuItem>
           <DialogModal
