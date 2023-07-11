@@ -63,7 +63,7 @@ export default function DrawerMenu() {
           </DrawerHeader>
 
           <DrawerBody>
-            <UserTabs variant={"unstyled"}>{}</UserTabs>
+            {/* <UserTabs variant={"unstyled"} id={}/> */}
           </DrawerBody>
 
           <DrawerFooter>
