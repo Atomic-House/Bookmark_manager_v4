@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import fetch from "node-fetch";
-import getMetaData from "metadata-scraper";
+import { unfurl } from "unfurl.js";
 export async function GET(req: NextRequest, { params }: { params: { data: string[] } }) {
   const [id] = params.data;
   const bookmarks = await prisma.list.findFirst({
@@ -19,9 +19,7 @@ export async function POST(req: NextRequest, { params }: { params: { data: strin
   const body: { name: string | null; url: string } = await req.json();
   const url = new URL(body.url);
   const [id] = params.data;
-  const md = await getMetaData(body.url, {
-    maxRedirects: 7,
-  });
+  const md = await unfurl(body.url);
   const bookmark = await prisma.list.update({
     where: {
       id: id,

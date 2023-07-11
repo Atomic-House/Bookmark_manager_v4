@@ -26,7 +26,6 @@
     "@uploadthing/react": "^5.1.0",
     "autoprefixer": "^10.4.14",
     "framer-motion": "^10.12.17",
-    "metadata-scraper": "^0.2.61",
     "next": "^13.4.7",
     "next-auth": "^4.22.1",
     "nextjs-toploader": "^1.4.2",
@@ -44,7 +43,9 @@
     "sharp": "^0.32.1",
     "tailwindcss": "^3.3.2",
     "typescript": "^5.1.6",
-    "uploadthing": "^5.1.0"
+    "unfurl.js": "^6.3.2",
+    "uploadthing": "^5.1.0",
+    "url-metadata": "^3.0.2"
   },
   "devDependencies": {
     "@types/react-beautiful-dnd": "^13.1.4",
