@@ -23,7 +23,7 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
-  reactStrictMode: false,
+  reactStrictMode:true,
 };
 
 module.exports = nextConfig;
