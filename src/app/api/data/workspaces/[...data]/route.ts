@@ -29,6 +29,14 @@ export async function POST(req: NextRequest, { params }: { params: { data: strin
         create: [
           {
             name: body.name,
+            email: session.user?.email!,
+            boards: {
+              create: [
+                {
+                  name: "Main",
+                },
+              ],
+            },
           },
         ],
       },

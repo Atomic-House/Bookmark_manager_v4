@@ -58,16 +58,17 @@ export default function UserTabs({
           ))}
           {isLoading || isTabsLoading ? <Spinner /> : ""}
           <AddClass
+            add_edit={"Add a "}
             onSubmit={createTab}
             onChange={(e) => setName(e.target.value)}
             isLoading={isLoading}
             placeholder="+"
             category="tabs"
-            positionStyles=""
-            buttonStyles="dark:bg-blue-800 p-2 flex justify-center items-center rounded-md"
+            positionStyles="flex items-center"
+            buttonStyles="dark:bg-blue-800 bg-blue-400 hover:scale-90 rounded-md h-fit p-2 flex justify-center items-center rounded-md"
           />
         </TabList>
-        <TabIndicator mt="-1.5px" height="2px" bg="blue.500" borderRadius="1px" />
+        <TabIndicator mt="-1.5px" height="2px" mb={3} bg="blue.500" borderRadius="1px" />
         <TabPanels>
           {tabs.map((tab: TabsInterface) => (
             <PanelTab id={tab.id} key={tab.id} boardId={id} />

@@ -70,6 +70,7 @@ export default function MySidebar({ ws }: { ws: any[] }) {
         </Link>
 
         <AddClass
+          add_edit={"Add a "}
           isLoading={isBoardLoading}
           category="boards"
           placeholder="+"
@@ -100,12 +101,16 @@ export default function MySidebar({ ws }: { ws: any[] }) {
               <MdOutlineInbox />
             </span>
           </li>
-          <li className="flex justify-between items-center py-4 text-xl transition-all ease-in ">
+          <Link
+            className="flex cursor-pointer justify-between items-center py-4 text-xl transition-all ease-in "
+            href={"/trash"}
+          >
             {!closed && <span>Trash</span>}
+
             <span className="px-2">
               <BsTrashFill />
             </span>
-          </li>
+          </Link>
         </ul>
         <div className="flex flex-col justify-center items-center dark:text-white py-2 text-black transition-all duration-300 min-w-fit sticky top-96 text-2xl"></div>
         <div className="flex justify-between gap-9 absolute bottom-0">
@@ -122,6 +127,7 @@ export default function MySidebar({ ws }: { ws: any[] }) {
         </div>
 
         <AddClass
+          add_edit={"Add a "}
           isLoading={isLoading}
           category="workspaces"
           placeholder="+"

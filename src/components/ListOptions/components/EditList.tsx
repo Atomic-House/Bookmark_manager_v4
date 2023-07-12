@@ -19,6 +19,7 @@ export default function EditList({ id, name }: { id: string; name: string }) {
   return (
     <div className="m-2 hover:opacity-95 duration-300">
     <AddClass
+        add_edit={"Edit a "}
       category="lists"
       isLoading={isLoading}
       placeholder={"Edit"}

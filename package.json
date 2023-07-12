@@ -31,6 +31,7 @@
     "nextjs-toploader": "^1.4.2",
     "node-fetch": "^3.3.1",
     "nodemailer": "^6.9.3",
+    "open-graph-scraper": "^6.2.1",
     "peekalink": "^1.0.3",
     "postcss": "^8.4.24",
     "react": "^18.2.0",
@@ -42,9 +43,7 @@
     "redux": "^4.2.1",
     "sharp": "^0.32.1",
     "tailwindcss": "^3.3.2",
-    "typescript": "^5.1.6",
-    "uploadthing": "^5.1.0",
-    "url-metadata": "^3.0.2"
+    "typescript": "^5.1.6"
   },
   "devDependencies": {
     "@types/react-beautiful-dnd": "^13.1.4",

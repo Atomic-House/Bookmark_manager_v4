@@ -12,8 +12,8 @@ import {
   Button,
   Spinner,
 } from "@chakra-ui/react";
-import { ChangeEventHandler, FormEventHandler, useRef, useState } from "react";
- 
+import { ChangeEventHandler, FormEventHandler, HTMLAttributes, useRef, useState } from "react";
+
 export default function AddClass({
   category,
   placeholder,
@@ -22,14 +22,16 @@ export default function AddClass({
   onSubmit,
   onChange,
   isLoading,
+  add_edit,
 }: {
   category: string;
   isLoading: boolean;
   placeholder: string;
-  positionStyles: string;
-  buttonStyles: string;
+  positionStyles: HTMLAttributes<HTMLDivElement>["className"];
+  buttonStyles: HTMLAttributes<HTMLButtonElement>["className"]
   onSubmit: FormEventHandler<HTMLFormElement>;
   onChange: ChangeEventHandler<HTMLInputElement>;
+  add_edit: string | undefined | null;
 }) {
   const initRef = useRef();
 
@@ -45,7 +47,10 @@ export default function AddClass({
             </PopoverTrigger>
             <Portal>
               <PopoverContent>
-                <PopoverHeader>Add a {category}</PopoverHeader>
+                <PopoverHeader>
+                  {add_edit}
+                  {category}
+                </PopoverHeader>
                 <PopoverCloseButton />
                 <PopoverBody>
                   <form onSubmit={onSubmit}>

@@ -19,7 +19,7 @@ export default function PanelTab({ id, boardId }: { id: string; boardId: string 
     refetch,
     isSuccess: isListSuccess,
     isStale: isListStale,
-  } = useFetchData("lists", id, 200);
+  } = useFetchData("lists", id, false);
   const {
     mutateAsync: createList,
     isLoading: isCreateListLoading,
@@ -45,16 +45,17 @@ export default function PanelTab({ id, boardId }: { id: string; boardId: string 
 
   return (
     <>
-      <TabPanel key={id}>
-        <div className="sticky flex items-center gap-5">
+        <TabPanel key={id}>
+        <div className="sticky flex items-center gap-5 ">
           <AddClass
             onSubmit={createList}
+            add_edit={"Create a "}
             onChange={(e) => setName(e.target.value)}
             isLoading={isCreateListLoading}
             placeholder="+  Add a new list"
             category="lists"
             positionStyles="sticky"
-            buttonStyles="dark:bg-blue-800  bg-blue-700  text-white p-2 flex justify-center items-center rounded-lg"
+            buttonStyles="dark:bg-blue-800 bg-blue-700 mb-3 text-white p-2 flex justify-center items-center rounded-lg"
           />
           <div className="p-1  bg-slate-200">
             <FaSortAmountDownAlt className="text-slate-800" />
@@ -66,9 +67,11 @@ export default function PanelTab({ id, boardId }: { id: string; boardId: string 
         </div>
         <div className="flex">
           <DragDropContext onDragEnd={handleDragEnd}>
-            {lists?.map((list: Lists) => (
-              <List id={list.id} name={list.name} key={list.id} />
-            ))}
+            {lists
+              ?.filter((l: { isDeleted: boolean }) => !l.isDeleted)
+              ?.map((list: Lists) => (
+                <List id={list.id} name={list.name} key={list.id} />
+              ))}
           </DragDropContext>
         </div>
       </TabPanel>

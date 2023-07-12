@@ -12,7 +12,6 @@ export default function Bookmark({
   id,
   link,
   image,
-
   title,
   description,
   index,
@@ -31,7 +30,7 @@ export default function Bookmark({
     "",
     "",
     id,
-    "DELETE"
+    "PUT"
   );
   if (isSuccess) {
     console.log("successfully deleted");

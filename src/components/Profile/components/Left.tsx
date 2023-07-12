@@ -29,8 +29,9 @@ export default function Left() {
       const data = await fetch("/api/user", {
         method: "POST",
         body: JSON.stringify({
-          username: username,
-          name: firstName! + lastName,
+          firstName,
+          lastName,
+          username,
         }),
       });
       return data.json();
@@ -41,6 +42,9 @@ export default function Left() {
   });
   if (isError) {
     console.error(error);
+  }
+  if (isSuccess) {
+    alert("Successfully updated");
   }
   return (
     <div className="w-[50%] flex flex-col drop-shadow-xl p-3 bg-slate-100">

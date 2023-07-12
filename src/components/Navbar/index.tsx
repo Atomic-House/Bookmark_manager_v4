@@ -9,6 +9,7 @@ import Svg2 from "@/../public/Svg-02.svg";
 import { useColorMode } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import { AiFillSetting } from "react-icons/ai";
+import Preferences from "../Preferences/Dropdown";
 export default function Navbar() {
   const { width } = useWindowDimension();
   const { data: session } = useSession();
@@ -23,7 +24,7 @@ export default function Navbar() {
         {" "}
         <NavSearch iconPosition="left" />
         <Notification />
-        <AiFillSetting className="text-2xl"/>
+        <Preferences />
         <ProfileMenu
           display={
             <Image

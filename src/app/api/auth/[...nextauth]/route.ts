@@ -32,6 +32,7 @@ export const authOptions: NextAuthOptions = {
             workspaces: {
               create: [
                 {
+                  email: user?.email!,
                   name: "Default",
                 },
               ],

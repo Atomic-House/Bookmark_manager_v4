@@ -22,6 +22,14 @@ export async function POST(req: Request, { params }: { params: { data: string[] 
         create: [
           {
             name: body.name,
+            lists: {
+              create: [
+                {
+                  name: "List",
+                  boardId: id,
+                },
+              ],
+            },
           },
         ],
       },
