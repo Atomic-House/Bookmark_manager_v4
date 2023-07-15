@@ -1,12 +1,11 @@
 "use client";
 import Link from "next/link";
-import { BsPencilSquare } from "react-icons/bs";
 import { AiFillDelete } from "react-icons/ai";
-import { BiPencil } from "react-icons/bi";
 import Image from "next/image";
 import { useMutations } from "@/functions/mutations";
 import { Spinner } from "@chakra-ui/react";
 import { Draggable } from "react-beautiful-dnd";
+import EditBookmarkOptions from "./components/EditBookmarkOptions";
 export default function Bookmark({
   name,
   id,
@@ -30,7 +29,7 @@ export default function Bookmark({
     "",
     "",
     id,
-    "PUT"
+    "PUT",
   );
   if (isSuccess) {
     console.log("successfully deleted");
@@ -60,10 +59,9 @@ export default function Bookmark({
               {name ? name : title ? title.slice(0, 9) + "..." : ""}
             </Link>
           </div>
-          <div className="flex ">
+          <div className="flex items-center">
             {" "}
-            <BiPencil />
-            <AiFillDelete className="text-red-500" onClick={mutateAsync} />
+            <EditBookmarkOptions onClickDelete={mutateAsync} />
             {isLoading ? <Spinner /> : null}
           </div>
         </div>

@@ -32,7 +32,9 @@ export default function DialogModal({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const component =
     type === "menu" ? (
-      <MenuItem onClick={onOpen}>{desc}</MenuItem>
+      <MenuItem onClick={onOpen} className="flex gap-2">
+        {desc}
+      </MenuItem>
     ) : (
       <Button onClick={onOpen}>{desc}</Button>
     );

@@ -16,7 +16,10 @@ export async function GET(req: NextRequest) {
 
   return NextResponse.json(workspace);
 }
-export async function POST(req: NextRequest, { params }: { params: { data: string[] } }) {
+export async function POST(
+  req: NextRequest,
+  { params }: { params: { data: string[] } },
+) {
   const session = await getServerSession(authOptions);
   if (!session) throw new Error("Not authenticated");
   const body = await req.json();
@@ -34,6 +37,19 @@ export async function POST(req: NextRequest, { params }: { params: { data: strin
               create: [
                 {
                   name: "Main",
+                  tabs: {
+                    create: [
+                      {
+                        name: "Tab",
+                        email: session.user?.email!,
+                        lists: {
+                          create: [
+                            { name: "List", email: session.user?.email },
+                          ],
+                        },
+                      },
+                    ],
+                  },
                 },
               ],
             },
@@ -45,7 +61,10 @@ export async function POST(req: NextRequest, { params }: { params: { data: strin
 
   return NextResponse.json(workspace);
 }
-export async function PATCH(req: Request, { params }: { params: { data: string[] } }) {
+export async function PATCH(
+  req: Request,
+  { params }: { params: { data: string[] } },
+) {
   const [id, name] = params.data;
   const workspace = await prisma.workspace.update({
     where: {
@@ -58,7 +77,10 @@ export async function PATCH(req: Request, { params }: { params: { data: string[]
   return NextResponse.json(workspace);
 }
 //to change it to deleted or not
-export async function DELETE(req: Request, { params }: { params: { data: string[] } }) {
+export async function DELETE(
+  req: Request,
+  { params }: { params: { data: string[] } },
+) {
   const [id] = params.data;
   const workspace = await prisma.workspace.delete({
     where: {

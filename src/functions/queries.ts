@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
 
 export function useFetchWorkspace() {
   const {
@@ -20,7 +21,6 @@ export function useFetchWorkspace() {
         headers: {
           "Content-Type": "application/json",
         },
-        cache: "no-store",
       });
       return await data.json();
     },
@@ -38,7 +38,11 @@ export function useFetchWorkspace() {
     error,
   };
 }
-export function useFetchData(category: string, parentId: string, interval: number | false) {
+export function useFetchData(
+  category: string,
+  parentId: string,
+  interval: number | false,
+) {
   const {
     data,
     isError,
@@ -58,11 +62,48 @@ export function useFetchData(category: string, parentId: string, interval: numbe
         headers: {
           "Content-Type": "application/json",
         },
-        cache: "no-store",
       });
       return await data.json();
     },
     refetchInterval: interval,
+  });
+  return {
+    data,
+    isError,
+    isStale,
+    isPaused,
+    isSuccess,
+    isFetching,
+    isLoading,
+    isLoadingError,
+    error,
+    refetch,
+  };
+}
+export function useFetchTrash(category: string) {
+  const session = useSession();
+  const {
+    data,
+    isError,
+    isStale,
+    isPaused,
+    isSuccess,
+    isFetching,
+    error,
+    isLoading,
+    isLoadingError,
+    refetch,
+  } = useQuery({
+    queryKey: [category, session.data?.user?.email],
+    queryFn: async () => {
+      const data = await fetch(`/api/data/trash/${category}/read`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      return await data.json();
+    },
   });
   return {
     data,

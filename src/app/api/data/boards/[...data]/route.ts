@@ -1,18 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-export async function GET(req: NextRequest, { params }: { params: { data: string[] } }) {
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { data: string[] } },
+) {
   const [id] = params.data;
-  const boards = await prisma.workspace.findFirst({
+  const boards = await prisma.board.findMany({
     where: {
-      id: id,
-    },
-    include: {
-      boards: true,
+      wsId: id,
+      isDeleted: false,
     },
   });
   return NextResponse.json(boards);
 }
-export async function POST(req: NextRequest, { params }: { params: { data: string[] } }) {
+export async function POST(
+  req: NextRequest,
+  { params }: { params: { data: string[] } },
+) {
+  const session = await getServerSession(authOptions);
   const body: { name: string } = await req.json();
   const [id] = params.data;
   const boards = await prisma.workspace.update({
@@ -24,6 +31,7 @@ export async function POST(req: NextRequest, { params }: { params: { data: strin
         create: [
           {
             name: body.name,
+            email: session?.user?.email,
           },
         ],
       },
@@ -31,7 +39,10 @@ export async function POST(req: NextRequest, { params }: { params: { data: strin
   });
   return NextResponse.json(boards);
 }
-export async function PATCH(req: Request, { params }: { params: { data: string[] } }) {
+export async function PATCH(
+  req: Request,
+  { params }: { params: { data: string[] } },
+) {
   const [id, name] = params.data;
   const boards = await prisma.board.update({
     where: {
@@ -44,7 +55,10 @@ export async function PATCH(req: Request, { params }: { params: { data: string[]
   return NextResponse.json(boards);
 }
 //to change it to deleted or not
-export async function PUT(req: Request, { params }: { params: { data: any[] } }) {
+export async function PUT(
+  req: Request,
+  { params }: { params: { data: any[] } },
+) {
   const [id] = params.data;
   const workspace = await prisma.board.update({
     where: {

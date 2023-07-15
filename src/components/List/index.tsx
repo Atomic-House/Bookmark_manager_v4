@@ -6,7 +6,8 @@ import { Spinner } from "@chakra-ui/react";
 import { useEffect } from "react";
 import AddClass from "@/components/Create/bookmark";
 import { StrictModeDroppable } from "@/components/Dnd/StrictModeDroppable";
-import ListOptions from "../ListOptions";
+import EditListOptions from "./components/EditListOptions";
+import { useMutations } from "@/functions/mutations";
 export default function List({ name, id }: { name: string; id: string }) {
   const {
     data: lists,
@@ -20,6 +21,11 @@ export default function List({ name, id }: { name: string; id: string }) {
     refetch,
     error,
   } = useFetchData("bookmarks", id, false);
+  const {
+    mutateAsync: trashList,
+    isLoading: isTrashListLoading,
+    isSuccess: isTrashListSuccess,
+  } = useMutations("delete list", "lists", "", "", id, "PUT");
   useEffect(() => {
     refetch();
   }, [refetch, lists]);
@@ -41,8 +47,17 @@ export default function List({ name, id }: { name: string; id: string }) {
           >
             <div className="flex  justify-between items-center gap-2 sticky">
               <div>{name}</div>
-              <AddClass listId={id} buttonStyles="" positionStyles="" category="bookmarks" />
-              <ListOptions key={id} id={id} name={name} />
+              <AddClass
+                listId={id}
+                buttonStyles=""
+                positionStyles=""
+                category="bookmarks"
+              />
+              <EditListOptions
+                onClickDelete={trashList}
+                isSuccess={isTrashListSuccess}
+                isLoading={isTrashListLoading}
+              />
             </div>
             <div>
               {lists?.bookmarks
@@ -57,7 +72,7 @@ export default function List({ name, id }: { name: string; id: string }) {
                       description: string;
                       favicon: string;
                     },
-                    index: number
+                    index: number,
                   ) => (
                     <Bookmark
                       index={index}
@@ -69,7 +84,7 @@ export default function List({ name, id }: { name: string; id: string }) {
                       image={bm.favicon}
                       description={bm.description}
                     />
-                  )
+                  ),
                 )}
               {/* {isLoading ? <Spinner /> : null} */}
             </div>

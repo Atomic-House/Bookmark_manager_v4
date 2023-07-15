@@ -25,7 +25,7 @@ export default function AltBoards() {
   if (isError || isLoadingError) {
     console.error(error);
   }
-  if (isLoading ) {
+  if (isLoading) {
     return <Spinner />;
   }
   if (isSuccess && isStale)
@@ -33,7 +33,9 @@ export default function AltBoards() {
       <Disclosure>
         {({ open, close }) => (
           <div className="flex-col flex gap-2">
-            <Disclosure.Button className={"flex justify-around items-center gap-3"}>
+            <Disclosure.Button
+              className={"flex justify-around items-center gap-3"}
+            >
               <span>Boards</span>
               <BsChevronDown
                 className={`${
@@ -50,18 +52,19 @@ export default function AltBoards() {
               leaveFrom="transform opacity-100 "
               leaveTo="transform opacity-0 "
             >
-              <Disclosure.Panel as={`div`} className={`flex flex-col text-l gap-2`}>
-                {boards?.boards
-                  ?.filter((x: { isDeleted: Boolean }) => !x.isDeleted)
-                  ?.map((board: { id: string; name: string }) => (
-                    <Link
-                      key={board.id}
-                      as={`/home/board/${board.id}`}
-                      href={`/home/board/${board.id}`}
-                    >
-                      {board.name}
-                    </Link>
-                  ))}
+              <Disclosure.Panel
+                as={`div`}
+                className={`flex flex-col text-l gap-2`}
+              >
+                {boards?.map((board: { id: string; name: string }) => (
+                  <Link
+                    key={board.id}
+                    as={`/home/board/${board.id}`}
+                    href={`/home/board/${board.id}`}
+                  >
+                    {board.name}
+                  </Link>
+                ))}
               </Disclosure.Panel>
             </Transition>
           </div>

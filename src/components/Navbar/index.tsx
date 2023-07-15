@@ -2,7 +2,8 @@
 import useWindowDimension from "@/hooks/window";
 import NavSearch from "../Search";
 import Notification from "./components/Notification";
-import ProfileMenu from "./components/ProfileMenu";
+// import ProfileMenu from "./components/ProfileMenu";
+import ProfileMenu from "./components/AltProfileMenu";
 import Image from "next/image";
 import Svg1 from "@/../public/Svg-01.svg";
 import Svg2 from "@/../public/Svg-02.svg";
@@ -26,9 +27,22 @@ export default function Navbar() {
         <Notification />
         <Preferences />
         <ProfileMenu
+          image={
+            session?.user?.image
+              ? session.user.image
+              : colorMode === "light"
+                ? Svg1
+                : Svg2
+          }
           display={
             <Image
-              src={session?.user?.image ? session.user.image : colorMode === "light" ? Svg1 : Svg2}
+              src={
+                session?.user?.image
+                  ? session.user.image
+                  : colorMode === "light"
+                    ? Svg1
+                    : Svg2
+              }
               alt="image"
               width={30}
               height={30}

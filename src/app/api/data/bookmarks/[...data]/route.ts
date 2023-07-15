@@ -2,11 +2,17 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import fetch from "node-fetch";
 import ogs from "open-graph-scraper";
-export async function GET(req: NextRequest, { params }: { params: { data: string[] } }) {
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { data: string[] } },
+) {
   const [id] = params.data;
   const bookmarks = await prisma.list.findFirst({
     where: {
       id: id,
+      isDeleted: false,
     },
     include: {
       bookmarks: true,
@@ -15,7 +21,11 @@ export async function GET(req: NextRequest, { params }: { params: { data: string
   return NextResponse.json(bookmarks);
 }
 
-export async function POST(req: NextRequest, { params }: { params: { data: string[] } }) {
+export async function POST(
+  req: NextRequest,
+  { params }: { params: { data: string[] } },
+) {
+  const session = await getServerSession(authOptions);
   const body: { name: string | null; url: string } = await req.json();
   const url = new URL(body.url);
   const [id] = params.data;
@@ -34,6 +44,7 @@ export async function POST(req: NextRequest, { params }: { params: { data: strin
               favicon: `https://www.google.com/s2/favicons?domain=${url.hostname}&sz=256`,
               title: result.ogTitle,
               description: result.ogDescription,
+              email: session?.user?.email,
             },
           ],
         },
@@ -42,7 +53,10 @@ export async function POST(req: NextRequest, { params }: { params: { data: strin
   });
   return NextResponse.json(bookmark);
 }
-export async function PATCH(req: Request, { params }: { params: { data: string[] } }) {
+export async function PATCH(
+  req: Request,
+  { params }: { params: { data: string[] } },
+) {
   const [id] = params.data;
   const body = await req.json();
   const bookmark = await prisma.bookmark.update({
@@ -58,7 +72,10 @@ export async function PATCH(req: Request, { params }: { params: { data: string[]
   return NextResponse.json(bookmark);
 }
 //to change it to deleted or not
-export async function PUT(req: Request, { params }: { params: { data: any[] } }) {
+export async function PUT(
+  req: Request,
+  { params }: { params: { data: any[] } },
+) {
   const [id] = params.data;
   const bookmarks = await prisma.bookmark.update({
     where: {

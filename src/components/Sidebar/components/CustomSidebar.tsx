@@ -1,8 +1,12 @@
 "use client";
-import { MdKeyboardDoubleArrowLeft, MdOutlineDashboard, MdOutlineInbox } from "react-icons/md";
+import {
+  MdKeyboardDoubleArrowLeft,
+  MdOutlineDashboard,
+  MdOutlineInbox,
+} from "react-icons/md";
 import Link from "next/link";
 import Image from "next/image";
-import Svg1 from "@/../public/Svg-02.svg";
+import Svg1 from "@/../public/Svg-01.svg";
 import { useState } from "react";
 import SwitchButton from "@/components/ThemeSwitch";
 import { BsTrashFill } from "react-icons/bs";
@@ -27,7 +31,7 @@ export default function MySidebar({ ws }: { ws: any[] }) {
     name,
     "",
     "create",
-    "POST"
+    "POST",
   );
   const { mutateAsync: addBoad, isLoading: isBoardLoading } = useMutations(
     "create board",
@@ -35,7 +39,7 @@ export default function MySidebar({ ws }: { ws: any[] }) {
     boardName,
     "",
     wsId,
-    "POST"
+    "POST",
   );
   const {
     mutateAsync: deleteBoard,
@@ -122,7 +126,9 @@ export default function MySidebar({ ws }: { ws: any[] }) {
         >
           {" "}
           <MdKeyboardDoubleArrowLeft
-            className={`${closed ? "rotate-180" : ""} duration-300 transition-all`}
+            className={`${
+              closed ? "rotate-180" : ""
+            } duration-300 transition-all`}
           />
         </div>
 

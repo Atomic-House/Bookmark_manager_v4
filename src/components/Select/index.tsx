@@ -6,10 +6,24 @@ import { AiFillCheckCircle, AiOutlineSelect } from "react-icons/ai";
 import { HiChevronUpDown } from "react-icons/hi2";
 import { useAppDispatch } from "@/store/hooks";
 import { setArray, setId } from "@/slices/workspaceSlice";
-export default function Select({ collapsed, ws: workspaces }: { collapsed: boolean; ws: any[] }) {
+export default function Select({
+  collapsed,
+  ws: workspaces,
+}: {
+  collapsed: boolean;
+  ws: any[];
+}) {
   const dispatch = useAppDispatch();
-  const [selected, setSelected] = useState<{ name: string; id: string; boards: any[] }>(
-    workspaces[0]
+  const [selected, setSelected] = useState<{
+    name: string;
+    id: string;
+    boards: any[];
+  }>(
+    workspaces[0] || {
+      name: "Select Workspace",
+      id: "heloasjfldfsj",
+      boards: [],
+    },
   );
   useEffect(() => {
     dispatch(setArray(selected?.boards));
@@ -44,12 +58,19 @@ export default function Select({ collapsed, ws: workspaces }: { collapsed: boole
               >
                 {({ selected }) => (
                   <>
-                    <span className={`block truncate ${selected ? "font-medium" : "font-normal"}`}>
+                    <span
+                      className={`block truncate ${
+                        selected ? "font-medium" : "font-normal"
+                      }`}
+                    >
                       {workspace.name}
                     </span>
                     {selected ? (
                       <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
-                        <AiFillCheckCircle className="h-5 w-5" aria-hidden="true" />
+                        <AiFillCheckCircle
+                          className="h-5 w-5"
+                          aria-hidden="true"
+                        />
                       </span>
                     ) : null}
                   </>
@@ -59,9 +80,14 @@ export default function Select({ collapsed, ws: workspaces }: { collapsed: boole
           </Listbox.Options>
         </Transition>
         <Listbox.Button className="relative   cursor-default dark:bg-black dark:text-white bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-          <span className="block truncate">{collapsed ? <AiOutlineSelect /> : selected?.name}</span>
+          <span className="block truncate">
+            {collapsed ? <AiOutlineSelect /> : selected?.name}
+          </span>
           <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-            <HiChevronUpDown className="h-5 w-5 text-gray-400" aria-hidden="true" />
+            <HiChevronUpDown
+              className="h-5 w-5 text-gray-400"
+              aria-hidden="true"
+            />
           </span>
         </Listbox.Button>
       </div>
