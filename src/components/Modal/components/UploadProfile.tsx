@@ -1,0 +1,92 @@
+"use client";
+import { UploadButton } from "@/utils/uploadthing";
+import { UploadButton as BgUpload } from "@/utils/bgUpload";
+
+import "@uploadthing/react/styles.css";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Avatar,
+  useDisclosure,
+  Button,
+} from "@chakra-ui/react";
+import { Dispatch, SetStateAction } from "react";
+export default function UploadImage({
+  image,
+  onClientUploadComplete,
+  onBgClientUploadComplete,
+}: {
+  image: string | undefined | null;
+  onClientUploadComplete?:
+    | ((
+        res?:
+          | {
+              fileUrl: string;
+              fileKey: string;
+            }[]
+          | undefined,
+      ) => void)
+    | undefined;
+  onBgClientUploadComplete?:
+    | ((
+        res?:
+          | {
+              fileUrl: string;
+              fileKey: string;
+            }[]
+          | undefined,
+      ) => void)
+    | undefined;
+}) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  return (
+    <>
+      <Avatar
+        onClick={onOpen}
+        src={image!}
+        width={"100px"}
+        height={"100px"}
+        position={"absolute"}
+        top={"24"}
+        p={2}
+      />
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Upload Image</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <UploadButton
+              endpoint="imageUploader"
+              onUploadError={(error: Error) => {
+                console.log("error");
+                alert("Try again \n" + "Error: " + error);
+              }}
+              onClientUploadComplete={onClientUploadComplete}
+            />
+            {/* <BgUpload
+              endpoint="bgUpload"
+              onUploadError={(error: Error) => {
+                console.log("error");
+                alert("Try again \n" + "Error: " + error);
+              }}
+              onClientUploadComplete={onBgClientUploadComplete}
+            />
+            */}
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
+              Close
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+}

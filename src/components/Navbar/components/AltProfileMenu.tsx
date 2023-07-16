@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { useSession, signOut } from "next-auth/react";
 import { useMutations } from "@/functions/mutations";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import Image from "next/image";
 import Link from "next/link";
 import {

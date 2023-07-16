@@ -5,15 +5,18 @@ import { Input, Avatar, Spinner } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
-import { isErrored } from "stream";
+import "@uploadthing/react/styles.css";
+import { UploadButton } from "@/utils/uploadthing";
+import UploadImage from "@/components/Modal/components/UploadProfile";
 export default function Left() {
   const { data: session, status, update } = useSession();
-  const [firstName, setFirstName] = useState(session?.user?.email?.split(" ")[0]);
+  const [firstName, setFirstName] = useState(
+    session?.user?.email?.split(" ")[0],
+  );
   const [lastName, setLastName] = useState(session?.user?.email?.split(" ")[1]);
   const [username, setUsername] = useState("");
-  if (!session) {
-    redirect("/auth/signin");
-  }
+  const [image, setImage] = useState(session?.user?.image);
+  const [bgImage, setBgImage] = useState("");
   const {
     mutateAsync: updateUser,
     isLoading,
@@ -23,7 +26,7 @@ export default function Left() {
     isError,
     error,
   } = useMutation({
-    mutationKey: ["update userinfo", session.user?.email],
+    mutationKey: ["update userinfo", session?.user?.email],
     mutationFn: async (e: FormEvent) => {
       e.preventDefault();
       const data = await fetch("/api/user", {
@@ -40,6 +43,10 @@ export default function Left() {
       update();
     },
   });
+  if (!session) {
+    redirect("/auth/signin");
+  }
+
   if (isError) {
     console.error(error);
   }
@@ -54,18 +61,18 @@ export default function Left() {
           alt="banner"
           width={120}
           height={60}
-          className="w-[140vw] h-[150px] relative rounded-md"
+          className=" relative items-center object-cover w-full h-40"
+        // className="w-[140vw] h-[150px] relative rounded-md"
         />
-        <Avatar
-          src={
-            "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
-          }
-          width={"100px"}
-          height={"100px"}
-          position={"absolute"}
-          top={"24"}
-          p={2}
-        ></Avatar>
+        <UploadImage
+          image={image}
+          onClientUploadComplete={(res) => {
+            setImage(res?.at(0)?.fileUrl);
+          }}
+          onBgClientUploadComplete={(res) => {
+            setBgImage(res?.at(0)?.fileUrl!);
+          }}
+        />
       </section>
       <section className="mt-14">
         <form onSubmit={updateUser}>
@@ -114,7 +121,11 @@ export default function Left() {
             </div>
             <div>
               <label htmlFor="confirmPassword">Confirm Password</label>
-              <Input type="password" id="confirmPassword" name="confirmPassword" />
+              <Input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+              />
             </div>
           </div>
           <button

@@ -18,12 +18,16 @@ const nextConfig = {
         protocol: "https",
         hostname: "www.google.com",
       },
+      {
+        protocol: "https",
+        hostname: "uploadthing.com",
+      },
     ],
   },
   experimental: {
     appDir: true,
   },
-  reactStrictMode:true,
+  reactStrictMode: true,
 };
 
 module.exports = nextConfig;

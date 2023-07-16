@@ -43,6 +43,7 @@ model User {
   defaultWs     String?
   isPremiumUser Boolean     @default(false)
   userName      String?     @unique
+  background    String?
   accounts      Account[]
   Inbox         Inbox[]
   lists         List[]
@@ -73,10 +74,10 @@ model Inbox {
   id          String    @id @default(cuid())
   userId      String
   email       String?
-  user        User      @relation(fields: [userId], references: [id])
-  tabs        Tab[]
-  workspace   Workspace @relation(fields: [workspaceId], references: [id])
   workspaceId String    @unique
+  user        User      @relation(fields: [userId], references: [id])
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  tabs        Tab[]
 }
 
 model Board {
@@ -130,7 +131,7 @@ model Bookmark {
   listId      String
   favicon     String?
   tags        String[]
-  email       String?
   createdAt   DateTime? @default(now())
+  email       String?
   list        List      @relation(fields: [listId], references: [id], onDelete: Cascade)
 }
