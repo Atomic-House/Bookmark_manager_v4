@@ -24,8 +24,9 @@ export default function ProfileMenu({ display }: { display: JSX.Element }) {
     "workspaces",
     "",
     "",
+    "",
     id,
-    "DELETE"
+    "DELETE",
   );
 
   return (

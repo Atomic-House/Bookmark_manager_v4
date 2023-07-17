@@ -30,6 +30,7 @@ export default function MySidebar({ ws }: { ws: any[] }) {
     "workspaces",
     name,
     "",
+    "",
     "create",
     "POST",
   );
@@ -37,6 +38,7 @@ export default function MySidebar({ ws }: { ws: any[] }) {
     "create board",
     "boards",
     boardName,
+    "",
     "",
     wsId,
     "POST",
@@ -47,7 +49,7 @@ export default function MySidebar({ ws }: { ws: any[] }) {
     isSuccess: isDeleteSuccess,
     error: deleteError,
     isError: isDeleteError,
-  } = useMutations("delete board", "boards", "", "", boardId, "PUT");
+  } = useMutations("delete board", "boards", "", "", "", boardId, "PUT");
   if (isDeleteSuccess) {
     router.push("/home/board/inbox");
   }
@@ -55,12 +57,11 @@ export default function MySidebar({ ws }: { ws: any[] }) {
     <div className="relative">
       {" "}
       <div
-        className={`h-screen ${
-          closed ? "w-16" : "w-64"
-        } bg-white dark:bg-slate-900  flex flex-col transition-all duration-300 ease-in-out`}
+        className={`h-screen ${closed ? "w-16" : "w-64"
+          } bg-white dark:bg-slate-900  flex flex-col transition-all duration-300 ease-in-out`}
       >
         <Link
-          href={`/home/boards/inbox`}
+          href={`/home/board/inbox`}
           passHref
           className="flex bg-blue-500 dark:bg-blue-800 dark:text-white justify-center items-center py-[60px] flex-col transition-all text-xl font-bold duration-300"
         >
@@ -126,9 +127,8 @@ export default function MySidebar({ ws }: { ws: any[] }) {
         >
           {" "}
           <MdKeyboardDoubleArrowLeft
-            className={`${
-              closed ? "rotate-180" : ""
-            } duration-300 transition-all`}
+            className={`${closed ? "rotate-180" : ""
+              } duration-300 transition-all`}
           />
         </div>
 

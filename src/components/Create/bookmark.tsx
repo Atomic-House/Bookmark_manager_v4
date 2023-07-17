@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import { BsFillPlusCircleFill } from "react-icons/bs";
+import { BiLink } from "react-icons/bi";
 export default function AddClass({
   category,
   positionStyles,
@@ -33,8 +34,9 @@ export default function AddClass({
     "bookmarks",
     name,
     url,
+    "",
     listId,
-    "POST"
+    "POST",
   );
   useEffect(() => {
     if (isSuccess) {
@@ -50,12 +52,18 @@ export default function AddClass({
   }
   return (
     <div className={positionStyles}>
-      <Popover closeOnBlur={false} placement="bottom" initialFocusRef={initRef.current}>
+      <Popover
+        closeOnBlur={false}
+        placement="bottom"
+        initialFocusRef={initRef.current}
+      >
         {({ isOpen, onClose }) => (
           <>
             <PopoverTrigger>
-              <button className={` ${buttonStyles} w-fit duration-300 transition-all`}>
-                <BsFillPlusCircleFill className="text-xs cursor-pointer" />
+              <button
+                className={` ${buttonStyles} w-fit duration-300 transition-all`}
+              >
+                <BiLink className=" cursor-pointer" />
               </button>
             </PopoverTrigger>
             <Portal>
@@ -80,7 +88,13 @@ export default function AddClass({
                         onChange={(e) => setUrl(e.target.value)}
                       />
                     </div>
-                    <Button mt={4} mx={2} colorScheme="blue" ref={initRef.current} type="submit">
+                    <Button
+                      mt={4}
+                      mx={2}
+                      colorScheme="blue"
+                      ref={initRef.current}
+                      type="submit"
+                    >
                       {isLoading ? <Spinner /> : ""} Add
                     </Button>
                     <Button

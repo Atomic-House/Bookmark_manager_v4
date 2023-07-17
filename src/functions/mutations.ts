@@ -7,6 +7,7 @@ export const useMutations = (
   category: string,
   name: string,
   url: string,
+  color: string,
   additionalParams: string | null | undefined,
   fetchType: "GET" | "POST" | "PUT" | "DELETE" | "PATCH",
 ) => {
@@ -28,7 +29,7 @@ export const useMutations = (
       e.preventDefault();
       await fetch(`/api/data/${category}/${additionalParams}`, {
         method: fetchType,
-        body: JSON.stringify({ name: name, url: url }),
+        body: JSON.stringify({ name: name, url: url, color: color }),
       });
     },
     onSuccess: () => {

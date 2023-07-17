@@ -7,6 +7,7 @@ import { useFetchData } from "@/functions/queries";
 import UserTabs from "@/components/Tabs";
 export default function Page({ params }: { params: { id: string } }) {
   const [name, setName] = useState("");
+
   const id = params.id;
   const {
     mutateAsync: createTab,

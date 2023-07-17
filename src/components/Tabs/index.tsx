@@ -1,6 +1,13 @@
 "use client";
 import { useMutations } from "@/functions/mutations";
-import { Tabs, TabList, Spinner, TabPanels, Tab, TabIndicator } from "@chakra-ui/react";
+import {
+  Tabs,
+  TabList,
+  Spinner,
+  TabPanels,
+  Tab,
+  TabIndicator,
+} from "@chakra-ui/react";
 import { useState } from "react";
 import AddClass from "../Create/create";
 import { useFetchData } from "@/functions/queries";
@@ -35,7 +42,7 @@ export default function UserTabs({
     isSuccess,
     isError,
     error,
-  } = useMutations("create tabs", "tabs", name, "", id, "POST");
+  } = useMutations("create tabs", "tabs", name, "", "", id, "POST");
 
   const {
     mutateAsync: createList,
@@ -43,7 +50,15 @@ export default function UserTabs({
     error: createListError,
     isError: isCreateListError,
     isSuccess: isCreateListSuccess,
-  } = useMutations("create lists", "lists", name, "", `${id}/${boardId}`, "POST");
+  } = useMutations(
+    "create lists",
+    "lists",
+    name,
+    "",
+    `${id}/${boardId}`,
+    "",
+    "POST",
+  );
   if (isError || isTabsError || isCreateListError) {
     console.error(error, createListError);
   }
@@ -68,7 +83,13 @@ export default function UserTabs({
             buttonStyles="dark:bg-blue-800 bg-blue-400 hover:scale-90 rounded-md h-fit p-2 flex justify-center items-center rounded-md"
           />
         </TabList>
-        <TabIndicator mt="-1.5px" height="2px" mb={3} bg="blue.500" borderRadius="1px" />
+        <TabIndicator
+          mt="-1.5px"
+          height="2px"
+          mb={3}
+          bg="blue.500"
+          borderRadius="1px"
+        />
         <TabPanels>
           {tabs.map((tab: TabsInterface) => (
             <PanelTab id={tab.id} key={tab.id} boardId={id} />

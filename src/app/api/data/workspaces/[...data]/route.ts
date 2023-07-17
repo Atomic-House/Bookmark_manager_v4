@@ -23,6 +23,7 @@ export async function POST(
   const session = await getServerSession(authOptions);
   if (!session) throw new Error("Not authenticated");
   const body = await req.json();
+
   const workspace = await prisma.user.update({
     where: {
       email: session.user?.email!,
@@ -33,6 +34,18 @@ export async function POST(
           {
             name: body.name,
             email: session.user?.email!,
+            inbox: {
+              create: {
+                email: session.user?.email!,
+                tabs: {
+                  create: [
+                    {
+                      name: "Tab",
+                    },
+                  ],
+                },
+              },
+            },
             boards: {
               create: [
                 {
@@ -58,7 +71,6 @@ export async function POST(
       },
     },
   });
-
   return NextResponse.json(workspace);
 }
 export async function PATCH(

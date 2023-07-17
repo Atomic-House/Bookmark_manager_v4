@@ -1,5 +1,5 @@
 "use client";
-
+//Select workspace component
 import { Fragment, useEffect, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { AiFillCheckCircle, AiOutlineSelect } from "react-icons/ai";
@@ -29,6 +29,7 @@ export default function Select({
     dispatch(setArray(selected?.boards));
     dispatch(setId(selected?.id));
   }, [selected, dispatch]);
+
   return (
     <Listbox value={selected} onChange={setSelected}>
       <div className="relative mt-1">

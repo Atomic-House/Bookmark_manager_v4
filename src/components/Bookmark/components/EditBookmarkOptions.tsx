@@ -37,7 +37,7 @@ export default function EditBookmarkOptions({
     <Menu closeOnSelect={false}>
       <MenuButton as={Button} colorScheme="blue" variant={"unstyled"}>
         <BiPencil />
-</MenuButton>
+      </MenuButton>
       <MenuList>
         <MenuGroup>
           <MenuItem className="flex gap-2">
@@ -87,6 +87,7 @@ export default function EditBookmarkOptions({
           <div className="grid grid-cols-5 gap-2 place-items-center m-2">
             {hexArray.map((hex) => (
               <MenuItemOption
+                onClick={() => console.log("Selected", hex)}
                 key={hex}
                 p={2}
                 value={hex}

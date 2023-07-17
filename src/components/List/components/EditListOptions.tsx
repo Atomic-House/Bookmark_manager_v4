@@ -21,7 +21,32 @@ import { PiShare } from "react-icons/pi";
 import { BiAlarmSnooze, BiDuplicate, BiPencil } from "react-icons/bi";
 import { AiOutlineCi, AiOutlineStar } from "react-icons/ai";
 import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
-import { MouseEventHandler } from "react";
+import { MouseEventHandler, useContext } from "react";
+import { ListColorContext } from "@/components/context/ListColorContext";
+const colors = [
+  "red",
+  "orange",
+  "yellow",
+  "green",
+  "teal",
+  "blue",
+  "purple",
+  "pink",
+  "gray",
+  "cyan",
+];
+const hexArray = [
+  "#f08dcc",
+  "#f2f595",
+  "#f595a0",
+  "#95f5b4",
+  "#f5bf95",
+  "#95e5f5",
+  "#86708a",
+  "#bfccad",
+  "#f0c5d4",
+  "#8db3f0",
+];
 export default function EditListOptions({
   onClickDelete,
   isSuccess,
@@ -31,9 +56,15 @@ export default function EditListOptions({
   isLoading: boolean;
   isSuccess: boolean;
 }) {
+  const { setListColor } = useContext(ListColorContext);
   return (
     <Menu closeOnSelect={false}>
-      <MenuButton as={Button} colorScheme="blue" variant={"unstyled"}>
+      <MenuButton
+        as={Button}
+        w={"fit-content"}
+        colorScheme="blue"
+        variant={"unstyled"}
+      >
         <BsThreeDotsVertical />
       </MenuButton>
       <MenuList>
@@ -86,6 +117,21 @@ export default function EditListOptions({
             isSuccess={isSuccess}
           />
         </MenuGroup>
+        <MenuDivider />
+        <MenuOptionGroup>
+          <div className="flex justify-center font-bold">List color</div>
+          <div className="grid grid-cols-5 gap-2 place-items-center m-2">
+            {colors.map((color) => (
+              <MenuItemOption
+                onClick={() => setListColor(color)}
+                key={color}
+                p={2}
+                value={color}
+                bg={color}
+              ></MenuItemOption>
+            ))}
+          </div>
+        </MenuOptionGroup>
       </MenuList>
     </Menu>
   );

@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-const initialState: { array: any[]; id: string } = {
+const initialState: { array: any[]; id: string; inboxId: string } = {
   array: [],
   id: "",
+  inboxId: "",
 };
 
 const workspaceSlice = createSlice({
@@ -14,9 +15,12 @@ const workspaceSlice = createSlice({
     setId: (state, action: PayloadAction<string>) => {
       state.id = action.payload;
     },
+    setInboxId: (state, action: PayloadAction<string>) => {
+      state.inboxId = action.payload;
+    },
   },
 });
 
-export const { setArray, setId } = workspaceSlice.actions;
+export const { setArray, setId, setInboxId } = workspaceSlice.actions;
 
 export default workspaceSlice.reducer;

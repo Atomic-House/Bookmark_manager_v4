@@ -45,7 +45,6 @@ model User {
   userName      String?     @unique
   background    String?
   accounts      Account[]
-  Inbox         Inbox[]
   lists         List[]
   sessions      Session[]
   Tab           Tab[]
@@ -67,17 +66,17 @@ model Workspace {
   email  String?
   boards Board[]
   inbox  Inbox?
-  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Inbox {
   id          String    @id @default(cuid())
-  userId      String
+  name        String    @default("Inbox")
   email       String?
   workspaceId String    @unique
-  user        User      @relation(fields: [userId], references: [id])
   workspace   Workspace @relation(fields: [workspaceId], references: [id])
   tabs        Tab[]
+  userId      String?
 }
 
 model Board {
@@ -95,13 +94,13 @@ model Tab {
   id        String  @id @default(cuid())
   name      String
   isDeleted Boolean @default(false)
-  boardId   String
+  boardId   String?
   email     String?
   isPublic  Boolean @default(false)
   userId    String?
   inboxId   String?
   lists     List[]
-  board     Board   @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  board     Board?  @relation(fields: [boardId], references: [id])
   Inbox     Inbox?  @relation(fields: [inboxId], references: [id])
   User      User?   @relation(fields: [userId], references: [id])
 }
@@ -114,7 +113,7 @@ model List {
   isPublic  Boolean    @default(false)
   userId    String?
   tabId     String?
-  color     String?
+  color     String?    @default("#aeb0a9")
   createdAt DateTime?  @default(now())
   bookmarks Bookmark[]
   tab       Tab?       @relation(fields: [tabId], references: [id], onDelete: Cascade)

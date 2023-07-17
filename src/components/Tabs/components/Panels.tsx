@@ -9,7 +9,14 @@ import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import AddClass from "@/components/Create/create";
 import { FaSortAmountDownAlt } from "react-icons/fa";
 import { BiFilterAlt } from "react-icons/bi";
-export default function PanelTab({ id, boardId }: { id: string; boardId: string }) {
+import { List as IList } from "@prisma/client";
+export default function PanelTab({
+  id,
+  boardId,
+}: {
+  id: string;
+  boardId: string;
+}) {
   const [name, setName] = useState("");
   const {
     data: lists,
@@ -26,12 +33,22 @@ export default function PanelTab({ id, boardId }: { id: string; boardId: string 
     error: createListError,
     isError,
     isSuccess,
-  } = useMutations("create lists", "lists", name, "", `${id}/${boardId}`, "POST");
+  } = useMutations(
+    "create lists",
+    "lists",
+    name,
+    "",
+    "",
+    `${id}/${boardId}`,
+    "POST",
+  );
   function handleDragEnd(result: DropResult) {
     console.log(result);
   }
   if (isListError || isError) {
-    return <TabPanel>{JSON.stringify({ listError, createListError })}</TabPanel>;
+    return (
+      <TabPanel>{JSON.stringify({ listError, createListError })}</TabPanel>
+    );
   }
   if (isListLoading) {
     return (
@@ -45,7 +62,7 @@ export default function PanelTab({ id, boardId }: { id: string; boardId: string 
 
   return (
     <>
-        <TabPanel key={id}>
+      <TabPanel key={id}>
         <div className="sticky flex items-center gap-5 ">
           <AddClass
             onSubmit={createList}
@@ -69,8 +86,13 @@ export default function PanelTab({ id, boardId }: { id: string; boardId: string 
           <DragDropContext onDragEnd={handleDragEnd}>
             {lists
               ?.filter((l: { isDeleted: boolean }) => !l.isDeleted)
-              ?.map((list: Lists) => (
-                <List id={list.id} name={list.name} key={list.id} />
+              ?.map((list: IList) => (
+                <List
+                  id={list.id}
+                  name={list.name}
+                  key={list.id}
+                  color={list.color}
+                />
               ))}
           </DragDropContext>
         </div>
