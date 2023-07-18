@@ -88,10 +88,8 @@ export default function PanelTab({
               ?.filter((l: { isDeleted: boolean }) => !l.isDeleted)
               ?.map((list: IList) => (
                 <List
-                  id={list.id}
-                  name={list.name}
-                  key={list.id}
-                  color={list.color}
+                  {...list}
+                key={list.id} 
                 />
               ))}
           </DragDropContext>

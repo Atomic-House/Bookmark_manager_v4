@@ -60,13 +60,14 @@ model VerificationToken {
 }
 
 model Workspace {
-  name   String
-  userId String
-  id     String  @id @default(cuid())
-  email  String?
-  boards Board[]
-  inbox  Inbox?
-  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name    String
+  userId  String
+  id      String  @id @default(cuid())
+  email   String?
+  boards  Board[]
+  inbox   Inbox?
+  inboxId String?
+  user    User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Inbox {
@@ -113,7 +114,7 @@ model List {
   isPublic  Boolean    @default(false)
   userId    String?
   tabId     String?
-  color     String?    @default("#aeb0a9")
+  color     String?    @default("slate")
   createdAt DateTime?  @default(now())
   bookmarks Bookmark[]
   tab       Tab?       @relation(fields: [tabId], references: [id], onDelete: Cascade)

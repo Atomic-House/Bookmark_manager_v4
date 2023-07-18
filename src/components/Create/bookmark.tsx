@@ -13,7 +13,6 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
-import { BsFillPlusCircleFill } from "react-icons/bs";
 import { BiLink } from "react-icons/bi";
 export default function AddClass({
   category,
@@ -61,7 +60,7 @@ export default function AddClass({
           <>
             <PopoverTrigger>
               <button
-                className={` ${buttonStyles} w-fit duration-300 transition-all`}
+                className={` ${buttonStyles} w-fit duration-300 transition-all flex items-center justify-center`}
               >
                 <BiLink className=" cursor-pointer" />
               </button>

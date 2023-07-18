@@ -17,6 +17,7 @@ import { useMutations } from "@/functions/mutations";
 import { useAppSelector } from "@/store/hooks";
 import DeleteBoardModal from "@/components/Modal";
 import { usePathname, useRouter } from "next/navigation";
+import { Box } from "@chakra-ui/react";
 export default function MySidebar({ ws }: { ws: any[] }) {
   const [closed, setClosed] = useState(false);
   const [name, setName] = useState("");
@@ -25,6 +26,9 @@ export default function MySidebar({ ws }: { ws: any[] }) {
   const pathname = usePathname();
   const router = useRouter();
   const boardId = pathname.replace("/home/board/", "");
+  const inbox = useAppSelector((state) => state.workspace.inboxId);
+  console.log(inbox);
+
   const { mutateAsync, isLoading } = useMutations(
     "create workspace",
     "workspaces",
@@ -51,19 +55,22 @@ export default function MySidebar({ ws }: { ws: any[] }) {
     isError: isDeleteError,
   } = useMutations("delete board", "boards", "", "", "", boardId, "PUT");
   if (isDeleteSuccess) {
-    router.push("/home/board/inbox");
+    router.push("/home");
   }
+  console.log(!pathname.includes("board") || !pathname.includes("trash"));
+
   return (
     <div className="relative">
       {" "}
       <div
-        className={`h-screen ${closed ? "w-16" : "w-64"
-          } bg-white dark:bg-slate-900  flex flex-col transition-all duration-300 ease-in-out`}
+        className={`h-screen ${
+          closed ? "w-16" : "w-64"
+        } bg-white dark:bg-slate-900  flex flex-col transition-all duration-300 ease-in-out`}
       >
         <Link
-          href={`/home/board/inbox`}
+          href={`/home`}
           passHref
-          className="flex bg-blue-500 dark:bg-blue-800 dark:text-white justify-center items-center py-[60px] flex-col transition-all text-xl font-bold duration-300"
+          className={`flex bg-blue-500 dark:bg-blue-800  dark:text-white justify-center items-center py-[60px] flex-col transition-all text-xl font-bold duration-300 $`}
         >
           <Image src={Svg1} alt="atomic house logo" width={30} height={30} />
           {!closed && (
@@ -93,29 +100,44 @@ export default function MySidebar({ ws }: { ws: any[] }) {
           isSuccess={isDeleteSuccess}
         />
         <ul className="text-black dark:text-white transition-all duration-300 mx-2 px-2">
-          <li className="flex justify-between items-center py-4 text-xl transition-all ease-in gap-2">
+          <Box
+            color={`${pathname.includes("board") ? "blue" : ""}`}
+            className="flex justify-between  py-4 text-xl transition-all ease-in gap-2"
+          >
             {!closed && <MyBoards />}
-            <span className="px-2">
-              <MdOutlineDashboard className="flex justify-center items-center" />
+            <span className="px-2 sticky">
+              <MdOutlineDashboard className="flex justify-center items-center sticky" />
             </span>
-          </li>
+          </Box>
 
-          <li className="flex justify-between items-center py-4 text-xl transition-all ease-in ">
-            {!closed && <Link href={`/home/board/inbox`}>Inbox</Link>}
+          <Box
+            color={`${
+              !pathname.includes("board") && !pathname.includes("trash")
+                ? "blue"
+                : ""
+            }`}
+            className={
+              "flex justify-between items-center py-4 text-xl transition-all ease-in "
+            }
+          >
+            {!closed && <Link href={`/home`}>Inbox</Link>}
             <span className="px-2">
               <MdOutlineInbox />
             </span>
-          </li>
-          <Link
-            className="flex cursor-pointer justify-between items-center py-4 text-xl transition-all ease-in "
+          </Box>
+          <Box
+            color={pathname.includes("trash") ? "red" : ""}
+            as={Link}
             href={"/trash"}
+            className={
+              "flex cursor-pointer justify-between items-center py-4 text-xl transition-all ease-in "
+            }
           >
             {!closed && <span>Trash</span>}
-
             <span className="px-2">
               <BsTrashFill />
             </span>
-          </Link>
+          </Box>
         </ul>
         <div className="flex flex-col justify-center items-center dark:text-white py-2 text-black transition-all duration-300 min-w-fit sticky top-96 text-2xl"></div>
         <div className="flex justify-between gap-9 absolute bottom-0">
@@ -123,12 +145,13 @@ export default function MySidebar({ ws }: { ws: any[] }) {
         </div>
         <div
           onClick={() => setClosed(!closed)}
-          className="hover:bg-cyan-400 w-fit p-2 rounded-full duration-300 transition-all"
+          className="hover:bg-cyan-400 w-fit p-2 rounded-full duration-300 transition-all "
         >
           {" "}
           <MdKeyboardDoubleArrowLeft
-            className={`${closed ? "rotate-180" : ""
-              } duration-300 transition-all`}
+            className={`${
+              closed ? "rotate-180" : ""
+            } duration-300 transition-all`}
           />
         </div>
 

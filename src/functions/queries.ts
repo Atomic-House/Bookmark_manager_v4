@@ -118,3 +118,40 @@ export function useFetchTrash(category: string) {
     refetch,
   };
 }
+export function useFetchInbox(wsId: string) {
+  const {
+    data,
+    isError,
+    isStale,
+    isPaused,
+    isSuccess,
+    isFetching,
+    error,
+    isLoading,
+    isLoadingError,
+    refetch,
+  } = useQuery({
+    queryKey: [wsId],
+    queryFn: async () => {
+      const data = await fetch(`/api/data/inbox/${wsId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      return await data.json();
+    },
+  });
+  return {
+    data,
+    isError,
+    isStale,
+    isPaused,
+    isSuccess,
+    isFetching,
+    isLoading,
+    isLoadingError,
+    error,
+    refetch,
+  };
+}

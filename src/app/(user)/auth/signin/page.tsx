@@ -13,9 +13,11 @@ export default function Page() {
   const { data: session } = useSession();
   const [email, setEmail] = useState("");
   if (session) {
-    redirect("/home/board/inbox");
+    redirect("/home");
   }
-  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e: FormEvent) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (
+    e: FormEvent,
+  ) => {
     e.preventDefault();
     await signIn("email", {
       email,
@@ -61,7 +63,12 @@ export default function Page() {
             {" "}
             Made in Atomic House
           </Link>
-          <Image src={colorMode === "light" ? Svg1 : Svg2} alt="logo" width={30} height={30} />
+          <Image
+            src={colorMode === "light" ? Svg1 : Svg2}
+            alt="logo"
+            width={30}
+            height={30}
+          />
         </div>
       </div>
     </div>

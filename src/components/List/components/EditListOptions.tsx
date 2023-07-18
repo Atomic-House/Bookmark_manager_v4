@@ -9,14 +9,11 @@ import {
   MenuOptionGroup,
   MenuDivider,
   Button,
+  Spinner
 } from "@chakra-ui/react";
 import DialogModal from "@/components/Modal";
-import {
-  BsUpload,
-  BsCalendar4Event,
-  BsTrash3,
-  BsThreeDotsVertical,
-} from "react-icons/bs";
+import { useChangeColor } from "@/functions/mutations";
+import { BsUpload, BsCalendar4Event, BsTrash3, BsThreeDotsVertical } from "react-icons/bs";
 import { PiShare } from "react-icons/pi";
 import { BiAlarmSnooze, BiDuplicate, BiPencil } from "react-icons/bi";
 import { AiOutlineCi, AiOutlineStar } from "react-icons/ai";
@@ -51,20 +48,23 @@ export default function EditListOptions({
   onClickDelete,
   isSuccess,
   isLoading,
+  id,
 }: {
   onClickDelete: MouseEventHandler<HTMLButtonElement>;
   isLoading: boolean;
   isSuccess: boolean;
+  id: string;
 }) {
   const { setListColor } = useContext(ListColorContext);
+  const {
+    mutateAsync: changeColor,
+    isLoading: isChangeColorLoading,
+    isError: isChangeColorError,
+    error: changeColorError,
+  } = useChangeColor();
   return (
     <Menu closeOnSelect={false}>
-      <MenuButton
-        as={Button}
-        w={"fit-content"}
-        colorScheme="blue"
-        variant={"unstyled"}
-      >
+      <MenuButton as={Button} w={"fit-content"} colorScheme="blue" variant={"unstyled"}>
         <BsThreeDotsVertical />
       </MenuButton>
       <MenuList>
@@ -121,10 +121,13 @@ export default function EditListOptions({
         <MenuOptionGroup>
           <div className="flex justify-center font-bold">List color</div>
           <div className="grid grid-cols-5 gap-2 place-items-center m-2">
-            {colors.map((color) => (
+            {colors.map((color, index) => (
               <MenuItemOption
-                onClick={() => setListColor(color)}
-                key={color}
+                onClick={() => {
+                  changeColor({ id, color });
+                  setListColor(color);
+                }}
+                key={index}
                 p={2}
                 value={color}
                 bg={color}

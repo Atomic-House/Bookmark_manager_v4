@@ -11,6 +11,7 @@ export async function GET(req: NextRequest) {
     },
     include: {
       boards: true,
+      inbox: true,
     },
   });
 

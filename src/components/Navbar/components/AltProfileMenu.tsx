@@ -22,6 +22,7 @@ import {
 import { LiaPuzzlePieceSolid } from "react-icons/lia";
 import { BiHelpCircle, BiTrash } from "react-icons/bi";
 import { FiLogOut } from "react-icons/fi";
+import DialogModal from "@/components/Modal";
 export default function ProfileMenu({
   display,
   image,
@@ -72,10 +73,14 @@ export default function ProfileMenu({
             <LiaPuzzlePieceSolid />
             Add browser extension
           </MenuItem>
-          <MenuItem className="flex gap-2">
-            <BiTrash />
-            Delete this workspace
-          </MenuItem>
+          <DialogModal
+            desc={"Delete this Workspace"}
+            type="menu"
+            func={mutateAsync}
+            confirmation={`Are you sure you want to delete this workspace?`}
+            isSuccess={isSuccess}
+            isLoading={isLoading}
+          />
         </MenuGroup>
 
         <MenuDivider />

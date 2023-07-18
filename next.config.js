@@ -24,13 +24,6 @@ const nextConfig = {
       },
     ],
   },
-  experimental: {
-    appDir: true,
-  },
-  reactStrictMode: true,
-  eslint: {
-    dirs: ["src"],
-  },
 };
 
 module.exports = nextConfig;

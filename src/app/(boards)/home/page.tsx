@@ -2,12 +2,13 @@
 import { Spinner } from "@chakra-ui/react";
 import { useState } from "react";
 import AddClass from "@/components/Create/create";
-import { useMutations } from "@/functions/mutations";
+import { useAddTabsToInbox, useMutations } from "@/functions/mutations";
 import { useFetchData } from "@/functions/queries";
 import UserTabs from "@/components/Tabs";
+import { useAppSelector } from "@/store/hooks";
 export default function Page({ params }: { params: { id: string } }) {
   const [name, setName] = useState("");
-
+  const inboxId = useAppSelector((state) => state.workspace.inboxId);
   const id = params.id;
   const {
     mutateAsync: createTab,
@@ -15,7 +16,7 @@ export default function Page({ params }: { params: { id: string } }) {
     isSuccess,
     isError: isCreateTabError,
     error: createTabError,
-  } = useMutations("create tabs", "tabs", name, "", "", id, "POST");
+  } = useAddTabsToInbox(inboxId, name);
   const {
     data: tabs,
     isLoading: isTabsLoading,
@@ -23,7 +24,7 @@ export default function Page({ params }: { params: { id: string } }) {
     error: tabsError,
     isSuccess: isTabSuccess,
     isStale: isTabStale,
-  } = useFetchData("tabs", id, false);
+  } = useFetchData("inbox", id, false);
   //Loading state spinner
   if (isTabsLoading) {
     return <Spinner />;

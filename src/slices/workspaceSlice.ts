@@ -1,3 +1,4 @@
+import { Inbox } from "@prisma/client";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 const initialState: { array: any[]; id: string; inboxId: string } = {
   array: [],

@@ -5,7 +5,12 @@ import { Listbox, Transition } from "@headlessui/react";
 import { AiFillCheckCircle, AiOutlineSelect } from "react-icons/ai";
 import { HiChevronUpDown } from "react-icons/hi2";
 import { useAppDispatch } from "@/store/hooks";
-import { setArray, setId } from "@/slices/workspaceSlice";
+import { setArray, setId, setInboxId } from "@/slices/workspaceSlice";
+import { Board, Inbox, Workspace } from "@prisma/client";
+interface Ws extends Workspace {
+  boards: Board[];
+  inbox: Inbox;
+}
 export default function Select({
   collapsed,
   ws: workspaces,
@@ -14,11 +19,7 @@ export default function Select({
   ws: any[];
 }) {
   const dispatch = useAppDispatch();
-  const [selected, setSelected] = useState<{
-    name: string;
-    id: string;
-    boards: any[];
-  }>(
+  const [selected, setSelected] = useState<Ws>(
     workspaces[0] || {
       name: "Select Workspace",
       id: "heloasjfldfsj",
@@ -28,7 +29,9 @@ export default function Select({
   useEffect(() => {
     dispatch(setArray(selected?.boards));
     dispatch(setId(selected?.id));
+    dispatch(setInboxId(selected?.inbox?.id));
   }, [selected, dispatch]);
+  console.log(selected);
 
   return (
     <Listbox value={selected} onChange={setSelected}>
