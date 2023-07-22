@@ -4,16 +4,16 @@ import { UploadButton as BgUpload } from "@/utils/bgUpload";
 
 import "@uploadthing/react/styles.css";
 import {
+  Avatar,
+  Button,
   Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Avatar,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   useDisclosure,
-  Button,
 } from "@chakra-ui/react";
 import { Dispatch, SetStateAction } from "react";
 export default function UploadImage({
@@ -24,23 +24,23 @@ export default function UploadImage({
   image: string | undefined | null;
   onClientUploadComplete?:
     | ((
-        res?:
-          | {
-              fileUrl: string;
-              fileKey: string;
-            }[]
-          | undefined,
-      ) => void)
+      res?:
+        | {
+          fileUrl: string;
+          fileKey: string;
+        }[]
+        | undefined,
+    ) => void)
     | undefined;
   onBgClientUploadComplete?:
     | ((
-        res?:
-          | {
-              fileUrl: string;
-              fileKey: string;
-            }[]
-          | undefined,
-      ) => void)
+      res?:
+        | {
+          fileUrl: string;
+          fileKey: string;
+        }[]
+        | undefined,
+    ) => void)
     | undefined;
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -61,6 +61,9 @@ export default function UploadImage({
           <ModalHeader>Upload Image</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
+            <div className="flex justify-center m-2">
+              Update Profile
+            </div>
             <UploadButton
               endpoint="imageUploader"
               onUploadError={(error: Error) => {
@@ -69,7 +72,11 @@ export default function UploadImage({
               }}
               onClientUploadComplete={onClientUploadComplete}
             />
-            {/* <BgUpload
+
+            <div className="flex justify-center  m-2">
+              Update Background
+            </div>
+            <UploadButton
               endpoint="bgUpload"
               onUploadError={(error: Error) => {
                 console.log("error");
@@ -77,7 +84,6 @@ export default function UploadImage({
               }}
               onClientUploadComplete={onBgClientUploadComplete}
             />
-            */}
           </ModalBody>
 
           <ModalFooter>

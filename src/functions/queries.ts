@@ -1,6 +1,39 @@
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-
+export function useGetUser() {
+  const { data: session } = useSession();
+  const {
+    data,
+    isError,
+    isStale,
+    isPaused,
+    isFetched,
+    isLoading,
+    isSuccess,
+    refetch,
+  } = useQuery({
+    queryKey: ["user", session?.user?.email],
+    queryFn: async () => {
+      const data = await fetch("/api/data/user", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      return await data.json();
+    },
+  });
+  return {
+    data,
+    isError,
+    isStale,
+    isPaused,
+    isFetched,
+    isLoading,
+    isSuccess,
+    refetch,
+  }
+}
 export function useFetchWorkspace() {
   const {
     data: workspace,

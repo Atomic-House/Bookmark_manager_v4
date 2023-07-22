@@ -70,7 +70,7 @@ export default function MySidebar({ ws }: { ws: any[] }) {
         <Link
           href={`/home`}
           passHref
-          className={`flex bg-blue-500 dark:bg-blue-800  dark:text-white justify-center items-center py-[60px] flex-col transition-all text-xl font-bold duration-300 $`}
+          className={`flex text-blue-700  dark:text-white justify-center items-center py-[60px] flex-col transition-all text-xl font-bold duration-300 $`}
         >
           <Image src={Svg1} alt="atomic house logo" width={30} height={30} />
           {!closed && (

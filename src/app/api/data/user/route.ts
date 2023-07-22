@@ -19,3 +19,16 @@ export async function POST(req: Request) {
   });
   return NextResponse.json({ user: session.user, data });
 }
+export async function GET(req: Request) {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    return NextResponse.json({ session: "not authenticated" });
+  }
+  const data = await prisma.user.findFirst({
+    where: {
+      email: session.user?.email!,
+    },
+  });
+  return NextResponse.json({  ...data });
+
+}

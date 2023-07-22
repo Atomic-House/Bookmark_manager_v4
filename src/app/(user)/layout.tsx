@@ -1,20 +1,23 @@
 import Providers from "../providers";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
-import Head from "next/head";
-export const metadata = {
+export const metadata: Metadata = {
   title: "Login or Signup",
   description: "Created by Mir Saheb Ali",
   icons: {
- icon: '/favicon.ico'   
-  }
+    icon: "/favicon.ico",
+  },
 };
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+const inter = Inter({ subsets: ["latin"] });
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
-      <Head>
-<link rel="icon" href="/favicon.ico" type="image/png" sizes="32x32" />
-      </Head>
-      <body>
+      <body className={inter.className}>
         <Providers>{children}</Providers>
       </body>
     </html>

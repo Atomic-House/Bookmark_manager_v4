@@ -1,5 +1,5 @@
 "use client";
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import Profile from "@/components/Profile";
 export default function Page() {
   return (

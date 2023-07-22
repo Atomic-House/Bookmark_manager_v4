@@ -112,6 +112,7 @@ model List {
   isDeleted Boolean    @default(false)
   email     String?
   isPublic  Boolean    @default(false)
+  emoji     String?
   userId    String?
   tabId     String?
   color     String?    @default("slate")

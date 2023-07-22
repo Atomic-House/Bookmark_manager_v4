@@ -11,8 +11,8 @@ import {
 import { useState } from "react";
 import AddClass from "../Create/create";
 import { useFetchData } from "@/functions/queries";
-import { TabsInterface } from "@/types";
 import PanelTab from "./components/Panels";
+import { TabWithLists } from "@/types";
 const style = { className: "flex justify-center items-center" };
 export default function UserTabs({
   tabs,
@@ -27,7 +27,7 @@ export default function UserTabs({
 }: {
   variant: "unstyled" | "outline";
   id: string;
-  tabs: TabsInterface[];
+  tabs: TabWithLists[];
   isTabsLoading: boolean;
   isTabSuccess: boolean;
   isTabStale: boolean;
@@ -60,13 +60,13 @@ export default function UserTabs({
     "POST",
   );
   if (isError || isTabsError || isCreateListError) {
-    console.error(error, createListError);
+    console.error(error || createListError);
   }
   if (isTabSuccess && isTabStale) {
     return (
       <Tabs variant={variant} key={id}>
         <TabList className="flex gap-3 justify-between w-full ">
-          {tabs.map((tab: TabsInterface) => (
+          {tabs?.map((tab:TabWithLists) => (
             <Tab className="m-2" key={tab.id}>
               {tab.name}
             </Tab>
@@ -91,8 +91,8 @@ export default function UserTabs({
           borderRadius="1px"
         />
         <TabPanels>
-          {tabs.map((tab: TabsInterface) => (
-            <PanelTab id={tab.id} key={tab.id} boardId={id} />
+          {tabs?.map((tab:TabWithLists) => (
+            <PanelTab key={tab.id} {...tab}/>
           ))}
         </TabPanels>
       </Tabs>

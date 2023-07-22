@@ -28,15 +28,14 @@ export const ourFileRouter = {
       });
       console.log("metadata", file.url);
     }),
-} satisfies FileRouter;
-export const bgFileRouter = {
-  bgUpload: f({ image: { maxFileSize: "4MB" } })
-    .middleware(async (req) => {
-      const user = await auth();
-      if (!user) throw new Error("Unauthorized");
+  bgUpload: f({
+    image: { maxFileSize: "2MB" },
+  }).middleware(async (req) => {
+    const user = await auth();
+    if (!user) throw new Error("Unauthorized");
 
-      return { userEmail: user.user?.email };
-    })
+    return { userEmail: user.user?.email };
+  })
     .onUploadComplete(async ({ metadata, file }) => {
       console.log("metadata", metadata.userEmail);
       await prisma.user.update({
@@ -44,12 +43,12 @@ export const bgFileRouter = {
           email: metadata.userEmail!,
         },
         data: {
-          background: file.url!,
+          background: file.url,
         },
       });
       console.log("metadata", file.url);
     }),
 } satisfies FileRouter;
+
 export type OurFileRouter = typeof ourFileRouter;
 
-export type BgFileRouter = typeof bgFileRouter;

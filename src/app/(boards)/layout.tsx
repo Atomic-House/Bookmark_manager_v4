@@ -5,15 +5,14 @@ import Navbar from "@/components/Navbar";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
+import type { Metadata } from "next";
 import NextTopLoader from "nextjs-toploader";
-import store from "@/store/store";
-import { setImage } from "@/slices/userSlice";
-export const metadata = {
+import { Inter } from "next/font/google";
+const inter = Inter({ subsets: ["latin"] });
+export const metadata: Metadata = {
   title: "Bookmark Manager",
   description: "Created by Mir Saheb Ali",
-  icons: {
-    icon: "/favicon.ico",
-  },
+  icons: { icon: "/favicon.ico" },
 };
 export default async function RootLayout({
   children,
@@ -24,10 +23,7 @@ export default async function RootLayout({
   if (!session) redirect("/auth/signin");
   return (
     <html lang="en">
-      <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-      </head>
-      <body>
+      <body className={inter.className}>
         <Providers>
           <Sidebar>
             <NextTopLoader />

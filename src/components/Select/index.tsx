@@ -31,7 +31,6 @@ export default function Select({
     dispatch(setId(selected?.id));
     dispatch(setInboxId(selected?.inbox?.id));
   }, [selected, dispatch]);
-  console.log(selected);
 
   return (
     <Listbox value={selected} onChange={setSelected}>

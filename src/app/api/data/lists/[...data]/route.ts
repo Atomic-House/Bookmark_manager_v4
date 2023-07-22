@@ -8,6 +8,9 @@ export async function GET(
 ) {
   const [id] = params.data;
   const lists = await prisma.list.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
     where: {
       tabId: id,
       isDeleted: false,
@@ -49,7 +52,7 @@ export async function PATCH(
   { params }: { params: { data: string[] } },
 ) {
   const [id] = params.data;
-  const body: { name: string } = await req.json();
+  const body: { name: string; emoji: string; color: string } = await req.json();
   const lists = await prisma.list.update({
     where: {
       id: id,

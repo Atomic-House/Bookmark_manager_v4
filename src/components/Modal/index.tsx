@@ -1,16 +1,16 @@
 "use client";
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
   Button,
   MenuItem,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Spinner,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { MouseEventHandler } from "react";
 
@@ -30,14 +30,13 @@ export default function DialogModal({
   type: "menu" | "button";
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const component =
-    type === "menu" ? (
+  const component = type === "menu"
+    ? (
       <MenuItem onClick={onOpen} className="flex gap-2">
         {desc}
       </MenuItem>
-    ) : (
-      <Button onClick={onOpen}>{desc}</Button>
-    );
+    )
+    : <Button onClick={onOpen}>{desc}</Button>;
   return (
     <>
       {component}

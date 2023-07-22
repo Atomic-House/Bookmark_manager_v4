@@ -32,7 +32,7 @@ export default function Page({ params }: { params: { id: string } }) {
   //return error on screen
   if (isTabsError) console.error(tabsError);
   if (isTabSuccess && isTabStale) {
-    if (tabs.length === 0) {
+    if (tabs?.length === 0) {
       return (
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           <div> Empty...</div>
