@@ -15,6 +15,7 @@ import { ListPrefContext, type ListPrefs } from "../context/ListPrefContext";
 import { Bookmark as BookmarkType } from "@prisma/client";
 interface ListsWithBookmarksWithPrefs extends ListsWithBookmarks {
   listPrefs?: ListPrefs;
+  
 }
 
 export default function List({

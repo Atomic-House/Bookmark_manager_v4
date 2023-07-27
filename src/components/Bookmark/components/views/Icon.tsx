@@ -9,14 +9,11 @@ export default function IconView({
   url,
   icon,
   favicon,
-  title,
   index,
   mutateAsync,
-  isLoading,
 }: Bookmark & {
   index: number;
   icon: string;
-  isLoading: boolean;
   mutateAsync: any;
 }) {
   return (

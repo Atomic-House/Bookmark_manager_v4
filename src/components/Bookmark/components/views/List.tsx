@@ -14,11 +14,9 @@ export default function ListView({
   title,
   index,
   mutateAsync,
-  isLoading,
 }: Bookmark & {
   index: number;
   icon: string;
-  isLoading: boolean;
   mutateAsync: any;
 }) {
   return (
@@ -46,7 +44,6 @@ export default function ListView({
             <div className="flex items-center">
               {" "}
               <EditBookmarkOptions onClickDelete={mutateAsync} />
-              {isLoading ? <Spinner /> : null}
             </div>
           </div>
         )}

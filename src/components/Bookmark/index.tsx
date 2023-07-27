@@ -27,9 +27,6 @@ export default function Bookmark({
   ...bookmarkProps
 }: Bookmark & {
   index: number;
-  icon: string;
-  isLoading: boolean;
-  mutateAsync: any;
 }) {
   const { listPrefs } = useContext(ListPrefContext);
   const { mutateAsync, isError, error, isLoading, isSuccess } = useMutations(
@@ -53,6 +50,8 @@ export default function Bookmark({
   if (listPrefs?.view === "icon") {
     return (
       <IconView
+        mutateAsync={mutateAsync}
+        icon={icon}
         description={description}
         name={name}
         title={title}
@@ -68,6 +67,9 @@ export default function Bookmark({
   if (listPrefs?.view === "list") {
     return (
       <ListView
+        icon={icon}
+
+        mutateAsync={mutateAsync}
         description={description}
         name={name}
         title={title}
