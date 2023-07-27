@@ -29,6 +29,7 @@ export default function AddClass({
   onChange,
   isLoading,
   add_edit,
+  list
 }: {
   category: string;
   isLoading: boolean;
@@ -38,6 +39,7 @@ export default function AddClass({
   onSubmit: FormEventHandler<HTMLFormElement>;
   onChange: ChangeEventHandler<HTMLInputElement>;
   add_edit: string | undefined | null;
+    list?:React.ReactNode
 }) {
   const initRef = useRef();
 

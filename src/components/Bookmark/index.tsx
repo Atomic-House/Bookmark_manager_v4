@@ -1,20 +1,11 @@
 "use client";
-import Link from "next/link";
-import Image from "next/image";
 import { useMutations } from "@/functions/mutations";
-import { Spinner } from "@chakra-ui/react";
-import EditBookmarkOptions from "./components/EditBookmarkOptions";
-import { Draggable } from "react-beautiful-dnd";
 import { Bookmark } from "@prisma/client";
-import { redirect } from "next/navigation";
-import { Image as LinkImage } from "@chakra-ui/react";
 import { useContext } from "react";
 import { ListPrefContext } from "../context/ListPrefContext";
 import IconView from "./components/views/Icon";
 import ListView from "./components/views/List";
-interface BookmarkWithIndex extends Bookmark {
-  index: number;
-}
+
 export default function Bookmark({
   name,
   id,
@@ -68,7 +59,6 @@ export default function Bookmark({
     return (
       <ListView
         icon={icon}
-
         mutateAsync={mutateAsync}
         description={description}
         name={name}

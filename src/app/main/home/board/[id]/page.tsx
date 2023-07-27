@@ -24,7 +24,11 @@ export default function Page({ params }: { params: { id: string } }) {
     error: tabsError,
     isSuccess: isTabSuccess,
     isStale: isTabStale,
-  } = useFetchData<TabWithLists[] & Workspace & {workspaceId:string}>("tabs", id, false);
+  } = useFetchData<TabWithLists[] & Workspace & { workspaceId: string }>(
+    "tabs",
+    id,
+    false,
+  );
   //Loading state spinner
   if (isTabsLoading) {
     return <Spinner />;
@@ -35,7 +39,7 @@ export default function Page({ params }: { params: { id: string } }) {
     if (tabs?.length === 0) {
       return (
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <div> Empty...</div>
+          <div>Empty...</div>
           <AddClass
             add_edit={"Add a"}
             isLoading={isCreateTabLoading}

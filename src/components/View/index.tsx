@@ -61,7 +61,11 @@ export default function Views() {
         </MenuGroup>
         <MenuDivider />
         <MenuGroup>
-          <RadioGroup onChange={setSelected} value={selected}>
+          <RadioGroup
+            onChange={setSelected}
+            defaultValue={"list"}
+            value={selected}
+          >
             {views.map((view, index) => {
               return (
                 <div

@@ -4,19 +4,17 @@ import { FcList } from "@react-icons/all-files/fc/FcList";
 import {
   Button,
   Popover,
-  PopoverAnchor,
   PopoverArrow,
   PopoverBody,
   PopoverCloseButton,
   PopoverContent,
-  PopoverFooter,
   PopoverHeader,
   PopoverTrigger,
   Spinner,
 } from "@chakra-ui/react";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { ListEmojiContext } from "../context/ListEmojiContext";
-import { useAddEmojiToList, useMutations } from "@/functions/mutations";
+import { useAddEmojiToList } from "@/functions/mutations";
 import { ListsWithBookmarks } from "@/types";
 const Picker = dynamic(
   () => {
@@ -24,7 +22,6 @@ const Picker = dynamic(
   },
   { ssr: false },
 );
-
 export default function EmojiSelect({
   id,
   name,
@@ -33,12 +30,12 @@ export default function EmojiSelect({
   ...listProps
 }: ListsWithBookmarks) {
   const { listEmoji, setListEmoji } = useContext(ListEmojiContext);
-  const { mutateAsync, isLoading, isSuccess } = useAddEmojiToList(id, {
+  const { mutateAsync, isLoading } = useAddEmojiToList(id, {
     name,
     color,
     emoji: listEmoji,
   });
-  
+
   return (
     <Popover isLazy>
       <PopoverTrigger>
