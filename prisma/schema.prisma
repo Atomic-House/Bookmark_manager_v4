@@ -35,20 +35,28 @@ model Session {
 }
 
 model User {
-  id            String      @id @default(cuid())
-  name          String?
-  email         String?     @unique
-  emailVerified DateTime?
-  image         String?
+  id              String           @id @default(cuid())
+  name            String?
+  email           String?          @unique
+  emailVerified   DateTime?
+  image           String?
+  accounts        Account[]
+  lists           List[]
+  sessions        Session[]
+  Tab             Tab[]
+  workspaces      Workspace[]
+  UserPreferences UserPreferences?
+}
+
+model UserPreferences {
+  listType      String?
   defaultWs     String?
-  isPremiumUser Boolean     @default(false)
-  userName      String?     @unique
+  isPremiumUser Boolean @default(false)
+  userName      String? @unique
   background    String?
-  accounts      Account[]
-  lists         List[]
-  sessions      Session[]
-  Tab           Tab[]
-  workspaces    Workspace[]
+  user          User    @relation(fields: [userId], references: [id])
+  userId        String  @unique
+  @@id([userId])
 }
 
 model VerificationToken {
@@ -91,19 +99,56 @@ model Board {
   tabs      Tab[]
 }
 
+enum Sort {
+  A_Z
+  Z_A
+  NEWEST
+  OLDEST
+}
+
+enum View {
+  LIST
+  CARD
+  ICON
+}
+
+enum Link {
+  MOST
+  BROKEN
+  DUPLICATE
+}
+
+model Filter {
+  id        String     @id @default(cuid())
+  tags      String[]
+  link      Link?
+  listPrefs ListPrefs?
+}
+
+model ListPrefs {
+  id       String  @id @default(cuid())
+  view     View?
+  sort     Sort?
+  filter   Filter? @relation(fields: [filterId], references: [id])
+  filterId String? @unique
+  tab      Tab?
+}
+
 model Tab {
-  id        String  @id @default(cuid())
-  name      String
-  isDeleted Boolean @default(false)
-  boardId   String?
-  email     String?
-  isPublic  Boolean @default(false)
-  userId    String?
-  inboxId   String?
-  lists     List[]
-  board     Board?  @relation(fields: [boardId], references: [id])
-  Inbox     Inbox?  @relation(fields: [inboxId], references: [id])
-  User      User?   @relation(fields: [userId], references: [id])
+  id         String     @id @default(cuid())
+  name       String
+  isDeleted  Boolean    @default(false)
+  boardId    String?
+  email      String?
+  isPublic   Boolean    @default(false)
+  userId     String?
+  inboxId    String?
+  lists      List[]
+  board      Board?     @relation(fields: [boardId], references: [id])
+  Inbox      Inbox?     @relation(fields: [inboxId], references: [id])
+  User       User?      @relation(fields: [userId], references: [id])
+  listPrefId String?    @unique
+  listPrefs  ListPrefs? @relation(fields: [listPrefId], references: [id])
 }
 
 model List {
@@ -115,7 +160,8 @@ model List {
   emoji     String?
   userId    String?
   tabId     String?
-  color     String?    @default("slate")
+  tags      String[]
+  color     String?    @default("slategray")
   createdAt DateTime?  @default(now())
   bookmarks Bookmark[]
   tab       Tab?       @relation(fields: [tabId], references: [id], onDelete: Cascade)

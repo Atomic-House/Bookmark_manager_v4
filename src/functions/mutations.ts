@@ -10,6 +10,8 @@ export const useMutations = (
   color: string,
   additionalParams: string | null | undefined,
   fetchType: "GET" | "POST" | "PUT" | "DELETE" | "PATCH",
+  parent?: string,
+  parentId?: string,
 ) => {
   const queryClient = useQueryClient();
   const {
@@ -34,6 +36,9 @@ export const useMutations = (
     },
     onSuccess: () => {
       queryClient.invalidateQueries([category]);
+      if (parent) {
+        queryClient.invalidateQueries([parent, parentId]);
+      }
     },
   });
 
@@ -55,16 +60,21 @@ export function useDnd(id: string) {
   const { mutateAsync, mutate, isSuccess, isError, isLoading, error, reset } =
     useMutation({
       mutationKey: ["usednd", id],
-      mutationFn: async ({source, destination, bookmarkId}: {source: string, destination: string, bookmarkId: string}) => {
-        await fetch(
-          `/api/data/dnd/${source}/${destination}/${bookmarkId}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
+      mutationFn: async ({
+        source,
+        destination,
+        bookmarkId,
+      }: {
+        source: string;
+        destination: string;
+        bookmarkId: string;
+      }) => {
+        await fetch(`/api/data/dnd/${source}/${destination}/${bookmarkId}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
           },
-        );
+        });
       },
 
       onSuccess: () => {
@@ -81,7 +91,6 @@ export function useDnd(id: string) {
     reset,
   };
 }
-export function setUserData(name: string, username: string) {}
 export function useRestoreTrash(category: string, lId: string) {
   const queryClient = useQueryClient();
   const session = useSession();
@@ -135,7 +144,7 @@ export function useChangeColor() {
 }
 export function useAddEmojiToList(
   id: string,
-  { name, emoji, color }: { name: string; emoji: string; color: string },
+  { name, emoji, color }: { name: string; emoji: string; color: string | null },
 ) {
   const { mutateAsync, data, isError, isSuccess, isLoading, error } =
     useMutation({

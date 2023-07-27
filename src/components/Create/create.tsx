@@ -1,18 +1,24 @@
 "use client";
 
 import {
+  Button,
+  Input,
   Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeader,
   PopoverBody,
   PopoverCloseButton,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTrigger,
   Portal,
-  Input,
-  Button,
   Spinner,
 } from "@chakra-ui/react";
-import { ChangeEventHandler, FormEventHandler, HTMLAttributes, useRef, useState } from "react";
+import {
+  ChangeEventHandler,
+  FormEventHandler,
+  HTMLAttributes,
+  useRef,
+  useState,
+} from "react";
 
 export default function AddClass({
   category,
@@ -28,7 +34,7 @@ export default function AddClass({
   isLoading: boolean;
   placeholder: string;
   positionStyles: HTMLAttributes<HTMLDivElement>["className"];
-  buttonStyles: HTMLAttributes<HTMLButtonElement>["className"]
+  buttonStyles: HTMLAttributes<HTMLButtonElement>["className"];
   onSubmit: FormEventHandler<HTMLFormElement>;
   onChange: ChangeEventHandler<HTMLInputElement>;
   add_edit: string | undefined | null;
@@ -37,11 +43,17 @@ export default function AddClass({
 
   return (
     <div className={positionStyles}>
-      <Popover closeOnBlur={false} placement="bottom" initialFocusRef={initRef.current}>
+      <Popover
+        closeOnBlur={false}
+        placement="bottom"
+        initialFocusRef={initRef.current}
+      >
         {({ isOpen, onClose }) => (
           <>
             <PopoverTrigger>
-              <button className={` ${buttonStyles} w-fit duration-300 transition-all`}>
+              <button
+                className={` ${buttonStyles} w-fit duration-300 transition-all`}
+              >
                 {placeholder}
               </button>
             </PopoverTrigger>
@@ -49,7 +61,7 @@ export default function AddClass({
               <PopoverContent>
                 <PopoverHeader>
                   {add_edit}
-                  {category}
+                  {category.slice(0, category.length - 1)}
                 </PopoverHeader>
                 <PopoverCloseButton />
                 <PopoverBody>
@@ -60,14 +72,26 @@ export default function AddClass({
                       id="name"
                       placeholder={category + " name"}
                       onChange={onChange}
+                      my={2}
+                      p={2}
+                      variant={"unstyled"}
                     />
-                    <Button mt={4} mx={2} colorScheme="blue" ref={initRef.current} type="submit">
+                    <Button
+                      mt={4}
+                      mx={2}
+                      px={9}
+                      bg="#422AFB"
+                      textColor={"white"}
+                      ref={initRef.current}
+                      type="submit"
+                    >
                       {isLoading ? <Spinner /> : ""} Add
                     </Button>
                     <Button
                       type="button"
                       mt={4}
-                      colorScheme="blue"
+                      textColor={"black"}
+                      colorScheme="white"
                       onClick={onClose}
                       ref={initRef.current}
                     >

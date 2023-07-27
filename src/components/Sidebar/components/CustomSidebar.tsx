@@ -1,15 +1,13 @@
 "use client";
-import {
-  MdKeyboardDoubleArrowLeft,
-  MdOutlineDashboard,
-  MdOutlineInbox,
-} from "react-icons/md";
+import { MdKeyboardArrowLeft } from "@react-icons/all-files/md/MdKeyboardArrowLeft";
+import { MdDashboard } from "@react-icons/all-files/md/MdDashboard";
+import { MdInbox } from "@react-icons/all-files/md/MdInbox";
 import Link from "next/link";
 import Image from "next/image";
 import Svg1 from "@/../public/Svg-01.svg";
 import { useState } from "react";
 import SwitchButton from "@/components/ThemeSwitch";
-import { BsTrashFill } from "react-icons/bs";
+import { BsTrashFill } from "@react-icons/all-files/bs/BsTrashFill";
 import Select from "@/components/Select";
 import AddClass from "@/components/Create/create";
 import MyBoards from "./AltBoards";
@@ -25,9 +23,8 @@ export default function MySidebar({ ws }: { ws: any[] }) {
   const wsId = useAppSelector((state) => state.workspace.id);
   const pathname = usePathname();
   const router = useRouter();
-  const boardId = pathname.replace("/home/board/", "");
+  const boardId = pathname.replace("/main/home/board/", "");
   const inbox = useAppSelector((state) => state.workspace.inboxId);
-  console.log(inbox);
 
   const { mutateAsync, isLoading } = useMutations(
     "create workspace",
@@ -51,16 +48,13 @@ export default function MySidebar({ ws }: { ws: any[] }) {
     mutateAsync: deleteBoard,
     isLoading: isDeleteLoading,
     isSuccess: isDeleteSuccess,
-    error: deleteError,
-    isError: isDeleteError,
   } = useMutations("delete board", "boards", "", "", "", boardId, "PUT");
   if (isDeleteSuccess) {
-    router.push("/home");
+    router.push("/main/home");
   }
-  console.log(!pathname.includes("board") || !pathname.includes("trash"));
 
   return (
-    <div className="relative">
+    <div className="relative drop-shadow-lg">
       {" "}
       <div
         className={`h-screen ${
@@ -68,7 +62,7 @@ export default function MySidebar({ ws }: { ws: any[] }) {
         } bg-white dark:bg-slate-900  flex flex-col transition-all duration-300 ease-in-out`}
       >
         <Link
-          href={`/home`}
+          href={`/main/home`}
           passHref
           className={`flex text-blue-700  dark:text-white justify-center items-center py-[60px] flex-col transition-all text-xl font-bold duration-300 $`}
         >
@@ -106,7 +100,7 @@ export default function MySidebar({ ws }: { ws: any[] }) {
           >
             {!closed && <MyBoards />}
             <span className="px-2 sticky">
-              <MdOutlineDashboard className="flex justify-center items-center sticky" />
+              <MdDashboard className="flex justify-center items-center sticky" />
             </span>
           </Box>
 
@@ -120,15 +114,15 @@ export default function MySidebar({ ws }: { ws: any[] }) {
               "flex justify-between items-center py-4 text-xl transition-all ease-in "
             }
           >
-            {!closed && <Link href={`/home`}>Inbox</Link>}
+            {!closed && <Link href={`/main/home`}>Inbox</Link>}
             <span className="px-2">
-              <MdOutlineInbox />
+              <MdInbox />
             </span>
           </Box>
           <Box
             color={pathname.includes("trash") ? "red" : ""}
             as={Link}
-            href={"/trash"}
+            href={"/main/trash"}
             className={
               "flex cursor-pointer justify-between items-center py-4 text-xl transition-all ease-in "
             }
@@ -148,7 +142,7 @@ export default function MySidebar({ ws }: { ws: any[] }) {
           className="hover:bg-cyan-400 w-fit p-2 rounded-full duration-300 transition-all "
         >
           {" "}
-          <MdKeyboardDoubleArrowLeft
+          <MdKeyboardArrowLeft
             className={`${
               closed ? "rotate-180" : ""
             } duration-300 transition-all`}

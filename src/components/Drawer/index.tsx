@@ -1,24 +1,23 @@
 "use client";
 import {
+  Button,
   Drawer,
   DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  useDisclosure,
-  Button,
-  useColorModeValue,
   useColorMode,
+  useColorModeValue,
+  useDisclosure,
 } from "@chakra-ui/react";
 import UserTabs from "../Tabs";
 import PopoverButton from "./components/Popover";
-import { GiHamburgerMenu } from "react-icons/gi";
+import { GiHamburgerMenu } from "@react-icons/all-files/gi/GiHamburgerMenu";
 import useWindowDimension from "@/hooks/window";
 import SwitchButton from "../ThemeSwitch";
 import Image from "next/image";
-import ProfileMenu from "../Navbar/components/ProfileMenu";
 import NavSearch from "../Search";
 import Svg1 from "@/../public/Svg-01.svg";
 import Svg2 from "@/../public/Svg-02.svg";
@@ -32,7 +31,13 @@ export default function DrawerMenu() {
     <div>
       <div onClick={onOpen}>
         <Image
-          src={session?.user?.image ? session.user.image : colorMode === "light" ? Svg1 : Svg2}
+          src={
+            session?.user?.image
+              ? session.user.image
+              : colorMode === "light"
+              ? Svg1
+              : Svg2
+          }
           alt="logo"
           className="rounded-full"
           width={30}
@@ -51,10 +56,10 @@ export default function DrawerMenu() {
           <DrawerHeader className="flex justify-between">
             <div>
               {" "}
-              <div>Hello {session?.user?.name?.substring(0, 7).concat("...")}!</div>
               <div>
-                <ProfileMenu display={<div>Account</div>} />
+                Hello {session?.user?.name?.substring(0, 7).concat("...")}!
               </div>
+              <div></div>
               <SwitchButton />
             </div>
             <div className="relative right-6">

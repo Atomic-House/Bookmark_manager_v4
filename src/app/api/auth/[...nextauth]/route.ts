@@ -17,14 +17,16 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   pages: {
-    signIn: "/auth/signin",
-    newUser: "/auth/signin",
+    signIn: "/user/auth/signin",
+    newUser: "/user/auth/signin",
   },
   callbacks: {
-    async jwt({ trigger, token, user }) {
-      if (trigger === "signUp") {
-        console.log("New user");
-        const defaultWorkspace = await prisma.user.update({
+    async session({ session, user, newSession }) {
+      const workspaceLength = await prisma.workspace.count({
+        where: { email: user.email },
+      });
+      if (workspaceLength === 0) {
+        await prisma.user.update({
           where: {
             email: user?.email!,
           },
@@ -34,28 +36,33 @@ export const authOptions: NextAuthOptions = {
                 {
                   email: user?.email!,
                   name: "Default",
+                  inbox: {
+                    create: {
+                      email: user?.email!,
+                      tabs: {
+                        create: [
+                          {
+                            name: "Tab",
+                            lists: {
+                              create: [
+                                {
+                                  name: "List",
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  },
                 },
               ],
             },
           },
         });
-        await prisma.workspace.update({
-          where: {
-            id: defaultWorkspace?.id,
-          },
-          data: {
-            boards: {
-              create: [
-                {
-                  name: "Inbox",
-                },
-              ],
-            },
-          },
-        });
-        return token;
+        return session;
       }
-      return token;
+      return session;
     },
   },
 };

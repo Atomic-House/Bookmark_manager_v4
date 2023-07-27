@@ -1,22 +1,27 @@
 "use client";
 import {
+  Button,
   Menu,
   MenuButton,
-  MenuList,
+  MenuDivider,
+  MenuGroup,
   MenuItem,
   MenuItemOption,
-  MenuGroup,
+  MenuList,
   MenuOptionGroup,
-  MenuDivider,
-  Button,
-  Spinner
+  Spinner,
 } from "@chakra-ui/react";
 import DialogModal from "@/components/Modal";
 import { useChangeColor } from "@/functions/mutations";
-import { BsUpload, BsCalendar4Event, BsTrash3, BsThreeDotsVertical } from "react-icons/bs";
-import { PiShare } from "react-icons/pi";
-import { BiAlarmSnooze, BiDuplicate, BiPencil } from "react-icons/bi";
-import { AiOutlineCi, AiOutlineStar } from "react-icons/ai";
+import { BsUpload } from "@react-icons/all-files/bs/BsUpload";
+import { BsThreeDotsVertical } from "@react-icons/all-files/bs/BsThreeDotsVertical";
+import { BsFillCalendarFill } from "@react-icons/all-files/bs/BsFillCalendarFill";
+import { BsTrash2 } from "@react-icons/all-files/bs/BsTrash2";
+import { BiAlarmSnooze } from "@react-icons/all-files/bi/BiAlarmSnooze";
+import { BiDuplicate } from "@react-icons/all-files/bi/BiDuplicate";
+import { BiPencil } from "@react-icons/all-files/bi/BiPencil";
+import { AiOutlineCi } from "@react-icons/all-files/ai/AiOutlineCi";
+import { AiOutlineStar } from "@react-icons/all-files/ai/AiOutlineStar";
 import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
 import { MouseEventHandler, useContext } from "react";
 import { ListColorContext } from "@/components/context/ListColorContext";
@@ -64,7 +69,12 @@ export default function EditListOptions({
   } = useChangeColor();
   return (
     <Menu closeOnSelect={false}>
-      <MenuButton as={Button} w={"fit-content"} colorScheme="blue" variant={"unstyled"}>
+      <MenuButton
+        as={Button}
+        w={"fit-content"}
+        colorScheme="blue"
+        variant={"unstyled"}
+      >
         <BsThreeDotsVertical />
       </MenuButton>
       <MenuList>
@@ -82,7 +92,7 @@ export default function EditListOptions({
             Add Snooze
           </MenuItem>
           <MenuItem className="flex gap-2">
-            <BsCalendar4Event />
+            <BsFillCalendarFill />
             Add Reminder
           </MenuItem>
         </MenuGroup>
@@ -110,7 +120,7 @@ export default function EditListOptions({
             confirmation={"Trash list?"}
             desc={
               <>
-                <BsTrash3 /> Move to trash
+                <BsTrash2 /> Move to trash
               </>
             }
             isLoading={isLoading}

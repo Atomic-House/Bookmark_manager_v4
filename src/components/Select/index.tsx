@@ -2,8 +2,9 @@
 //Select workspace component
 import { Fragment, useEffect, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
-import { AiFillCheckCircle, AiOutlineSelect } from "react-icons/ai";
-import { HiChevronUpDown } from "react-icons/hi2";
+import { AiFillCheckCircle } from "@react-icons/all-files/ai/AiFillCheckCircle";
+import { AiOutlineSelect } from "@react-icons/all-files/ai/AiOutlineSelect";
+import { HiChevronUp } from "@react-icons/all-files/hi/HiChevronUp";
 import { useAppDispatch } from "@/store/hooks";
 import { setArray, setId, setInboxId } from "@/slices/workspaceSlice";
 import { Board, Inbox, Workspace } from "@prisma/client";
@@ -87,10 +88,7 @@ export default function Select({
             {collapsed ? <AiOutlineSelect /> : selected?.name}
           </span>
           <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-            <HiChevronUpDown
-              className="h-5 w-5 text-gray-400"
-              aria-hidden="true"
-            />
+            <HiChevronUp className="h-5 w-5 text-gray-400" aria-hidden="true" />
           </span>
         </Listbox.Button>
       </div>

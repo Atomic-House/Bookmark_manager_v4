@@ -1,0 +1,45 @@
+import { Bookmark } from "@prisma/client";
+import { Draggable } from "react-beautiful-dnd";
+import Link from "next/link";
+import Image from "next/image";
+import EditBookmarkOptions from "../EditBookmarkOptions";
+export default function IconView({
+  id,
+  name,
+  url,
+  icon,
+  favicon,
+  title,
+  index,
+  mutateAsync,
+  isLoading,
+}: Bookmark & {
+  index: number;
+  icon: string;
+  isLoading: boolean;
+  mutateAsync: any;
+}) {
+  return (
+    <Draggable draggableId={id} index={index}>
+      {(provided, snapshot) => (
+        <div
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          className="flex justify-between items-center m-2 gap-3"
+        >
+          <Link href={url}>
+            <Image
+              src={favicon ? favicon : icon}
+              width={30}
+              alt={name!}
+              height={30}
+            />
+          </Link>
+
+          <EditBookmarkOptions onClickDelete={mutateAsync} />
+        </div>
+      )}
+    </Draggable>
+  );
+}

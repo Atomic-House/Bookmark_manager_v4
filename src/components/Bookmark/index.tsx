@@ -6,6 +6,12 @@ import { Spinner } from "@chakra-ui/react";
 import EditBookmarkOptions from "./components/EditBookmarkOptions";
 import { Draggable } from "react-beautiful-dnd";
 import { Bookmark } from "@prisma/client";
+import { redirect } from "next/navigation";
+import { Image as LinkImage } from "@chakra-ui/react";
+import { useContext } from "react";
+import { ListPrefContext } from "../context/ListPrefContext";
+import IconView from "./components/views/Icon";
+import ListView from "./components/views/List";
 interface BookmarkWithIndex extends Bookmark {
   index: number;
 }
@@ -17,7 +23,15 @@ export default function Bookmark({
   title,
   description,
   index,
-}: BookmarkWithIndex) {
+  createdAt,
+  ...bookmarkProps
+}: Bookmark & {
+  index: number;
+  icon: string;
+  isLoading: boolean;
+  mutateAsync: any;
+}) {
+  const { listPrefs } = useContext(ListPrefContext);
   const { mutateAsync, isError, error, isLoading, isSuccess } = useMutations(
     "delete bookmark",
     "bookmarks",
@@ -36,37 +50,34 @@ export default function Bookmark({
   const icon = `https://www.google.com/s2/favicons?domain=${
     new URL(url).hostname
   }&sz=256`;
-
-  return (
-    <>
-      <Draggable draggableId={id} index={index}>
-        {(provided) => (
-          <div
-            ref={provided.innerRef}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-            className={" flex justify-between items-center m-2 gap-3"}
-          >
-            <Image
-              src={favicon ? favicon : icon}
-              width={30}
-              alt={name!}
-              height={30}
-            />
-            <div className="  ">
-              {" "}
-              <Link href={url} target="_blank">
-                {name ? name : title ? title.slice(0, 9) + "..." : ""}
-              </Link>
-            </div>
-            <div className="flex items-center">
-              {" "}
-              <EditBookmarkOptions onClickDelete={mutateAsync} />
-              {isLoading ? <Spinner /> : null}
-            </div>
-          </div>
-        )}
-      </Draggable>
-    </>
-  );
+  if (listPrefs?.view === "icon") {
+    return (
+      <IconView
+        description={description}
+        name={name}
+        title={title}
+        url={url}
+        favicon={favicon}
+        index={index}
+        id={id}
+        createdAt={createdAt}
+        {...bookmarkProps}
+      />
+    );
+  }
+  if (listPrefs?.view === "list") {
+    return (
+      <ListView
+        description={description}
+        name={name}
+        title={title}
+        url={url}
+        favicon={favicon}
+        index={index}
+        id={id}
+        createdAt={createdAt}
+        {...bookmarkProps}
+      />
+    );
+  }
 }

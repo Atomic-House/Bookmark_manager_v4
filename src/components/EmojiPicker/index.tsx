@@ -1,6 +1,6 @@
 "use client";
 import dynamic from "next/dynamic";
-import { FcList } from "react-icons/fc";
+import { FcList } from "@react-icons/all-files/fc/FcList";
 import {
   Button,
   Popover,
@@ -17,6 +17,7 @@ import {
 import { useContext, useEffect } from "react";
 import { ListEmojiContext } from "../context/ListEmojiContext";
 import { useAddEmojiToList, useMutations } from "@/functions/mutations";
+import { ListsWithBookmarks } from "@/types";
 const Picker = dynamic(
   () => {
     return import("emoji-picker-react");
@@ -24,33 +25,36 @@ const Picker = dynamic(
   { ssr: false },
 );
 
-export default function EmojiSelect(
-  { id, name, color }: { id: string; name: string; color: string },
-) {
+export default function EmojiSelect({
+  id,
+  name,
+  color,
+  emoji,
+  ...listProps
+}: ListsWithBookmarks) {
   const { listEmoji, setListEmoji } = useContext(ListEmojiContext);
   const { mutateAsync, isLoading, isSuccess } = useAddEmojiToList(id, {
     name,
     color,
     emoji: listEmoji,
   });
-
+  
   return (
     <Popover isLazy>
       <PopoverTrigger>
         <Button variant={"unstyled"} fontSize={"2xl"}>
           <div className="relative flex justify-center ">
-         <div> {listEmoji ? listEmoji : <FcList />}
-         </div>
+            <div>{listEmoji ? listEmoji : emoji ? emoji : <FcList />}</div>
             <div className="absolute">
-          {isLoading?<Spinner opacity={0.5} /> : ""}
-          </div>
+              {isLoading ? <Spinner opacity={0.5} /> : ""}
+            </div>
           </div>
         </Button>
       </PopoverTrigger>
-      <PopoverContent>
+      <PopoverContent zIndex={20}>
         <PopoverArrow />
         <PopoverCloseButton />
-        <PopoverHeader>Confirmation!</PopoverHeader>
+        <PopoverHeader>Select Icon</PopoverHeader>
         <PopoverBody>
           <Picker
             lazyLoadEmojis

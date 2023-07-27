@@ -9,11 +9,11 @@ import {
   MenuDivider,
   Button,
 } from "@chakra-ui/react";
-import { AiFillSetting } from "react-icons/ai";
+import { AiFillSetting } from "@react-icons/all-files/ai/AiFillSetting";
 export default function Preferences() {
   return (
     <Menu closeOnSelect={false}>
-      <MenuButton as={Button}>
+      <MenuButton  as={Button} bg={"white"} _hover={{ bg: "white" }}>
         <AiFillSetting />
       </MenuButton>
       <MenuList minWidth="240px">

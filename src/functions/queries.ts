@@ -1,7 +1,12 @@
+import { User } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 export function useGetUser() {
   const { data: session } = useSession();
+  if (!session) {
+   redirect('/user/auth/signin'); 
+  }
   const {
     data,
     isError,
@@ -14,7 +19,7 @@ export function useGetUser() {
   } = useQuery({
     queryKey: ["user", session?.user?.email],
     queryFn: async () => {
-      const data = await fetch("/api/data/user", {
+      const data = await fetch("/api/data/user/read", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -32,7 +37,7 @@ export function useGetUser() {
     isLoading,
     isSuccess,
     refetch,
-  }
+  };
 }
 export function useFetchWorkspace() {
   const {
@@ -71,11 +76,13 @@ export function useFetchWorkspace() {
     error,
   };
 }
-export function useFetchData(
+export function useFetchData<T>(
   category: string,
-  parentId: string,
-  interval: number | false,
+  parentId?: string | undefined,
+  interval?: number | false,
+  parent?: string,
 ) {
+  const { data: session } = useSession();
   const {
     data,
     isError,
@@ -87,18 +94,21 @@ export function useFetchData(
     isLoading,
     isLoadingError,
     refetch,
-  } = useQuery({
-    queryKey: [category, parentId],
+  } = useQuery<T>({
+    queryKey: [category, parentId ? parentId : session?.user?.email],
     queryFn: async () => {
-      const data = await fetch(`/api/data/${category}/${parentId}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
+      const data = await fetch(
+        `/api/data/${category}/${parentId ? parentId : ""}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
         },
-      });
+      );
       return await data.json();
     },
-    refetchInterval: interval,
+    refetchInterval: interval ? interval : false,
   });
   return {
     data,

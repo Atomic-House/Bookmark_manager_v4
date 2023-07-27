@@ -12,9 +12,13 @@ export async function GET(
     where: {
       boardId: id,
     },
-    include:{
-      lists:true
-    }
+    include: {
+      lists: {
+        include: {
+          bookmarks: true,
+        },
+      },
+    },
   });
   return NextResponse.json(tabs);
 }

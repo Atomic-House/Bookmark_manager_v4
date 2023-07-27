@@ -13,6 +13,11 @@ export async function GET(
     where: {
       id: id,
       isDeleted: false,
+      bookmarks:{
+        some:{
+          isDeleted:false
+        }
+      }
     },
     include: {
       bookmarks: true,

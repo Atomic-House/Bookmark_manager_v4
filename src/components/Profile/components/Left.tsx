@@ -4,21 +4,26 @@ import { FormEvent, useEffect, useState } from "react";
 import { Avatar, Input, Spinner } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import "@uploadthing/react/styles.css";
 import UploadImage from "@/components/Modal/components/UploadProfile";
 import { useGetUser } from "@/functions/queries";
-import { User } from "@prisma/client";
+import { User, UserPreferences } from "@prisma/client";
 export default function Left() {
-  const { data: user, isLoading: isBgLoading, refetch }: {
-    data: User;
+  const {
+    data: user,
+    isLoading: isBgLoading,
+    refetch,
+  }: {
+    data: UserPreferences;
     isLoading: boolean;
     refetch: () => void;
   } = useGetUser();
-  const { data: session, status, update } = useSession();
+  const { data: session, update } = useSession();
   const [firstName, setFirstName] = useState(
     session?.user?.email?.split(" ")[0],
   );
+  const queryClient = useQueryClient();
   const [lastName, setLastName] = useState(session?.user?.email?.split(" ")[1]);
   const [username, setUsername] = useState("");
   const [image, setImage] = useState(session?.user?.image);
@@ -29,9 +34,7 @@ export default function Left() {
   const {
     mutateAsync: updateUser,
     isLoading,
-    isIdle,
     isSuccess,
-    isPaused,
     isError,
     error,
   } = useMutation({
@@ -41,20 +44,20 @@ export default function Left() {
       const data = await fetch("/api/user", {
         method: "POST",
         body: JSON.stringify({
-          firstName,
-          lastName,
-          username,
+          name: firstName + " " + lastName,
+          username: username,
         }),
       });
       return data.json();
     },
     onSuccess: () => {
       update();
+      queryClient.invalidateQueries(["user", session?.user?.email]);
     },
   });
 
   if (!session) {
-    redirect("/auth/signin");
+    redirect("/user/auth/signin");
   }
   if (isBgLoading || isLoading) {
     return <Spinner />;
@@ -64,17 +67,21 @@ export default function Left() {
   }
   if (isSuccess) {
     alert("Successfully updated");
+    refetch();
   }
   return (
-    <div className="w-[50%] flex flex-col drop-shadow-xl p-3 bg-slate-100">
+    <div className="w-[50%] flex flex-col drop-shadow-xl p-3 bg-slate-100 ">
       <section className="flex flex-col items-center relative">
         <Image
-          src={bgImage!}
+          src={
+            bgImage
+              ? bgImage
+              : "https://images.unsplash.com/photo-1574169208507-84376144848b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2079&q=80"
+          }
           alt="banner"
           width={300}
           height={80}
-          className=" relative items-center object-cover w-full h-40"
-          // className="w-[140vw] h-[150px] relative rounded-md"
+          className=" relative items-center object-cover w-full h-40 rounded"
         />
         <UploadImage
           image={image}

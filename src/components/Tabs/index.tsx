@@ -13,6 +13,7 @@ import AddClass from "../Create/create";
 import { useFetchData } from "@/functions/queries";
 import PanelTab from "./components/Panels";
 import { TabWithLists } from "@/types";
+import { Inbox } from "@prisma/client";
 const style = { className: "flex justify-center items-center" };
 export default function UserTabs({
   tabs,
@@ -27,7 +28,7 @@ export default function UserTabs({
 }: {
   variant: "unstyled" | "outline";
   id: string;
-  tabs: TabWithLists[];
+  tabs: TabWithLists[] & Inbox;
   isTabsLoading: boolean;
   isTabSuccess: boolean;
   isTabStale: boolean;

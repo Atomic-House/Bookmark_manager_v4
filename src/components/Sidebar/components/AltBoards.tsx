@@ -2,11 +2,12 @@
 import { Spinner } from "@chakra-ui/react";
 import { Disclosure, Transition } from "@headlessui/react";
 import Link from "next/link";
-import { BsChevronDown } from "react-icons/bs";
+import { BsChevronDown } from "@react-icons/all-files/bs/BsChevronDown";
 import { useEffect } from "react";
 import { useFetchData } from "@/functions/queries";
 import { useAppSelector } from "@/store/hooks";
 import { usePathname } from "next/navigation";
+import { BoardWithTabs } from "@/types";
 export default function AltBoards() {
   const wsId = useAppSelector((state) => state.workspace.id);
   const pathname = usePathname();
@@ -20,7 +21,7 @@ export default function AltBoards() {
     error,
     isLoadingError,
     isStale,
-  } = useFetchData("boards", wsId, false);
+  } = useFetchData<BoardWithTabs[]>("boards", wsId, false);
   useEffect(() => {
     refetch();
   }, [wsId, refetch]);
@@ -30,16 +31,18 @@ export default function AltBoards() {
   if (isLoading) {
     return <Spinner />;
   }
-  if (isSuccess && isStale)
+  if (isSuccess && isStale) {
     return (
       <Disclosure>
         {({ open, close }) => (
           <div className="flex-col flex gap-2">
-            <Disclosure.Button className={"flex justify-around items-center gap-9"}>
+            <Disclosure.Button
+              className={"flex justify-around items-center gap-9"}
+            >
               <span>Boards</span>
               <BsChevronDown
                 className={`${
-                  open ? "-rotate-90" : "rotate-0 "
+                  open ? "rotate-0" : "-rotate-90 "
                 } transform  transition-all duration-300 font-bold `}
               />
             </Disclosure.Button>
@@ -52,13 +55,18 @@ export default function AltBoards() {
               leaveFrom="transform opacity-100 "
               leaveTo="transform opacity-0 "
             >
-              <Disclosure.Panel as={`div`} className={`flex flex-col text-l gap-2 text-black`}>
+              <Disclosure.Panel
+                as={`div`}
+                className={`flex flex-col text-l gap-2 text-black`}
+              >
                 {boards?.map((board: { id: string; name: string }) => (
                   <Link
                     key={board.id}
-                    as={`/home/board/${board.id}`}
-                    href={`/home/board/${board.id}`}
-                    className={`${pathname.includes(board.id) ? "text-blue-600" : ""}`}
+                    as={`/main/home/board/${board.id}`}
+                    href={`/main/home/board/${board.id}`}
+                    className={`${
+                      pathname.includes(board.id) ? "text-blue-600" : ""
+                    }`}
                   >
                     {board.name}
                   </Link>
@@ -69,4 +77,5 @@ export default function AltBoards() {
         )}
       </Disclosure>
     );
+  }
 }

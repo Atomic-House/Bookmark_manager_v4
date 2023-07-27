@@ -59,6 +59,8 @@ export async function PATCH(
     },
     data: {
       name: body.name,
+      color: body.color,
+      emoji: body.emoji,
     },
   });
   return NextResponse.json(lists);

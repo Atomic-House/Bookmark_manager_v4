@@ -1,6 +1,6 @@
 "use client";
 import { Popover, Transition } from "@headlessui/react";
-import { HiChevronUpDown } from "react-icons/hi2";
+import { HiChevronUp } from "@react-icons/all-files/hi/HiChevronUp";
 import { Fragment } from "react";
 const solutions = [
   {
@@ -34,7 +34,7 @@ export default function PopoverComponent() {
                 group inline-flex items-center rounded-md bg-orange-700 px-3 py-2 text-base font-medium text-white hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
             >
               <span>Solutions</span>
-              <HiChevronUpDown
+              <HiChevronUp
                 className={`${open ? "" : "text-opacity-70"}
                   ml-2 h-5 w-5 text-orange-300 transition duration-150 ease-in-out group-hover:text-opacity-80`}
                 aria-hidden="true"
@@ -62,8 +62,12 @@ export default function PopoverComponent() {
                           <item.icon aria-hidden="true" />
                         </div>
                         <div className="ml-4">
-                          <p className="text-sm font-medium text-gray-900">{item.name}</p>
-                          <p className="text-sm text-gray-500">{item.description}</p>
+                          <p className="text-sm font-medium text-gray-900">
+                            {item.name}
+                          </p>
+                          <p className="text-sm text-gray-500">
+                            {item.description}
+                          </p>
                         </div>
                       </a>
                     ))}
@@ -74,7 +78,9 @@ export default function PopoverComponent() {
                       className="flow-root rounded-md px-2 py-2 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                     >
                       <span className="flex items-center">
-                        <span className="text-sm font-medium text-gray-900">Documentation</span>
+                        <span className="text-sm font-medium text-gray-900">
+                          Documentation
+                        </span>
                       </span>
                       <span className="block text-sm text-gray-500">
                         Start integrating products and tools
@@ -93,7 +99,13 @@ export default function PopoverComponent() {
 
 function IconOne() {
   return (
-    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="48"
+      height="48"
+      viewBox="0 0 48 48"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <rect width="48" height="48" rx="8" fill="#FFEDD5" />
       <path
         d="M24 11L35.2583 17.5V30.5L24 37L12.7417 30.5V17.5L24 11Z"
@@ -120,7 +132,13 @@ function IconOne() {
 
 function IconTwo() {
   return (
-    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="48"
+      height="48"
+      viewBox="0 0 48 48"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <rect width="48" height="48" rx="8" fill="#FFEDD5" />
       <path
         d="M28.0413 20L23.9998 13L19.9585 20M32.0828 27.0001L36.1242 34H28.0415M19.9585 34H11.8755L15.9171 27"
@@ -140,7 +158,13 @@ function IconTwo() {
 
 function IconThree() {
   return (
-    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="48"
+      height="48"
+      viewBox="0 0 48 48"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <rect width="48" height="48" rx="8" fill="#FFEDD5" />
       <rect x="13" y="32" width="2" height="4" fill="#FDBA74" />
       <rect x="17" y="28" width="2" height="8" fill="#FDBA74" />

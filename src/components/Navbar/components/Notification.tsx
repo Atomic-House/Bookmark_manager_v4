@@ -11,7 +11,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 
-import { AiOutlineBell } from "react-icons/ai";
+import { AiOutlineBell } from "@react-icons/all-files/ai/AiOutlineBell";
 export default function Notification() {
   return (
     <Menu>

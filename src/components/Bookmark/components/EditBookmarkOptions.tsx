@@ -1,19 +1,25 @@
 "use client";
 import {
+  Button,
   Menu,
   MenuButton,
-  MenuList,
+  MenuDivider,
+  MenuGroup,
   MenuItem,
   MenuItemOption,
-  MenuGroup,
+  MenuList,
   MenuOptionGroup,
-  MenuDivider,
-  Button,
 } from "@chakra-ui/react";
-import { BsUpload, BsCalendar4Event, BsTrash3 } from "react-icons/bs";
+import { BsUpload } from "@react-icons/all-files/bs/BsUpload";
+import { BsTrash2 } from "@react-icons/all-files/bs/BsTrash2";
+import { BsFillCalendarFill } from "@react-icons/all-files/bs/BsFillCalendarFill";
+
 import { PiShare } from "react-icons/pi";
-import { BiAlarmSnooze, BiDuplicate, BiPencil } from "react-icons/bi";
-import { AiOutlineCi, AiOutlineStar } from "react-icons/ai";
+import { BiAlarmSnooze } from "@react-icons/all-files/bi/BiAlarmSnooze";
+import { BiDuplicate } from "@react-icons/all-files/bi/BiDuplicate";
+import { BiPencil } from "@react-icons/all-files/bi/BiPencil";
+import { AiOutlineCi } from "@react-icons/all-files/ai/AiOutlineCi";
+import { AiOutlineStar } from "@react-icons/all-files/ai/AiOutlineStar";
 import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
 import { MouseEventHandler } from "react";
 const hexArray = [
@@ -57,7 +63,7 @@ export default function EditBookmarkOptions({
             Add Snooze
           </MenuItem>
           <MenuItem className="flex gap-2">
-            <BsCalendar4Event />
+            <BsFillCalendarFill />
             Add Reminder
           </MenuItem>
         </MenuGroup>
@@ -79,7 +85,7 @@ export default function EditBookmarkOptions({
         </MenuGroup>
         <MenuDivider />
         <MenuItem className="flex gap-2" onClick={onClickDelete}>
-          <BsTrash3 /> Move to trash
+          <BsTrash2 /> Move to trash
         </MenuItem>
         <MenuDivider />
         <MenuOptionGroup>

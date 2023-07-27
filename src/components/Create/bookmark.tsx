@@ -1,19 +1,19 @@
 "use client";
 import { useMutations } from "@/functions/mutations";
 import {
+  Button,
+  Input,
   Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeader,
   PopoverBody,
   PopoverCloseButton,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTrigger,
   Portal,
-  Input,
-  Button,
   Spinner,
 } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
-import { BiLink } from "react-icons/bi";
+import { BiLink } from "@react-icons/all-files/bi/BiLink";
 export default function AddClass({
   category,
   positionStyles,

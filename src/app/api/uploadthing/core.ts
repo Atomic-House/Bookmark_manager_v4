@@ -30,12 +30,13 @@ export const ourFileRouter = {
     }),
   bgUpload: f({
     image: { maxFileSize: "2MB" },
-  }).middleware(async (req) => {
-    const user = await auth();
-    if (!user) throw new Error("Unauthorized");
-
-    return { userEmail: user.user?.email };
   })
+    .middleware(async (req) => {
+      const user = await auth();
+      if (!user) throw new Error("Unauthorized");
+
+      return { userEmail: user.user?.email };
+    })
     .onUploadComplete(async ({ metadata, file }) => {
       console.log("metadata", metadata.userEmail);
       await prisma.user.update({
@@ -43,7 +44,11 @@ export const ourFileRouter = {
           email: metadata.userEmail!,
         },
         data: {
-          background: file.url,
+          UserPreferences: {
+            create: {
+              background: file.url,
+            },
+          },
         },
       });
       console.log("metadata", file.url);
@@ -51,4 +56,3 @@ export const ourFileRouter = {
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;
-
