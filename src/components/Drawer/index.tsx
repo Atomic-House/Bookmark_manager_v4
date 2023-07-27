@@ -63,7 +63,7 @@ export default function DrawerMenu() {
               <SwitchButton />
             </div>
             <div className="relative right-6">
-              <NavSearch iconPosition="right" />
+              <NavSearch  />
             </div>
           </DrawerHeader>
 
