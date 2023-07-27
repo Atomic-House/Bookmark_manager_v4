@@ -6,6 +6,7 @@ import { useMutations } from "@/functions/mutations";
 import { useFetchData } from "@/functions/queries";
 import UserTabs from "@/components/Tabs";
 import { TabWithLists } from "@/types";
+import { Workspace } from "@prisma/client";
 export default function Page({ params }: { params: { id: string } }) {
   const [name, setName] = useState("");
   const id = params.id;
@@ -23,7 +24,7 @@ export default function Page({ params }: { params: { id: string } }) {
     error: tabsError,
     isSuccess: isTabSuccess,
     isStale: isTabStale,
-  } = useFetchData<TabWithLists[]>("tabs", id, false);
+  } = useFetchData<TabWithLists[] & Workspace & {workspaceId:string}>("tabs", id, false);
   //Loading state spinner
   if (isTabsLoading) {
     return <Spinner />;

@@ -44,7 +44,7 @@ export default function Filter() {
         linksType: [...selectedLinks],
       },
     });
-  }, [selectedTags, selectedLinks]);
+  }, [selectedTags, selectedLinks,listPrefs,setListPrefs]);
 
   return (
     <Menu closeOnSelect={false}>
