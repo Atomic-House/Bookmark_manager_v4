@@ -1,6 +1,5 @@
 "use client";
 import { UploadButton } from "@/utils/uploadthing";
-import { UploadButton as BgUpload } from "@/utils/bgUpload";
 
 import "@uploadthing/react/styles.css";
 import {
