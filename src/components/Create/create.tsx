@@ -52,7 +52,7 @@ export default function AddClass({
         closeOnBlur={false}
         placement="bottom"
         initialFocusRef={initRef.current}
-        // isOpen={}
+      // isOpen={}
       >
         {({ isOpen, onClose }) => {
           return (
@@ -93,14 +93,7 @@ export default function AddClass({
                         ref={initRef.current}
                         type="submit"
                       >
-                        {isLoading ? (
-                          <Spinner />
-                        ) : (
-                          () => {
-                            return <> </>;
-                          }
-                        )}{" "}
-                        Add
+                        {isLoading ? <Spinner /> : ""} Add
                       </Button>
                       <Button
                         type="button"
