@@ -50,7 +50,7 @@ export async function POST(
             boards: {
               create: [
                 {
-                  name: "Main",
+                  name: "First Board",
                   tabs: {
                     create: [
                       {

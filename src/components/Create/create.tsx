@@ -29,7 +29,8 @@ export default function AddClass({
   onChange,
   isLoading,
   add_edit,
-  list
+  list,
+  isSuccess,
 }: {
   category: string;
   isLoading: boolean;
@@ -39,7 +40,8 @@ export default function AddClass({
   onSubmit: FormEventHandler<HTMLFormElement>;
   onChange: ChangeEventHandler<HTMLInputElement>;
   add_edit: string | undefined | null;
-    list?:React.ReactNode
+  list?: React.ReactNode;
+  isSuccess?: boolean;
 }) {
   const initRef = useRef();
 
@@ -49,6 +51,7 @@ export default function AddClass({
         closeOnBlur={false}
         placement="bottom"
         initialFocusRef={initRef.current}
+      // isOpen={}
       >
         {({ isOpen, onClose }) => (
           <>

@@ -24,9 +24,9 @@ const nextConfig = {
       },
     ],
   },
-eslint: {
-    dirs : ["src", "src/app"]  
-}  
+  eslint: {
+    dirs: ["src", "src/app"],
+  },
 };
 
 module.exports = nextConfig;

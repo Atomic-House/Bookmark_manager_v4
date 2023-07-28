@@ -13,14 +13,12 @@ import {
 import { BsUpload } from "@react-icons/all-files/bs/BsUpload";
 import { BsTrash2 } from "@react-icons/all-files/bs/BsTrash2";
 import { BsFillCalendarFill } from "@react-icons/all-files/bs/BsFillCalendarFill";
-
-import { PiShare } from "react-icons/pi";
+import { FaShareSquare } from "@react-icons/all-files/fa/FaShareSquare";
 import { BiAlarmSnooze } from "@react-icons/all-files/bi/BiAlarmSnooze";
 import { BiDuplicate } from "@react-icons/all-files/bi/BiDuplicate";
 import { BiPencil } from "@react-icons/all-files/bi/BiPencil";
-import { AiOutlineCi } from "@react-icons/all-files/ai/AiOutlineCi";
 import { AiOutlineStar } from "@react-icons/all-files/ai/AiOutlineStar";
-import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
+import { BsLayoutTextSidebarReverse } from "@react-icons/all-files/bs/BsLayoutTextSidebarReverse";
 import { MouseEventHandler } from "react";
 const hexArray = [
   "#f08dcc",
@@ -51,7 +49,7 @@ export default function EditBookmarkOptions({
             Upload Link
           </MenuItem>
           <MenuItem className="flex gap-2">
-            <PiShare />
+            <FaShareSquare />
             Share
           </MenuItem>
         </MenuGroup>
@@ -79,7 +77,7 @@ export default function EditBookmarkOptions({
             Duplicate
           </MenuItem>
           <MenuItem className="flex gap-2">
-            <TbLayoutSidebarLeftCollapse />
+            <BsLayoutTextSidebarReverse />
             Collapse
           </MenuItem>
         </MenuGroup>

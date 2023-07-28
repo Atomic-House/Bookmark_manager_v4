@@ -26,7 +26,7 @@ export default function Page({ params }: { params: { id: string } }) {
     error: tabsError,
     isSuccess: isTabSuccess,
     isStale: isTabStale,
-  } = useFetchData<Inbox  &  TabWithLists[]>("inbox", id, false);
+  } = useFetchData<Inbox & TabWithLists[]>("inbox", id, false);
   //Loading state spinner
   if (isTabsLoading) {
     return <Spinner />;
@@ -47,6 +47,7 @@ export default function Page({ params }: { params: { id: string } }) {
             positionStyles=""
             onSubmit={createTab}
             onChange={(e) => setName(e.target.value)}
+            isSuccess={isSuccess}
           />
         </div>
       );

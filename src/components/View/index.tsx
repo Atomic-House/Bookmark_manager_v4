@@ -1,5 +1,5 @@
 import { BiGridAlt } from "@react-icons/all-files/bi/BiGridAlt";
-import { HiListBullet } from "react-icons/hi2";
+import { MdFormatListBulleted } from "@react-icons/all-files/md/MdFormatListBulleted";
 import { BsFillEyeFill } from "@react-icons/all-files/bs/BsFillEyeFill";
 import { useContext, useState } from "react";
 import {
@@ -24,7 +24,7 @@ export default function Views() {
     {
       title: "List View",
       value: "list",
-      icon: <HiListBullet />,
+      icon: <MdFormatListBulleted />,
       selected: false,
     },
     {
@@ -52,7 +52,7 @@ export default function Views() {
         p={1}
         rounded={"md"}
       >
-        <HiListBullet />
+        <MdFormatListBulleted/>
       </MenuButton>
       <MenuList p={4} h={"37vh"}>
         <MenuGroup>

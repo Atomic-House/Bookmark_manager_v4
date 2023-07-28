@@ -51,9 +51,7 @@ export default function PanelTab({ id, lists }: TabWithLists) {
   // }, [refetch, listNow]);
 
   if (isListError || isError) {
-    return (
-      <TabPanel>{JSON.stringify({ listError, createListError })}</TabPanel>
-    );
+    return <TabPanel>{"listError"}</TabPanel>;
   }
   if (isListLoading) {
     return (
@@ -67,38 +65,13 @@ export default function PanelTab({ id, lists }: TabWithLists) {
   const handleDragEnd = (result: DropResult) => {
     const { destination, source, draggableId } = result;
     console.log(result);
-    // const array = [...nList];
-    // if (!result.destination) {
-    //   return; // Drop outside the list, do nothing
-    // }
-    // if (
-    //   array.length === 0 ||
-    //   array.find((l) => l.id === source.droppableId)?.bookmarks === undefined
-    // ) {
-    //   console.log("Nope!");
-    // }
-    // const [removed] = array
-    //   .find((l) => l.id === source.droppableId)!
-    //   .bookmarks.splice(source.index, 1);
-    //
-    // console.log("Before Removed:", removed);
-    // removed.listId = destination?.droppableId!;
-    // array
-    //   .find((l) => l.id === destination?.droppableId)
-    //   ?.bookmarks?.splice(destination!.index, 0, removed);
-    // setNList(array);
-    // mutateAsync({
-    //   source: source.droppableId,
-    //   destination: destination!.droppableId,
-    //   bookmarkId: draggableId,
-    // });
   };
 
   return (
     <>
       <TabPanel key={id}>
         <ListPrefContext.Provider value={{ listPrefs, setListPrefs }}>
-          <div className="sticky flex items-center gap-5 z-10">
+          <div className="flex sticky z-10 gap-5 items-center">
             <AddClass
               onSubmit={createList}
               add_edit={"New "}
@@ -108,12 +81,13 @@ export default function PanelTab({ id, lists }: TabWithLists) {
               category="lists"
               positionStyles="sticky"
               buttonStyles="dark:bg-blue-800 bg-[#11047A] mb-3 text-white p-2 flex justify-center items-center rounded-lg"
+              isSuccess={createListSuccess}
             />
             <Sort />
             <Filter />
             <Views />
           </div>
-          <div className="grid grid-cols-1 flex-wrap sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2">
+          <div className="grid flex-wrap grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             <DragDropContext onDragEnd={handleDragEnd}>
               {listNow
                 ?.sort((a, b) => a.name.localeCompare(b.name))

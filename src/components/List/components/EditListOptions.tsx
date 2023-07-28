@@ -13,16 +13,14 @@ import {
 } from "@chakra-ui/react";
 import DialogModal from "@/components/Modal";
 import { useChangeColor } from "@/functions/mutations";
-import { BsUpload } from "@react-icons/all-files/bs/BsUpload";
 import { BsThreeDotsVertical } from "@react-icons/all-files/bs/BsThreeDotsVertical";
 import { BsFillCalendarFill } from "@react-icons/all-files/bs/BsFillCalendarFill";
 import { BsTrash2 } from "@react-icons/all-files/bs/BsTrash2";
 import { BiAlarmSnooze } from "@react-icons/all-files/bi/BiAlarmSnooze";
 import { BiDuplicate } from "@react-icons/all-files/bi/BiDuplicate";
 import { BiPencil } from "@react-icons/all-files/bi/BiPencil";
-import { AiOutlineCi } from "@react-icons/all-files/ai/AiOutlineCi";
 import { AiOutlineStar } from "@react-icons/all-files/ai/AiOutlineStar";
-import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
+import { BsLayoutSidebar } from "@react-icons/all-files/bs/BsLayoutSidebar";
 import { MouseEventHandler, useContext } from "react";
 import { ListColorContext } from "@/components/context/ListColorContext";
 const colors = [
@@ -37,18 +35,6 @@ const colors = [
   "gray",
   "cyan",
 ];
-const hexArray = [
-  "#f08dcc",
-  "#f2f595",
-  "#f595a0",
-  "#95f5b4",
-  "#f5bf95",
-  "#95e5f5",
-  "#86708a",
-  "#bfccad",
-  "#f0c5d4",
-  "#8db3f0",
-];
 export default function EditListOptions({
   onClickDelete,
   isSuccess,
@@ -61,12 +47,7 @@ export default function EditListOptions({
   id: string;
 }) {
   const { setListColor } = useContext(ListColorContext);
-  const {
-    mutateAsync: changeColor,
-    isLoading: isChangeColorLoading,
-    isError: isChangeColorError,
-    error: changeColorError,
-  } = useChangeColor();
+  const { mutateAsync: changeColor } = useChangeColor();
   return (
     <Menu closeOnSelect={false}>
       <MenuButton
@@ -108,7 +89,7 @@ export default function EditListOptions({
             Duplicate
           </MenuItem>
           <MenuItem className="flex gap-2">
-            <TbLayoutSidebarLeftCollapse />
+            <BsLayoutSidebar />
             Collapse
           </MenuItem>
         </MenuGroup>

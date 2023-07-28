@@ -49,6 +49,7 @@ export default function Page({ params }: { params: { id: string } }) {
             positionStyles=""
             onSubmit={createTab}
             onChange={(e) => setName(e.target.value)}
+            isSuccess={isSuccess}
           />
         </div>
       );

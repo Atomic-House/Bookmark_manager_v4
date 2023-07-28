@@ -26,7 +26,11 @@ export default function MySidebar({ ws }: { ws: any[] }) {
   const boardId = pathname.replace("/main/home/board/", "");
   const inbox = useAppSelector((state) => state.workspace.inboxId);
 
-  const { mutateAsync, isLoading } = useMutations(
+  const {
+    mutateAsync,
+    isLoading,
+    isSuccess: isCreateWorkspaceSuccess,
+  } = useMutations(
     "create workspace",
     "workspaces",
     name,
@@ -35,15 +39,11 @@ export default function MySidebar({ ws }: { ws: any[] }) {
     "create",
     "POST",
   );
-  const { mutateAsync: addBoad, isLoading: isBoardLoading } = useMutations(
-    "create board",
-    "boards",
-    boardName,
-    "",
-    "",
-    wsId,
-    "POST",
-  );
+  const {
+    mutateAsync: addBoad,
+    isLoading: isBoardLoading,
+    isSuccess: isCreateBoardSuccess,
+  } = useMutations("create board", "boards", boardName, "", "", wsId, "POST");
   const {
     mutateAsync: deleteBoard,
     isLoading: isDeleteLoading,
@@ -83,6 +83,7 @@ export default function MySidebar({ ws }: { ws: any[] }) {
           buttonStyles="text-black p-1 "
           positionStyles="flex bg-white justify-center items-center"
           onSubmit={addBoad}
+          isSuccess={isCreateBoardSuccess}
           onChange={(e) => setBoardName(e.target.value)}
         />
         <DeleteBoardModal
@@ -93,14 +94,14 @@ export default function MySidebar({ ws }: { ws: any[] }) {
           isLoading={isDeleteLoading}
           isSuccess={isDeleteSuccess}
         />
-        <ul className="text-black dark:text-white transition-all duration-300 mx-2 px-2">
+        <ul className="px-2 mx-2 text-black transition-all duration-300 dark:text-white">
           <Box
             color={`${pathname.includes("board") ? "blue" : ""}`}
-            className="flex justify-between  py-4 text-xl transition-all ease-in gap-2"
+            className="flex gap-2 justify-between py-4 text-xl transition-all ease-in"
           >
             {!closed && <MyBoards />}
-            <span className="px-2 sticky">
-              <MdDashboard className="flex justify-center items-center sticky" />
+            <span className="sticky px-2">
+              <MdDashboard className="flex sticky justify-center items-center" />
             </span>
           </Box>
 
@@ -133,13 +134,13 @@ export default function MySidebar({ ws }: { ws: any[] }) {
             </span>
           </Box>
         </ul>
-        <div className="flex flex-col justify-center items-center dark:text-white py-2 text-black transition-all duration-300 min-w-fit sticky top-96 text-2xl"></div>
-        <div className="flex justify-between gap-9 absolute bottom-0">
+        <div className="flex sticky top-96 flex-col justify-center items-center py-2 text-2xl text-black transition-all duration-300 dark:text-white min-w-fit"></div>
+        <div className="flex absolute bottom-0 gap-9 justify-between">
           <Select collapsed={closed} ws={ws} />
         </div>
         <div
           onClick={() => setClosed(!closed)}
-          className="hover:bg-cyan-400 w-fit p-2 rounded-full duration-300 transition-all "
+          className="p-2 rounded-full transition-all duration-300 hover:bg-cyan-400 w-fit"
         >
           {" "}
           <MdKeyboardArrowLeft
@@ -158,6 +159,7 @@ export default function MySidebar({ ws }: { ws: any[] }) {
           buttonStyles="py-[0.4rem] px-7 bg-blue-500"
           onChange={(e) => setName(e.target.value)}
           onSubmit={mutateAsync}
+          isSuccess={isCreateWorkspaceSuccess}
         />
       </div>
     </div>

@@ -2,7 +2,8 @@
 import { FaSortAmountDownAlt } from "@react-icons/all-files/fa/FaSortAmountDownAlt";
 import { FcAlphabeticalSortingAz } from "@react-icons/all-files/fc/FcAlphabeticalSortingAz";
 import { FcAlphabeticalSortingZa } from "@react-icons/all-files/fc/FcAlphabeticalSortingZa";
-import { BsSortNumericDown, BsSortNumericUp } from "react-icons/bs";
+import {ImSortNumbericDesc} from "@react-icons/all-files/im/ImSortNumbericDesc"
+import {ImSortNumericAsc} from "@react-icons/all-files/im/ImSortNumericAsc"
 import {
   Box,
   Menu,
@@ -38,13 +39,13 @@ export default function Sort() {
     },
     {
       name: "New to Old",
-      icon: <BsSortNumericDown />,
+      icon: <ImSortNumbericDesc/>,
       selected: false,
       value: "newest",
     },
     {
       name: "Old to New",
-      icon: <BsSortNumericUp />,
+      icon: <ImSortNumericAsc/>,
       selected: false,
       value: "oldest",
     },
