@@ -25,17 +25,17 @@ export default function AltBoards() {
   useEffect(() => {
     refetch();
   }, [wsId, refetch]);
-  if (isError || isLoadingError) {
-    console.error(error);
-  }
-  if (isLoading) {
-    return <Spinner />;
-  }
+  // if (isError || isLoadingError) {
+  //   console.error(error);
+  // }
+  // if (isLoading) {
+  //   return <Spinner />;
+  // }
   if (isSuccess && isStale) {
     return (
       <Disclosure>
         {({ open, close }) => (
-          <div className="flex-col flex gap-2">
+          <div className="flex flex-col gap-2">
             <Disclosure.Button
               className={"flex justify-around items-center gap-9"}
             >
