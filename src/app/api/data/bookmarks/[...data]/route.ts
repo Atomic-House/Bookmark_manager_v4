@@ -13,11 +13,12 @@ export async function GET(
     where: {
       id: id,
       isDeleted: false,
-      bookmarks:{
-        some:{
-          isDeleted:false
-        }
-      }
+      bookmarks: {
+        every: {
+          listId: id,
+          isDeleted: false,
+        },
+      },
     },
     include: {
       bookmarks: true,
