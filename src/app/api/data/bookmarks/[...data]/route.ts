@@ -21,7 +21,11 @@ export async function GET(
       },
     },
     include: {
-      bookmarks: true,
+      bookmarks: {
+        where: {
+          isDeleted: false,
+        },
+      },
     },
   });
   return NextResponse.json(bookmarks);

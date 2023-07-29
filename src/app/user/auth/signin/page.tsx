@@ -26,11 +26,11 @@ export default function Page() {
   const { colorMode } = useColorMode();
   return (
     <div className="grid grid-cols-2 border-2 border-white h-[100vh]">
-      <div className=" m-14">
+      <div className="m-14">
         <h1 className="text-2xl font-bold">Sign In</h1>
         <h2 className="text-xl">Subtitle</h2>
         <div
-          className="flex justify-center rounded-s items-center gap-3 bg-blue-200 my-4 py-6 cursor-pointer"
+          className="flex gap-3 justify-center items-center py-6 my-4 bg-blue-200 cursor-pointer rounded-s"
           onClick={() => signIn("google")}
         >
           <span>
@@ -39,7 +39,7 @@ export default function Page() {
           </span>
           <span className="text-black">Continue with Google</span>
         </div>
-        <div className="flex justify-center gap-3 my-4">or</div>
+        <div className="flex gap-3 justify-center my-4">or</div>
         <div>
           <form onSubmit={handleSubmit} className="flex flex-col gap-3">
             <label htmlFor="email">Email</label>
@@ -52,13 +52,13 @@ export default function Page() {
             <Checkbox mx={"2"} defaultChecked>
               Keep me logged in
             </Checkbox>
-            <button className="bg-purple-700 py-4 rounded-s">Done</button>
+            <button className="py-4 bg-purple-700 rounded-s">Done</button>
           </form>
         </div>
       </div>
-      <div className="flex justify-center flex-col gap-6 items-center bg-blue-600">
+      <div className="flex flex-col gap-6 justify-center items-center bg-blue-600">
         <div className="text-4xl font-extrabold">Bookmark Manager</div>
-        <div className="mt-32 flex flex-col justify-center items-center">
+        <div className="flex flex-col justify-center items-center mt-32">
           <Link href={`http://atomichouse.co/`} className="font-bold">
             {" "}
             Made in Atomic House

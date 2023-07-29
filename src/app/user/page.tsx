@@ -1,9 +1,9 @@
 "use client";
-
-import { redirect } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 export default function Home() {
+  const router = useRouter();
   const { data: session } = useSession();
-  if (!session) redirect("/user/auth/signin");
-  redirect("/main/home");
+  if (!session) router.push("/user/auth/signin");
+  router.push("/main/home");
 }

@@ -1,8 +1,9 @@
-import { redirect } from "next/navigation";
-import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/route";
-export default async function Home() {
-  const session = await getServerSession(authOptions);
-  if (!session) redirect("/user/auth/signin");
-  redirect("/main/home");
+"use client";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+export default function Home() {
+  const router = useRouter();
+  const { data: session } = useSession();
+  if (!session) router.push("/user/auth/signin");
+  router.push("/main/home");
 }
