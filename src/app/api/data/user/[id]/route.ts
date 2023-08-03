@@ -35,9 +35,13 @@ export async function GET(req: Request) {
   if (!session) {
     return NextResponse.json({ session: "not authenticated" });
   }
+
   const data = await prisma.user.findFirst({
     where: {
       email: session.user?.email!,
+    },
+    include: {
+      UserPreferences: true,
     },
   });
 

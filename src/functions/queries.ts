@@ -1,8 +1,11 @@
 import { WorkspaceWithBoards } from "@/types";
-import { User } from "@prisma/client";
+import { User, UserPreferences } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
+interface Prefs extends User {
+  userPreferences: UserPreferences;
+}
 export function useGetUser() {
   const { data: session } = useSession();
   if (!session) {
@@ -17,7 +20,7 @@ export function useGetUser() {
     isLoading,
     isSuccess,
     refetch,
-  } = useQuery<User>({
+  } = useQuery<Prefs>({
     queryKey: ["user", session?.user?.email],
     queryFn: async () => {
       const data = await fetch("/api/data/user/read", {

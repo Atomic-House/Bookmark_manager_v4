@@ -25,21 +25,21 @@ export default function Navbar() {
     return <div></div>;
   }
   return (
-    <div className="absolute flex gap-2 right-0 top-0 m-0 md:mx-8 md:my-6 ">
+    <div className="flex absolute top-0 right-0 gap-2 m-0 md:my-6 md:mx-8">
       <NavSearch />
-      <div className="flex md:gap-3 items-center">
+      <div className="flex items-center md:gap-3">
         {" "}
         <div className="sticky"></div>
         <Notification />
         <Preferences />
         <ProfileMenu
-          background={user?.background}
+          background={user?.userPreferences.background}
           image={
             session?.user?.image
               ? session.user.image
               : colorMode === "light"
-              ? Svg1
-              : Svg2
+                ? Svg1
+                : Svg2
           }
           display={
             <Image
@@ -47,8 +47,8 @@ export default function Navbar() {
                 session?.user?.image
                   ? session.user.image
                   : colorMode === "light"
-                  ? Svg1
-                  : Svg2
+                    ? Svg1
+                    : Svg2
               }
               alt="image"
               width={30}

@@ -10,15 +10,7 @@ import UploadImage from "@/components/Modal/components/UploadProfile";
 import { useGetUser } from "@/functions/queries";
 import { User, UserPreferences } from "@prisma/client";
 export default function Left() {
-  const {
-    data: user,
-    isLoading: isBgLoading,
-    refetch,
-  }: {
-    data: UserPreferences;
-    isLoading: boolean;
-    refetch: () => void;
-  } = useGetUser();
+  const { data: user, isLoading: isBgLoading, refetch } = useGetUser();
   const { data: session, update } = useSession();
   const [firstName, setFirstName] = useState(
     session?.user?.email?.split(" ")[0],
@@ -27,7 +19,7 @@ export default function Left() {
   const [lastName, setLastName] = useState(session?.user?.email?.split(" ")[1]);
   const [username, setUsername] = useState("");
   const [image, setImage] = useState(session?.user?.image);
-  const [bgImage, setBgImage] = useState(user?.background);
+  const [bgImage, setBgImage] = useState(user?.userPreferences.background);
   useEffect(() => {
     refetch();
   }, [refetch, bgImage, user]);
@@ -71,7 +63,7 @@ export default function Left() {
   }
   return (
     <div className="w-[50%] flex flex-col drop-shadow-xl p-3 bg-slate-100 ">
-      <section className="flex flex-col items-center relative">
+      <section className="flex relative flex-col items-center">
         <Image
           src={
             bgImage
@@ -81,7 +73,7 @@ export default function Left() {
           alt="banner"
           width={300}
           height={80}
-          className=" relative items-center object-cover w-full h-40 rounded"
+          className="object-cover relative items-center w-full h-40 rounded"
         />
         <UploadImage
           image={image}
@@ -96,7 +88,7 @@ export default function Left() {
       </section>
       <section className="mt-14">
         <form onSubmit={updateUser}>
-          <div className="grid gap-5 grid-cols-2 grid-rows-3">
+          <div className="grid grid-cols-2 grid-rows-3 gap-5">
             <div>
               {" "}
               <label htmlFor="firstName">First Name</label>
@@ -150,7 +142,7 @@ export default function Left() {
           </div>
           <button
             type="submit"
-            className="bg-blue-800 text-white dark:text-black dark:bg-blue-600 p-2 rounded-lg flex items-center relative bottom-0 right-0 mt-4 float-right"
+            className="flex float-right relative right-0 bottom-0 items-center p-2 mt-4 text-white bg-blue-800 rounded-lg dark:text-black dark:bg-blue-600"
           >
             {isLoading ? <Spinner /> : null}
             Save changes
