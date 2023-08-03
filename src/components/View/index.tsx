@@ -52,7 +52,7 @@ export default function Views() {
         p={1}
         rounded={"md"}
       >
-        <MdFormatListBulleted/>
+        <MdFormatListBulleted />
       </MenuButton>
       <MenuList p={4} h={"37vh"}>
         <MenuGroup>
@@ -93,8 +93,8 @@ export default function Views() {
         </MenuGroup>
         <MenuDivider />
         <MenuGroup>
-          <div className="float-right flex gap-5 mt-3">
-            <button className="hover:text-red-900 duration-300 ">Reset</button>
+          <div className="flex float-right gap-5 mt-3">
+            <button className="duration-300 hover:text-red-900">Reset</button>
             <button className="bg-[#422AFB] py-2 rounded-full px-9 text-white hover:bg-blue-600 duration-300">
               Apply
             </button>

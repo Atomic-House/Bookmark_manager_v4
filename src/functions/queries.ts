@@ -1,3 +1,4 @@
+import { WorkspaceWithBoards } from "@/types";
 import { User } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
@@ -5,7 +6,7 @@ import { redirect } from "next/navigation";
 export function useGetUser() {
   const { data: session } = useSession();
   if (!session) {
-   redirect('/user/auth/signin'); 
+    redirect("/user/auth/signin");
   }
   const {
     data,
@@ -16,7 +17,7 @@ export function useGetUser() {
     isLoading,
     isSuccess,
     refetch,
-  } = useQuery({
+  } = useQuery<User>({
     queryKey: ["user", session?.user?.email],
     queryFn: async () => {
       const data = await fetch("/api/data/user/read", {
@@ -51,7 +52,7 @@ export function useFetchWorkspace() {
     isLoadingError,
     refetch,
     error,
-  } = useQuery({
+  } = useQuery<WorkspaceWithBoards[]>({
     queryKey: ["workspaces"],
     queryFn: async () => {
       const data = await fetch("/api/data/workspaces/read", {

@@ -39,6 +39,7 @@ model User {
   name            String?
   email           String?          @unique
   emailVerified   DateTime?
+  password        String?
   image           String?
   accounts        Account[]
   lists           List[]
@@ -56,6 +57,7 @@ model UserPreferences {
   background    String?
   user          User    @relation(fields: [userId], references: [id])
   userId        String  @unique
+
   @@id([userId])
 }
 

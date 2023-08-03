@@ -34,14 +34,14 @@ export default function AddClass({
   list,
   isSuccess,
 }: {
-  category: string;
-  isLoading: boolean;
-  placeholder: string;
-  positionStyles: HTMLAttributes<HTMLDivElement>["className"];
-  buttonStyles: HTMLAttributes<HTMLButtonElement>["className"];
-  onSubmit: FormEventHandler<HTMLFormElement>;
-  onChange: ChangeEventHandler<HTMLInputElement>;
-  add_edit: string | undefined | null;
+  category?: string;
+  isLoading?: boolean;
+  placeholder?: string | React.ReactNode;
+  positionStyles?: HTMLAttributes<HTMLDivElement>["className"];
+  buttonStyles?: HTMLAttributes<HTMLButtonElement>["className"];
+  onSubmit?: FormEventHandler<HTMLFormElement>;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
+  add_edit?: string | undefined | null;
   list?: React.ReactNode;
   isSuccess?: boolean;
 }) {
@@ -52,7 +52,7 @@ export default function AddClass({
         closeOnBlur={false}
         placement="bottom"
         initialFocusRef={initRef.current}
-      // isOpen={}
+        // isOpen={}
       >
         {({ isOpen, onClose }) => {
           return (
@@ -68,7 +68,7 @@ export default function AddClass({
                 <PopoverContent>
                   <PopoverHeader>
                     {add_edit}
-                    {category.slice(0, category.length - 1)}
+                    {category?.slice(0, category.length - 1)}
                   </PopoverHeader>
                   <PopoverCloseButton />
                   <PopoverBody>
@@ -87,10 +87,10 @@ export default function AddClass({
                         mt={4}
                         mx={2}
                         px={9}
-                        bg="#422AFB"
+                        bgColor={"#4F4F4F"}
+                        colorScheme="purple"
                         onClick={onClose}
-                        textColor={"white"}
-                        ref={initRef.current}
+                        textColor={"black"}
                         type="submit"
                       >
                         {isLoading ? <Spinner /> : ""} Add

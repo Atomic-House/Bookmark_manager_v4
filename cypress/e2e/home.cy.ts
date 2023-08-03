@@ -1,5 +1,10 @@
 describe("Home page", () => {
-  it("sidebar contains correct fields", () => {
-    cy.visit("http://localhost:3000/main/home");
+  beforeEach(() => {
+    // cy.loginByGoogleApi()
+  });
+  it("sidebar contains correct fields", async () => {
+    cy.visit("https://bookmark-manager-v4-eight.vercel.app/");
+    // cy.get("input").type("fosow27849@naymedia.com");
+    // cy.get("button").click();
   });
 });

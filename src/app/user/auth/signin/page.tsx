@@ -9,9 +9,11 @@ import Svg1 from "@/../public/Svg-01.svg";
 import Svg2 from "@/../public/Svg-02.svg";
 import Image from "next/image";
 import { Checkbox } from "@chakra-ui/react";
+import { getCsrfToken } from "next-auth/react";
 export default function Page() {
   const { data: session } = useSession();
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   if (session) {
     redirect("/main/home");
   }
@@ -49,10 +51,13 @@ export default function Page() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="mail@example.com"
             />
+
+            <button className="py-4 text-white bg-purple-700 rounded-s">
+              Done
+            </button>
             <Checkbox mx={"2"} defaultChecked>
               Keep me logged in
             </Checkbox>
-            <button className="py-4 bg-purple-700 rounded-s">Done</button>
           </form>
         </div>
       </div>

@@ -47,7 +47,7 @@ export default function List({
   useEffect(() => {
     refetch();
     setBookmarksList(lists?.bookmarks!);
-  }, [refetch, lists, lists?.bookmarks, prefs]);
+  }, [refetch, lists?.bookmarks]);
   const [listColor, setListColor] = useState<string>(color!);
   const [listEmoji, setListEmoji] = useState<string>(emoji ?? "");
 

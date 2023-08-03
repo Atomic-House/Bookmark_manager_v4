@@ -8,6 +8,7 @@ import { useFetchData } from "@/functions/queries";
 import { useAppSelector } from "@/store/hooks";
 import { usePathname } from "next/navigation";
 import { BoardWithTabs } from "@/types";
+import { Board } from "@prisma/client";
 export default function AltBoards() {
   const wsId = useAppSelector((state) => state.workspace.id);
   const pathname = usePathname();
@@ -25,12 +26,6 @@ export default function AltBoards() {
   useEffect(() => {
     refetch();
   }, [wsId, refetch]);
-  // if (isError || isLoadingError) {
-  //   console.error(error);
-  // }
-  // if (isLoading) {
-  //   return <Spinner />;
-  // }
   if (isSuccess && isStale) {
     return (
       <Disclosure>
@@ -59,7 +54,7 @@ export default function AltBoards() {
                 as={`div`}
                 className={`flex flex-col text-l gap-2 text-black`}
               >
-                {boards?.map((board: { id: string; name: string }) => (
+                {boards?.map((board: Board) => (
                   <Link
                     key={board.id}
                     as={`/main/home/board/${board.id}`}
@@ -71,6 +66,7 @@ export default function AltBoards() {
                     {board.name}
                   </Link>
                 ))}
+                {isLoading ? <Spinner /> : null}
               </Disclosure.Panel>
             </Transition>
           </div>

@@ -30,13 +30,14 @@ export default function DialogModal({
   type: "menu" | "button";
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const component = type === "menu"
-    ? (
-      <MenuItem  onClick={onOpen} className="flex gap-2">
+  const component =
+    type === "menu" ? (
+      <MenuItem onClick={onOpen} className="flex gap-2">
         {desc}
       </MenuItem>
-    )
-    : <Button onClick={onOpen}>{desc}</Button>;
+    ) : (
+      <Button onClick={onOpen}>{desc}</Button>
+    );
   return (
     <>
       {component}
@@ -53,7 +54,14 @@ export default function DialogModal({
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Cancel
             </Button>
-            <Button variant="outline" colorScheme="red" onClick={func}>
+            <Button
+              variant="outline"
+              colorScheme="red"
+              onClick={(e) => {
+                func(e);
+                onClose();
+              }}
+            >
               {isLoading ? <Spinner /> : ""} Delete
             </Button>
           </ModalFooter>

@@ -35,9 +35,8 @@ export default function Bookmark({
   if (isError) {
     console.error(error);
   }
-  const icon = `https://www.google.com/s2/favicons?domain=${
-    new URL(url).hostname
-  }&sz=256`;
+  const icon = `https://www.google.com/s2/favicons?domain=${new URL(url).hostname
+    }&sz=256`;
   if (listPrefs?.view === "icon") {
     return (
       <IconView

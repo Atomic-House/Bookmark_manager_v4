@@ -6,7 +6,6 @@ import Link from "next/link";
 import Image from "next/image";
 import Svg1 from "@/../public/Svg-01.svg";
 import { useState } from "react";
-import SwitchButton from "@/components/ThemeSwitch";
 import { BsTrashFill } from "@react-icons/all-files/bs/BsTrashFill";
 import Select from "@/components/Select";
 import AddClass from "@/components/Create/create";
@@ -16,7 +15,12 @@ import { useAppSelector } from "@/store/hooks";
 import DeleteBoardModal from "@/components/Modal";
 import { usePathname, useRouter } from "next/navigation";
 import { Box } from "@chakra-ui/react";
-export default function MySidebar({ ws }: { ws: any[] }) {
+import { WorkspaceWithBoards } from "@/types";
+export default function MySidebar({
+  ws,
+}: {
+  ws: WorkspaceWithBoards[] | undefined;
+}) {
   const [closed, setClosed] = useState(false);
   const [name, setName] = useState("");
   const [boardName, setBoardName] = useState("");
@@ -24,7 +28,6 @@ export default function MySidebar({ ws }: { ws: any[] }) {
   const pathname = usePathname();
   const router = useRouter();
   const boardId = pathname.replace("/main/home/board/", "");
-  const inbox = useAppSelector((state) => state.workspace.inboxId);
 
   const {
     mutateAsync,
@@ -52,7 +55,6 @@ export default function MySidebar({ ws }: { ws: any[] }) {
   if (isDeleteSuccess) {
     router.push("/main/home");
   }
-
   return (
     <div className="relative drop-shadow-lg">
       {" "}
@@ -136,7 +138,7 @@ export default function MySidebar({ ws }: { ws: any[] }) {
         </ul>
         <div className="flex sticky top-96 flex-col justify-center items-center py-2 text-2xl text-black transition-all duration-300 dark:text-white min-w-fit"></div>
         <div className="flex absolute bottom-0 gap-9 justify-between">
-          <Select collapsed={closed} ws={ws} />
+          <Select collapsed={closed} ws={ws!} />
         </div>
         <div
           onClick={() => setClosed(!closed)}
@@ -149,7 +151,6 @@ export default function MySidebar({ ws }: { ws: any[] }) {
             } duration-300 transition-all`}
           />
         </div>
-
         <AddClass
           add_edit={"Add a "}
           isLoading={isLoading}

@@ -30,9 +30,7 @@ export default function Page({ params }: { params: { id: string } }) {
     false,
   );
   //Loading state spinner
-  if (isTabsLoading) {
-    return <Spinner />;
-  }
+
   //return error on screen
   if (isTabsError) console.error(tabsError);
   if (isTabSuccess && isTabStale) {
@@ -69,6 +67,7 @@ export default function Page({ params }: { params: { id: string } }) {
             isTabsLoading={isTabsLoading}
             tabsError={tabsError}
           />
+          {isTabsLoading ? <Spinner /> : null}
         </div>
       </div>
     );

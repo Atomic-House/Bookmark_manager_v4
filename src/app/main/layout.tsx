@@ -8,6 +8,7 @@ import { redirect } from "next/navigation";
 import type { Metadata } from "next";
 import NextTopLoader from "nextjs-toploader";
 import { Inter } from "next/font/google";
+
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Bookmark Manager",

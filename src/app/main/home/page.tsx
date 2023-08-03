@@ -8,7 +8,11 @@ import UserTabs from "@/components/Tabs";
 import { useAppSelector } from "@/store/hooks";
 import { Inbox } from "@prisma/client";
 import { TabWithLists } from "@/types";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 export default function Page({ params }: { params: { id: string } }) {
+  const { status } = useSession();
+  const router = useRouter();
   const [name, setName] = useState("");
   const inboxId = useAppSelector((state) => state.workspace.inboxId);
   const id = params.id;
@@ -28,8 +32,11 @@ export default function Page({ params }: { params: { id: string } }) {
     isStale: isTabStale,
   } = useFetchData<Inbox & TabWithLists[]>("inbox", id, false);
   //Loading state spinner
-  if (isTabsLoading) {
+  if (isTabsLoading || status === "loading") {
     return <Spinner />;
+  }
+  if (status === "unauthenticated") {
+    router.push("/user/auth/signin");
   }
   //return error on screen
   if (isTabsError) console.error(tabsError);
