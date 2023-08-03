@@ -19,10 +19,10 @@ export const authOptions: NextAuthOptions = {
   ],
   pages: {
     signIn: "/user/auth/signin",
-    newUser: "/user/auth/signin",
+    newUser: "/user/welcome",
   },
   callbacks: {
-    async session({ session, user, newSession }) {
+    async session({ session, user, newSession, trigger }) {
       const workspaceLength = await prisma.workspace.count({
         where: { email: user.email },
       });

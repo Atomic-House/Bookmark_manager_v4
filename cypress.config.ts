@@ -2,7 +2,9 @@ import { defineConfig } from "cypress";
 require("dotenv").config();
 export default defineConfig({
   chromeWebSecurity: false,
+
   e2e: {
+    experimentalModifyObstructiveThirdPartyCode: true,
     setupNodeEvents(on, config) {
       // implement node event listeners here
     },

@@ -2,17 +2,17 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { FormEvent } from "react";
 
-export const useMutations = (
+export function useMutations<T>(
   mutationKey: string,
   category: string,
   name: string,
   url: string,
   color: string,
-  additionalParams: string | null | undefined,
+  CRUD: "create" | "read" | "update" | "delete" | string | null | undefined,
   fetchType: "GET" | "POST" | "PUT" | "DELETE" | "PATCH",
   parent?: string,
   parentId?: string,
-) => {
+) {
   const queryClient = useQueryClient();
   const {
     mutateAsync,
@@ -29,10 +29,12 @@ export const useMutations = (
     mutationKey: [mutationKey, category],
     mutationFn: async (e: FormEvent) => {
       e.preventDefault();
-      await fetch(`/api/data/${category}/${additionalParams}`, {
+      const res = await fetch(`/api/data/${category}/${CRUD}`, {
         method: fetchType,
         body: JSON.stringify({ name: name, url: url, color: color }),
       });
+      const data: T = await res.json();
+      return data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries([category]);
@@ -54,7 +56,7 @@ export const useMutations = (
     isPaused,
     isIdle,
   };
-};
+}
 export function useDnd(id: string) {
   const queryClient = useQueryClient();
   const { mutateAsync, mutate, isSuccess, isError, isLoading, error, reset } =
