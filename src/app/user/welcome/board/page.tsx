@@ -5,14 +5,15 @@ import { useMutations } from "@/functions/mutations";
 import { Transition } from "@headlessui/react";
 import { TiTick } from "@react-icons/all-files/ti/TiTick";
 import { Spinner } from "@chakra-ui/react";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { WorkspaceWithBoards } from "@/types";
 import { useAppSelector } from "@/store/hooks";
-import { redirect } from "next/navigation";
+import Link from "next/link";
+// import { redirect } from "next/navigation";
 export default function Page() {
   const [icon, setIcon] = useState("");
   const [name, setName] = useState("");
-  // const router = useRouter();
+  const router = useRouter();
 
   const wsId = useAppSelector((state) => state.workspace.id);
 
@@ -26,9 +27,9 @@ export default function Page() {
       wsId,
       "POST",
     );
-  if (isSuccess) {
-    redirect("/main/home/board/" + data?.id);
-  }
+  useEffect(() => {
+    router.push("/user/welcome/board");
+  }, [router, isSuccess]);
   return (
     <div className="flex flex-col">
       <div className="flex flex-col justify-center items-center">
@@ -70,10 +71,10 @@ export default function Page() {
           onClick={(e) => {
             mutateAsync(e);
             if (isSuccess) {
-              redirect("/main/home/board" + data?.id);
+              router.push("/main/home/board" + data?.id);
             }
           }}
-          className=" text-white bg-[#422AFB] p-4 rounded-lg"
+          className="flex transition-all duration-300 items-center justify-center text-white bg-[#422AFB] p-4 rounded-lg"
         >
           Create board
           {isLoading ? <Spinner /> : ""}
@@ -81,8 +82,15 @@ export default function Page() {
             show={isSuccess}
             enterFrom="opacity-0 scale-0 transition-all duration-200"
             enterTo="opacity-100 scale-100 transition-all duration-200"
+            className="flex gap-2 items-center"
           >
-            <TiTick />{" "}
+            <TiTick className="bg-green-500 rounded-full" />{" "}
+            <Link
+              className="p-2 mx-5 bg-purple-500 rounded duration-300 hover:bg-purple-600"
+              href={"/main/home/board" + data?.id}
+            >
+              Go to dashboard
+            </Link>
           </Transition>
         </button>
       </form>

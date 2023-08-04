@@ -32,13 +32,17 @@ export default function ProfileMenu({
   background?: string | null | undefined;
 }) {
   const id = useAppSelector((state) => state.workspace.id);
+
+  const inboxId = useAppSelector((state) => state.workspace.inboxId);
+  console.log("inboxid ", inboxId);
+
   const { mutateAsync, isSuccess, isLoading } = useMutations(
     "delete workspace",
     "workspaces",
     "",
     "",
     "",
-    id,
+    `${id}/${inboxId}`,
     "DELETE",
   );
 
@@ -46,7 +50,7 @@ export default function ProfileMenu({
     <Menu closeOnSelect={false}>
       <MenuButton>{display}</MenuButton>
       <MenuList flex={1} justifyContent={"center"} mt={0} rounded={"md"}>
-        <div className="w-full relative mb-7">
+        <div className="relative mb-7 w-full">
           <Image
             onClick={() => redirect("/main/profile")}
             src={
@@ -55,7 +59,7 @@ export default function ProfileMenu({
                 : "https://images.unsplash.com/photo-1574169208507-84376144848b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2079&q=80"
             }
             width={100}
-            className=" relative items-center object-cover w-full h-20 rounded"
+            className="object-cover relative items-center w-full h-20 rounded"
             height={30}
             alt="image"
           />

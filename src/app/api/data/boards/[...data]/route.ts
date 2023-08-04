@@ -22,19 +22,11 @@ export async function POST(
   const session = await getServerSession(authOptions);
   const body: { name: string } = await req.json();
   const [id] = params.data;
-  const boards = await prisma.workspace.update({
-    where: {
-      id: id,
-    },
+  const boards = await prisma.board.create({
     data: {
-      boards: {
-        create: [
-          {
-            name: body.name,
-            email: session?.user?.email,
-          },
-        ],
-      },
+      name: body.name,
+      email: session?.user?.email,
+      wsId: id,
     },
   });
   return NextResponse.json(boards);

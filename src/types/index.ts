@@ -15,6 +15,7 @@ export interface BoardWithTabs extends Board {
 
 export interface WorkspaceWithBoards extends Workspace {
   boards: BoardWithTabs[];
+  inbox: InboxWithTabs;
 }
 export interface UserWithWorkspace extends User {
   workspace: WorkspaceWithBoards[];

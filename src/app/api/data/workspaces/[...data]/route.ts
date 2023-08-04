@@ -24,45 +24,39 @@ export async function POST(
   const session = await getServerSession(authOptions);
   if (!session) throw new Error("Not authenticated");
   const body = await req.json();
-
-  const workspace = await prisma.user.update({
+  const user = await prisma.user.findUnique({
     where: {
       email: session.user?.email!,
     },
+  });
+  const workspace = await prisma.workspace.create({
     data: {
-      workspaces: {
+      userId: user?.id,
+      name: body.name,
+      email: session.user?.email!,
+      inbox: {
+        create: {
+          email: session.user?.email!,
+          tabs: {
+            create: [
+              {
+                name: "Tab",
+              },
+            ],
+          },
+        },
+      },
+      boards: {
         create: [
           {
-            name: body.name,
-            email: session.user?.email!,
-            inbox: {
-              create: {
-                email: session.user?.email!,
-                tabs: {
-                  create: [
-                    {
-                      name: "Tab",
-                    },
-                  ],
-                },
-              },
-            },
-            boards: {
+            name: "First Board",
+            tabs: {
               create: [
                 {
-                  name: "First Board",
-                  tabs: {
-                    create: [
-                      {
-                        name: "Tab",
-                        email: session.user?.email!,
-                        lists: {
-                          create: [
-                            { name: "List", email: session.user?.email },
-                          ],
-                        },
-                      },
-                    ],
+                  name: "Tab",
+                  email: session.user?.email!,
+                  lists: {
+                    create: [{ name: "List", email: session.user?.email }],
                   },
                 },
               ],

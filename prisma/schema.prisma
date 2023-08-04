@@ -70,22 +70,21 @@ model VerificationToken {
 }
 
 model Workspace {
-  name    String
-  userId  String
-  id      String  @id @default(cuid())
-  email   String?
-  boards  Board[]
-  inbox   Inbox?
-  inboxId String?
-  user    User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name   String
+  userId String
+  id     String  @id @default(cuid())
+  email  String?
+  boards Board[]
+  inbox  Inbox?
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Inbox {
-  id          String    @id @default(cuid())
-  name        String    @default("Inbox")
+  id          String     @id @default(cuid())
+  name        String     @default("Inbox")
   email       String?
-  workspaceId String    @unique
-  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  workspaceId String?    @unique
+  workspace   Workspace? @relation(fields: [workspaceId], references: [id])
   tabs        Tab[]
   userId      String?
 }

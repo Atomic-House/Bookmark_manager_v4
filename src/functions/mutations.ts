@@ -14,6 +14,7 @@ export function useMutations<T>(
   parentId?: string,
 ) {
   const queryClient = useQueryClient();
+
   const {
     mutateAsync,
     mutate,
