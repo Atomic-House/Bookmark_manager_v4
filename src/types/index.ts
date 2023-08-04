@@ -6,7 +6,9 @@ export interface ListsWithBookmarks extends List {
 export interface TabWithLists extends Tab {
   lists: ListsWithBookmarks[];
 }
-
+export interface InboxWithTabs extends TabWithLists {
+  tabs: TabWithLists[];
+}
 export interface BoardWithTabs extends Board {
   tabs: TabWithLists[];
 }

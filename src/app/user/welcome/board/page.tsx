@@ -5,13 +5,14 @@ import { useMutations } from "@/functions/mutations";
 import { Transition } from "@headlessui/react";
 import { TiTick } from "@react-icons/all-files/ti/TiTick";
 import { Spinner } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { WorkspaceWithBoards } from "@/types";
 import { useAppSelector } from "@/store/hooks";
+import { redirect } from "next/navigation";
 export default function Page() {
   const [icon, setIcon] = useState("");
   const [name, setName] = useState("");
-  const router = useRouter();
+  // const router = useRouter();
 
   const wsId = useAppSelector((state) => state.workspace.id);
 
@@ -26,7 +27,7 @@ export default function Page() {
       "POST",
     );
   if (isSuccess) {
-    router.push("/main/home/board/" + data?.id);
+    redirect("/main/home/board/" + data?.id);
   }
   return (
     <div className="flex flex-col">
@@ -69,7 +70,7 @@ export default function Page() {
           onClick={(e) => {
             mutateAsync(e);
             if (isSuccess) {
-              router.push("/main/home/board" + data?.id);
+              redirect("/main/home/board" + data?.id);
             }
           }}
           className=" text-white bg-[#422AFB] p-4 rounded-lg"

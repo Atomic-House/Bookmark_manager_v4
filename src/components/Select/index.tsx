@@ -70,9 +70,9 @@ export default function Select({
                       {workspace.name}
                     </span>
                     {selected ? (
-                      <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
+                      <span className="flex absolute inset-y-0 left-0 items-center pl-3 text-amber-600">
                         <AiFillCheckCircle
-                          className="h-5 w-5"
+                          className="w-5 h-5"
                           aria-hidden="true"
                         />
                       </span>
@@ -83,12 +83,12 @@ export default function Select({
             ))}
           </Listbox.Options>
         </Transition>
-        <Listbox.Button className="relative   cursor-default dark:bg-black dark:text-white bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+        <Listbox.Button className="relative py-2 pr-10 pl-3 text-left bg-white shadow-md cursor-default sm:text-sm dark:text-white dark:bg-black focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300">
           <span className="block truncate">
             {collapsed ? <AiOutlineSelect /> : selected?.name}
           </span>
-          <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-            <HiChevronUp className="h-5 w-5 text-gray-400" aria-hidden="true" />
+          <span className="flex absolute inset-y-0 right-0 items-center pr-2 pointer-events-none">
+            <HiChevronUp className="w-5 h-5 text-gray-400" aria-hidden="true" />
           </span>
         </Listbox.Button>
       </div>

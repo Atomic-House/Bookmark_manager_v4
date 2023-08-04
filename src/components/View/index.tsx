@@ -15,33 +15,10 @@ import {
 } from "@chakra-ui/react";
 import { ListPrefContext } from "../context/ListPrefContext";
 export default function Views() {
-  const views: {
-    title: string;
-    value: "list" | "card" | "icon";
-    icon: JSX.Element;
-    selected: boolean;
-  }[] = [
-    {
-      title: "List View",
-      value: "list",
-      icon: <MdFormatListBulleted />,
-      selected: false,
-    },
-    {
-      title: "Card View",
-      value: "card",
-      icon: <BiGridAlt />,
-      selected: false,
-    },
-    {
-      title: "Icon View",
-      value: "icon",
-      icon: <BsFillEyeFill />,
-      selected: false,
-    },
-  ];
   const [selected, setSelected] = useState("list");
+
   const { listPrefs, setListPrefs } = useContext(ListPrefContext);
+
   return (
     <Menu>
       <MenuButton
@@ -77,9 +54,8 @@ export default function Views() {
                     });
                     setSelected(view.value);
                   }}
-                  className={`flex justify-between p-2 hover:text-[#422AFB] duration-200 ${
-                    selected === view.value ? "text-[#422AFB]" : ""
-                  }`}
+                  className={`flex justify-between p-2 hover:text-[#422AFB] duration-200 ${selected === view.value ? "text-[#422AFB]" : ""
+                    }`}
                 >
                   <Flex alignItems={"center"}>
                     {view.icon}
@@ -104,3 +80,28 @@ export default function Views() {
     </Menu>
   );
 }
+const views: {
+  title: string;
+  value: "list" | "card" | "icon";
+  icon: JSX.Element;
+  selected: boolean;
+}[] = [
+    {
+      title: "List View",
+      value: "list",
+      icon: <MdFormatListBulleted />,
+      selected: false,
+    },
+    {
+      title: "Card View",
+      value: "card",
+      icon: <BiGridAlt />,
+      selected: false,
+    },
+    {
+      title: "Icon View",
+      value: "icon",
+      icon: <BsFillEyeFill />,
+      selected: false,
+    },
+  ];

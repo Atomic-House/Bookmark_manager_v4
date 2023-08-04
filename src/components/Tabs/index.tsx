@@ -25,16 +25,18 @@ export default function UserTabs({
   variant,
   id,
   boardId,
+  type,
 }: {
   variant: "unstyled" | "outline";
   id: string;
-  tabs: TabWithLists[] & Inbox;
+  tabs?: TabWithLists[];
   isTabsLoading: boolean;
   isTabSuccess: boolean;
   isTabStale: boolean;
   tabsError: any;
   isTabsError: boolean;
   boardId: string;
+  type?: "board" | "inbox";
 }) {
   const [name, setName] = useState("");
   const {
@@ -56,7 +58,7 @@ export default function UserTabs({
     "lists",
     name,
     "",
-    `${id}/${boardId}`,
+    type === "inbox" ? id : `${id}/${boardId}`,
     "",
     "POST",
   );
@@ -66,8 +68,8 @@ export default function UserTabs({
   if (isTabSuccess && isTabStale) {
     return (
       <Tabs variant={variant} key={id}>
-        <TabList className="flex gap-3 justify-between w-full ">
-          {tabs?.map((tab:TabWithLists) => (
+        <TabList className="flex gap-3 justify-between w-full">
+          {tabs?.map((tab: TabWithLists) => (
             <Tab className="m-2" key={tab.id}>
               {tab.name}
             </Tab>
@@ -92,9 +94,7 @@ export default function UserTabs({
           borderRadius="1px"
         />
         <TabPanels>
-          {tabs?.map((tab:TabWithLists) => (
-            <PanelTab key={tab.id} {...tab}/>
-          ))}
+          {tabs?.map((tab: TabWithLists) => <PanelTab key={tab.id} {...tab} />)}
         </TabPanels>
       </Tabs>
     );

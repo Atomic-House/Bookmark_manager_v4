@@ -35,16 +35,7 @@ export default function Filter() {
     { name: string; color: string }[]
   >([{ name: "", color: "" }]);
   const [selectedLinks, setSelectedLinks] = useState<string[]>([]);
-  // console.log(selectedTags);
-  useEffect(() => {
-    setListPrefs({
-      ...listPrefs,
-      filter: {
-        tags: [...selectedTags.map((t) => t.name)],
-        linksType: [...selectedLinks],
-      },
-    });
-  }, [selectedTags, selectedLinks, listPrefs, setListPrefs]);
+  console.log(listPrefs);
 
   return (
     <Menu closeOnSelect={false}>
@@ -81,9 +72,16 @@ export default function Filter() {
                 <div
                   key={index}
                   onClick={() => {
+                    setListPrefs({
+                      ...listPrefs,
+                      filter: {
+                        tags: [...selectedTags.map((t) => t.name)],
+                        linksType: [...selectedLinks],
+                      },
+                    });
                     setSelectedTags([...new Set([...selectedTags, tag])]);
                   }}
-                  className="border-2 border-slate-500 rounded-full text-xs p-1 flex justify-center items-center cursor-pointer"
+                  className="flex justify-center items-center p-1 text-xs rounded-full border-2 cursor-pointer border-slate-500"
                 >
                   <Box
                     bg={tag.color}
@@ -114,8 +112,8 @@ export default function Filter() {
 
         <MenuDivider />
         <MenuGroup>
-          <div className="float-right flex gap-5">
-            <button className="hover:text-red-900 duration-300 ">Reset</button>
+          <div className="flex float-right gap-5">
+            <button className="duration-300 hover:text-red-900">Reset</button>
             <button className="bg-[#422AFB] py-2 rounded-full px-9 text-white hover:bg-blue-600 duration-300">
               Apply
             </button>

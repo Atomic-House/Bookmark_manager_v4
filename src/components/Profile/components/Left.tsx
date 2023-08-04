@@ -19,7 +19,7 @@ export default function Left() {
   const [lastName, setLastName] = useState(session?.user?.email?.split(" ")[1]);
   const [username, setUsername] = useState("");
   const [image, setImage] = useState(session?.user?.image);
-  const [bgImage, setBgImage] = useState(user?.userPreferences.background);
+  const [bgImage, setBgImage] = useState(user?.userPreferences?.background);
   useEffect(() => {
     refetch();
   }, [refetch, bgImage, user]);

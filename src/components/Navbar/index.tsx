@@ -33,7 +33,7 @@ export default function Navbar() {
         <Notification />
         <Preferences />
         <ProfileMenu
-          background={user?.userPreferences.background}
+          background={user?.userPreferences?.background}
           image={
             session?.user?.image
               ? session.user.image

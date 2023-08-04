@@ -5,15 +5,16 @@ export async function GET(
   req: Request,
   { params }: { params: { data: string[] } },
 ) {
-  const [wsId, data] = params.data;
-  const inbox = await prisma.inbox.findFirst({
+  const [inboxId] = params.data;
+  const inbox = await prisma.inbox.findUnique({
     where: {
-      workspaceId: wsId,
+      id: inboxId,
     },
     include: {
       tabs: true,
     },
   });
+
   return NextResponse.json(inbox);
 }
 export async function POST(

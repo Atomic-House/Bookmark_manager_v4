@@ -7,7 +7,7 @@ import { useFetchData } from "@/functions/queries";
 import UserTabs from "@/components/Tabs";
 import { useAppSelector } from "@/store/hooks";
 import { Inbox } from "@prisma/client";
-import { TabWithLists } from "@/types";
+import { InboxWithTabs, TabWithLists } from "@/types";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 export default function Page({ params }: { params: { id: string } }) {
@@ -15,6 +15,8 @@ export default function Page({ params }: { params: { id: string } }) {
   const router = useRouter();
   const [name, setName] = useState("");
   const inboxId = useAppSelector((state) => state.workspace.inboxId);
+  console.log(inboxId);
+
   const id = params.id;
   const {
     mutateAsync: createTab,
@@ -24,24 +26,24 @@ export default function Page({ params }: { params: { id: string } }) {
     error: createTabError,
   } = useAddTabsToInbox(inboxId, name);
   const {
-    data: tabs,
+    data: inbox,
     isLoading: isTabsLoading,
     isError: isTabsError,
     error: tabsError,
     isSuccess: isTabSuccess,
     isStale: isTabStale,
-  } = useFetchData<Inbox & TabWithLists[]>("inbox", id, false);
+  } = useFetchData<InboxWithTabs>("inbox", inboxId, false);
   //Loading state spinner
-  if (isTabsLoading || status === "loading") {
-    return <Spinner />;
-  }
+  // if (isTabsLoading || status === "loading") {
+  //   return <Spinner />;
+  // }
   if (status === "unauthenticated") {
     router.push("/user/auth/signin");
   }
   //return error on screen
   if (isTabsError) console.error(tabsError);
   if (isTabSuccess && isTabStale) {
-    if (tabs?.length === 0) {
+    if (inbox?.tabs?.length === 0) {
       return (
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           <div>Empty...</div>
@@ -63,11 +65,12 @@ export default function Page({ params }: { params: { id: string } }) {
       <div>
         <div id="tabs">
           <UserTabs
-            boardId={id}
+            type="inbox"
+            boardId={inboxId}
             variant="unstyled"
             key={id}
             id={id}
-            tabs={tabs!}
+            tabs={inbox?.tabs}
             isTabsError={isTabsError}
             isTabSuccess={isTabSuccess}
             isTabStale={isTabStale}
