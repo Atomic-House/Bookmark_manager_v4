@@ -5,6 +5,7 @@ import { useContext } from "react";
 import { ListPrefContext } from "../context/ListPrefContext";
 import IconView from "./components/views/Icon";
 import ListView from "./components/views/List";
+import CardView from "./components/views/Card";
 
 export default function Bookmark({
   name,
@@ -28,15 +29,17 @@ export default function Bookmark({
     "",
     id,
     "PUT",
-  );
+  )
+
   if (isSuccess) {
     console.log("successfully deleted");
   }
   if (isError) {
     console.error(error);
   }
-  const icon = `https://www.google.com/s2/favicons?domain=${new URL(url).hostname
-    }&sz=256`;
+  const icon = `https://www.google.com/s2/favicons?domain=${
+    new URL(url).hostname
+  }&sz=256`;
   if (listPrefs?.view === "icon") {
     return (
       <IconView
@@ -57,6 +60,23 @@ export default function Bookmark({
   if (listPrefs?.view === "list") {
     return (
       <ListView
+        icon={icon}
+        mutateAsync={mutateAsync}
+        description={description}
+        name={name}
+        title={title}
+        url={url}
+        favicon={favicon}
+        index={index}
+        id={id}
+        createdAt={createdAt}
+        {...bookmarkProps}
+      />
+    );
+  }
+  if (listPrefs?.view === "card") {
+    return (
+      <CardView
         icon={icon}
         mutateAsync={mutateAsync}
         description={description}

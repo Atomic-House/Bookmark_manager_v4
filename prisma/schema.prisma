@@ -178,6 +178,7 @@ model Bookmark {
   isDeleted   Boolean   @default(false)
   listId      String
   favicon     String?
+  preview     String?
   tags        String[]
   createdAt   DateTime? @default(now())
   email       String?

@@ -23,7 +23,7 @@ export default function IconView({
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className="flex justify-between items-center m-2 gap-3"
+          className="flex gap-3 justify-between items-center m-2"
         >
           <Link href={url}>
             <Image
@@ -33,8 +33,6 @@ export default function IconView({
               height={30}
             />
           </Link>
-
-          <EditBookmarkOptions onClickDelete={mutateAsync} />
         </div>
       )}
     </Draggable>

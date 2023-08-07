@@ -9,7 +9,6 @@ import {
   TabPanels,
   Tabs,
 } from "@chakra-ui/react";
-import { HoverHandlers } from "framer-motion";
 import Image from "next/image";
 import { MouseEventHandler, useState } from "react";
 import { BiTrashAlt } from "@react-icons/all-files/bi/BiTrashAlt";
@@ -18,30 +17,16 @@ export default function Page() {
   const [listId, setListId] = useState("");
   const [bookmarkId, setBookmarkId] = useState("");
   const [boardId, setBoardId] = useState("");
-  const {
-    data: lists,
-    isError: isListError,
-    isLoading: isListLoading,
-    isSuccess: isListSuccess,
-  } = useFetchTrash("lists");
-  const {
-    data: bookmarks,
-    isError: isBookmarkError,
-    isLoading: isBookmarkLoading,
-    isSuccess: isBookmarkSuccess,
-  } = useFetchTrash("bookmarks");
-  const {
-    data: boards,
-    isError: isBoardError,
-    isLoading: isBoardLoading,
-    isSuccess: isBoardSuccess,
-  } = useFetchTrash("boards");
-  const { mutateAsync: restoreList, isLoading: isListRestoreLoading } =
-    useRestoreTrash("lists", listId);
-  const { mutateAsync: restoreBookmark, isLoading: isBookmarkRestoreLoading } =
-    useRestoreTrash("bookmarks", bookmarkId);
-  const { mutateAsync: restoreBoard, isLoading: isBoardRestoreLoading } =
-    useRestoreTrash("boards", boardId);
+  const { data: lists, isLoading: isListLoading } = useFetchTrash("lists");
+  const { data: bookmarks, isLoading: isBookmarkLoading } =
+    useFetchTrash("bookmarks");
+  const { data: boards, isLoading: isBoardLoading } = useFetchTrash("boards");
+  const { mutateAsync: restoreList } = useRestoreTrash("lists", listId);
+  const { mutateAsync: restoreBookmark } = useRestoreTrash(
+    "bookmarks",
+    bookmarkId,
+  );
+  const { mutateAsync: restoreBoard } = useRestoreTrash("boards", boardId);
   return (
     <div className="m-5">
       <h1 className="text-2xl mb-6">Trash</h1>

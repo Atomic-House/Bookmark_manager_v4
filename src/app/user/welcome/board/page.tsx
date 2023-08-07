@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { IconPicker, iconList, IconPickerItem } from "react-fa-icon-picker";
+// import { iconList, IconPicker, IconPickerItem } from "react-fa-icon-picker";
 import { useMutations } from "@/functions/mutations";
 import { Transition } from "@headlessui/react";
 import { TiTick } from "@react-icons/all-files/ti/TiTick";
@@ -54,19 +54,7 @@ export default function Page() {
         />
         <p>Choose any logo for your board</p>
         <span className="flex gap-3 items-center mb-4 text-red-400">
-          <IconPicker value={icon} onChange={setIcon} />
-
-          {iconList.slice(0, 10).map((icon, index) => (
-            <div key={index}>
-              <IconPickerItem
-                icon={icon}
-                size={24}
-                color="#ed82bd"
-                onClick={(v: string) => setIcon(v)}
-              />
-            </div>
-          ))}
-        </span>
+       </span>
         <button
           onClick={(e) => {
             mutateAsync(e);
@@ -87,7 +75,7 @@ export default function Page() {
             <TiTick className="bg-green-500 rounded-full" />{" "}
             <Link
               className="p-2 mx-5 bg-purple-500 rounded duration-300 hover:bg-purple-600"
-              href={"/main/home/board" + data?.id}
+              href={"/main/home/"}
             >
               Go to dashboard
             </Link>
@@ -97,3 +85,17 @@ export default function Page() {
     </div>
   );
 }
+//to be added later
+ //          <IconPicker value={icon} onChange={setIcon} />
+ //
+ //          {iconList.slice(0, 10).map((icon, index) => (
+ //            <div key={index}>
+ //              <IconPickerItem
+ //                icon={icon}
+ //                size={24}
+ //                color="#ed82bd"
+ //                onClick={(v: string) => setIcon(v)}
+ //              />
+ //            </div>
+ //          ))}
+ // 

@@ -59,9 +59,8 @@ export default function MySidebar({
     <div className="relative drop-shadow-lg">
       {" "}
       <div
-        className={`h-screen ${
-          closed ? "w-16" : "w-64"
-        } bg-white dark:bg-slate-900  flex flex-col transition-all duration-300 ease-in-out`}
+        className={`h-screen ${closed ? "w-16" : "w-64"
+          } bg-white dark:bg-slate-900  flex flex-col transition-all duration-300 ease-in-out`}
       >
         <Link
           href={`/main/home`}
@@ -108,11 +107,10 @@ export default function MySidebar({
           </Box>
 
           <Box
-            color={`${
-              !pathname.includes("board") && !pathname.includes("trash")
+            color={`${!pathname.includes("board") && !pathname.includes("trash")
                 ? "blue"
                 : ""
-            }`}
+              }`}
             className={
               "flex justify-between items-center py-4 text-xl transition-all ease-in "
             }
@@ -146,9 +144,8 @@ export default function MySidebar({
         >
           {" "}
           <MdKeyboardArrowLeft
-            className={`${
-              closed ? "rotate-180" : ""
-            } duration-300 transition-all`}
+            className={`${closed ? "rotate-180" : ""
+              } duration-300 transition-all`}
           />
         </div>
         <AddClass

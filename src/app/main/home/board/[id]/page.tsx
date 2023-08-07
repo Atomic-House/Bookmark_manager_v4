@@ -14,8 +14,6 @@ export default function Page({ params }: { params: { id: string } }) {
     mutateAsync: createTab,
     isLoading: isCreateTabLoading,
     isSuccess,
-    isError: isCreateTabError,
-    error: createTabError,
   } = useMutations("create tabs", "tabs", name, "", "", id, "POST");
   const {
     data: tabs,

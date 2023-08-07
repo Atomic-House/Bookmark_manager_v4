@@ -1,1 +1,1 @@
-
+describe("Sidebar checking", () => { });

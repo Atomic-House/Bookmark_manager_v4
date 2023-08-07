@@ -32,10 +32,7 @@ export default function ProfileMenu({
   background?: string | null | undefined;
 }) {
   const id = useAppSelector((state) => state.workspace.id);
-
   const inboxId = useAppSelector((state) => state.workspace.inboxId);
-  console.log("inboxid ", inboxId);
-
   const { mutateAsync, isSuccess, isLoading } = useMutations(
     "delete workspace",
     "workspaces",

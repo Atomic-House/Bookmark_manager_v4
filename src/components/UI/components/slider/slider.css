@@ -1,0 +1,33 @@
+/***** Chrome, Safari, Opera, and Edge Chromium *****/
+/***** Track Styles *****/
+input[type="range"]::-webkit-slider-runnable-track {
+  background: #c9d9ff;
+  height: 0.2rem;
+}
+/***** Thumb Styles *****/
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  border-radius: 2rem;
+  margin-top: -12px; /* Centers thumb on the track */
+  background-color: #422afb;
+  height: 2.3rem;
+  width: 1rem;
+}
+
+/***** Firefox *****/
+/***** Track Styles *****/
+input[type="range"]::-moz-range-track {
+  background: #c9d9ff;
+  height: 0.2rem;
+}
+/***** Thumb Styles *****/
+
+input[type="range"]::-moz-range-thumb {
+  border: none; /*Removes extra border that FF applies*/
+  border-radius: 2rem; /*Removes default border-radius that FF applies*/
+  background-color: #422afb;
+
+  height: 2.3rem;
+  width: 1rem;
+}

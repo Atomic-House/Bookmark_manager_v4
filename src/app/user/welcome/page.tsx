@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { IconPicker, iconList, IconPickerItem } from "react-fa-icon-picker";
+// import { IconPicker, iconList, IconPickerItem } from "react-fa-icon-picker";
 import { useMutations } from "@/functions/mutations";
 import { Transition } from "@headlessui/react";
 import { TiTick } from "@react-icons/all-files/ti/TiTick";
@@ -51,20 +51,7 @@ export default function Page() {
           onChange={(e) => setName(e.target.value)}
         />
         <p>Choose any logo for your workspace</p>
-        <span className="flex gap-3 items-center mb-4 text-red-400">
-          <IconPicker value={icon} onChange={setIcon} />
-
-          {iconList.slice(0, 10).map((icon, index) => (
-            <div key={index}>
-              <IconPickerItem
-                icon={icon}
-                size={24}
-                color="#ed82bd"
-                onClick={(v: string) => setIcon(v)}
-              />
-            </div>
-          ))}
-        </span>
+        <span className="flex gap-3 items-center mb-4 text-red-400"></span>
         <button
           onClick={(e) => {
             mutateAsync(e);
@@ -89,3 +76,17 @@ export default function Page() {
     </div>
   );
 }
+//to be added later
+//          <IconPicker value={icon} onChange={setIcon} />
+//
+//          {iconList.slice(0, 10).map((icon, index) => (
+//            <div key={index}>
+//              <IconPickerItem
+//                icon={icon}
+//                size={24}
+//                color="#ed82bd"
+//                onClick={(v: string) => setIcon(v)}
+//              />
+//            </div>
+//          ))}
+//

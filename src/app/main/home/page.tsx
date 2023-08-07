@@ -1,13 +1,11 @@
 "use client";
-import { Spinner } from "@chakra-ui/react";
 import { useState } from "react";
 import AddClass from "@/components/Create/create";
 import { useAddTabsToInbox, useMutations } from "@/functions/mutations";
 import { useFetchData } from "@/functions/queries";
 import UserTabs from "@/components/Tabs";
 import { useAppSelector } from "@/store/hooks";
-import { Inbox } from "@prisma/client";
-import { InboxWithTabs, TabWithLists } from "@/types";
+import { InboxWithTabs } from "@/types";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 export default function Page({ params }: { params: { id: string } }) {
@@ -22,8 +20,6 @@ export default function Page({ params }: { params: { id: string } }) {
     mutateAsync: createTab,
     isLoading: isCreateTabLoading,
     isSuccess,
-    isError: isCreateTabError,
-    error: createTabError,
   } = useAddTabsToInbox(inboxId, name);
   const {
     data: inbox,
@@ -33,10 +29,6 @@ export default function Page({ params }: { params: { id: string } }) {
     isSuccess: isTabSuccess,
     isStale: isTabStale,
   } = useFetchData<InboxWithTabs>("inbox", inboxId, false);
-  //Loading state spinner
-  // if (isTabsLoading || status === "loading") {
-  //   return <Spinner />;
-  // }
   if (status === "unauthenticated") {
     router.push("/user/auth/signin");
   }

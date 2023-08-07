@@ -12,7 +12,15 @@ export async function GET(
       wsId: id,
       isDeleted: false,
     },
+    include: {
+      tabs: {
+        where: {
+          isDeleted: false,
+        },
+      },
+    },
   });
+
   return NextResponse.json(boards);
 }
 export async function POST(

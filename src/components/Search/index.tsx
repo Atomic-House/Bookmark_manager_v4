@@ -32,7 +32,12 @@ export default function NavSearch() {
     setResults(items);
   }
   return (
-    <div className="sticky" onMouseEnter={onOpen} onClick={onToggle}>
+    <div
+      className="sticky"
+      onMouseEnter={onOpen}
+      // onClick={onToggle}
+      onMouseLeave={onClose}
+    >
       <div className="bg-slate-200 flex items-center p-2 px-4 rounded-full">
         <BiSearch />
 
@@ -59,9 +64,8 @@ export default function NavSearch() {
         {isOpen && (
           <div className="flex flex-col gap-5 justify-center p-2 bg-sky-400 opacity-75 rounded-lg absolute z-50">
             {results?.map((r) => {
-              const icon = `https://www.google.com/s2/favicons?domain=${
-                new URL(r.url).hostname
-              }&sz=256`;
+              const icon = `https://www.google.com/s2/favicons?domain=${new URL(r.url).hostname
+                }&sz=256`;
 
               return (
                 <Link

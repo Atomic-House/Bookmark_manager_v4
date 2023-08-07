@@ -13,10 +13,10 @@ import {
   Radio,
   RadioGroup,
 } from "@chakra-ui/react";
+
 import { ListPrefContext } from "../context/ListPrefContext";
 export default function Views() {
   const [selected, setSelected] = useState("list");
-
   const { listPrefs, setListPrefs } = useContext(ListPrefContext);
 
   return (

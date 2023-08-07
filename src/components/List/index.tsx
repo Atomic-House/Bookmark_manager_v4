@@ -66,6 +66,7 @@ export default function List({
               <Box
                 key={id}
                 className={`m-1 h-fit bg-[${listColor}] transition  duration-300 dark:bg-slate-900 p-4 `}
+                zIndex={1}
                 boxShadow={"md"}
                 {...provided.droppableProps}
                 bgColor={
