@@ -20,7 +20,7 @@ import { TiTick } from "@react-icons/all-files/ti/TiTick";
 export default function Sidebar({
   ws,
 }: {
-  ws: WorkspaceWithBoards[] | undefined;
+  ws?: WorkspaceWithBoards[] | undefined;
 }) {
   //Custom mutation hook which adds a board
 

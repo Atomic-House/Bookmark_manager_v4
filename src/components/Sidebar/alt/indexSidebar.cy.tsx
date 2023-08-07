@@ -13,7 +13,7 @@ describe("<Sidebar />", () => {
     cy.mount(
       // <ChakraProvider>
       <Providers>
-        <Sidebar ws={rawData}>Rest of the app here</Sidebar>,
+        <Sidebar>Rest of the app here</Sidebar>,
       </Providers>,
     );
   });
