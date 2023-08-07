@@ -9,10 +9,6 @@ export default function CardView({
   id,
   name,
   url,
-  icon,
-  favicon,
-  title,
-  index,
   preview,
   mutateAsync,
 }: Bookmark & {

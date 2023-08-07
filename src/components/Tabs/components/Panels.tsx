@@ -25,7 +25,6 @@ export default function PanelTab({ id, lists }: TabWithLists) {
   } = useFetchData<ListsWithBookmarks[]>("lists", id, false);
   //This saves the lists to operate DND
   //operations on it.
-  // const [nList, setNList] = useState<ListsWithBookmarks[]>(listNow);
   const [listPrefs, setListPrefs] = useState<ListPrefs | undefined>();
   const { mutateAsync, isSuccess, isLoading } = useDnd(id);
   const {
@@ -45,11 +44,6 @@ export default function PanelTab({ id, lists }: TabWithLists) {
     "tabs",
     id,
   );
-  // useEffect(() => {
-  //   refetch();
-  //   // setNList(listNow);
-  // }, [refetch, listNow]);
-
   if (isListError || isError) {
     return <TabPanel>{"listError"}</TabPanel>;
   }
@@ -63,7 +57,6 @@ export default function PanelTab({ id, lists }: TabWithLists) {
     );
   }
   const handleDragEnd = (result: DropResult) => {
-    const { destination, source, draggableId } = result;
     console.log(result);
   };
 
@@ -87,7 +80,11 @@ export default function PanelTab({ id, lists }: TabWithLists) {
             <Filter />
             <Views />
           </div>
-          <div className="grid flex-wrap grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          <div
+            className={`grid flex-wrap  gap-25 ${
+              listPrefs?.view === "card" ? "sm:grid-cols-1" : "grid-cols-2"
+            }`}
+          >
             <DragDropContext onDragEnd={handleDragEnd}>
               {listNow
                 ?.sort((a, b) => a.name.localeCompare(b.name))

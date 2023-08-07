@@ -6,7 +6,6 @@ import { ListPrefContext } from "../context/ListPrefContext";
 import IconView from "./components/views/Icon";
 import ListView from "./components/views/List";
 import CardView from "./components/views/Card";
-
 export default function Bookmark({
   name,
   id,

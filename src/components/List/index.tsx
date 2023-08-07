@@ -29,9 +29,7 @@ export default function List({
   const {
     data: lists,
     isLoading: isLoadingBookmarks,
-    isSuccess,
     isError,
-    isStale,
     isLoadingError,
     refetch,
     error,
@@ -101,7 +99,7 @@ export default function List({
                   />
                 </div>
               </div>
-              <div>
+              <div className={`flex ${listPrefs?.view === "card" ? "" : ""}`}>
                 {bookmarksList
                   ?.sort((a, b): any => {
                     if (prefs?.sort === "a_z") {
