@@ -1,5 +1,4 @@
 "use client";
-import { MdNaturePeople } from "@react-icons/all-files/md/MdNaturePeople";
 import { AiOutlineTeam } from "@react-icons/all-files/ai/AiOutlineTeam";
 import { BiTrashAlt } from "@react-icons/all-files/bi/BiTrashAlt";
 import { AiFillSetting } from "@react-icons/all-files/ai/AiFillSetting";
@@ -7,10 +6,9 @@ import { AiFillLayout } from "@react-icons/all-files/ai/AiFillLayout";
 import { AiOutlineDoubleLeft } from "@react-icons/all-files/ai/AiOutlineDoubleLeft";
 import { MdInbox } from "@react-icons/all-files/md/MdInbox";
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import SelectWorkspace from "./component/Select";
-import { Workspace } from "@prisma/client";
 import Create from "@/components/Create/alt";
 import { BiBuildingHouse } from "@react-icons/all-files/bi/BiBuildingHouse";
 import { useAppSelector } from "@/store/hooks";
@@ -47,7 +45,6 @@ export default function Sidebar({
     wsId,
     "POST",
   );
-  console.log(wsId);
 
   const { data: boardsArray, refetch } = useFetchData<BoardWithTabs[]>(
     "boards",
@@ -73,8 +70,9 @@ export default function Sidebar({
   return (
     // This is the full container for sidebar and it's contents
     <div
-      className={`rounded-2xl transition-all duration-300 bg-white h-[100vh] drop-shadow-xl ${collapse ? "w-[5vw]" : "w-[18vw]"
-        }`}
+      className={`rounded-2xl transition-all duration-300 bg-white h-[100vh] drop-shadow-xl ${
+        collapse ? "w-[5vw]" : "w-[18vw]"
+      }`}
     >
       <div className="flex justify-center font-semibold mx-4 my-6 text-2xl text-[#422AFB] ">
         {collapse ? <BiBuildingHouse /> : "Brand"}
@@ -87,14 +85,16 @@ export default function Sidebar({
           <Link
             href={nav.link}
             key={nav.id}
-            className={`flex gap-2 justify-start items-center p-2 m-4 rounded-lg duration-300 text-slate-400 hover:text-slate-800 hover:bg-slate-100 ${pathname === nav.link ? "bg-blue-100" : ""
-              }`}
+            className={`flex gap-2 justify-start items-center p-2 m-4 rounded-lg duration-300 text-slate-400 hover:text-slate-800 hover:bg-slate-100 ${
+              pathname === nav.link ? "bg-blue-100" : ""
+            }`}
           >
             <nav.icon
-              className={`text-2xl ${pathname.includes("trash") && nav.link === "/main/trash"
+              className={`text-2xl ${
+                pathname.includes("trash") && nav.link === "/main/trash"
                   ? "text-red-500"
                   : ""
-                }`}
+              }`}
             />
 
             {!collapse && <span className="font-semibold">{nav.name}</span>}
@@ -116,7 +116,7 @@ export default function Sidebar({
             submitBtnStyle="bg-[#422AFB]"
             bodyStyle="bg-slate-50  p-6 rounded-lg flex flex-col "
             headerStyle="text-xl font-semibold"
-            header={<p> New board</p>}
+            header={<p>New board</p>}
             contentStyle="bg-slate-50 mb-4 mt-2 rounded-lg  "
             content={<p>Create a new board</p>}
             inputStyle="bg-slate-50 p-2 rounded-xl placeholder:text-slate-400"
@@ -135,9 +135,11 @@ export default function Sidebar({
             key={board.id}
             //remove this on mouse over after testing
             onMouseOver={() => onMouseOver(board.id)}
-            className={`flex justify-between duration-300 p-1 ${mouseOver === board.id ? "bg-slate-100 " : ""
-              } ${boardId === board.id ? "bg-blue-100 scale-[1.01] rounded-lg" : ""
-              }
+            className={`flex justify-between duration-300 p-1 ${
+              mouseOver === board.id ? "bg-slate-100 " : ""
+            } ${
+              boardId === board.id ? "bg-blue-100 scale-[1.01] rounded-lg" : ""
+            }
               `}
           >
             <div className="flex gap-2 items-center">
@@ -160,8 +162,9 @@ export default function Sidebar({
         ))}
       </div>
       <div
-        className={`float-right sticky top-16 p-2 m-3 text-2xl text-white bg-violet-700 rounded-lg  transition-all duration-300 ${collapse ? "rotate-180" : ""
-          }`}
+        className={`float-right sticky top-16 p-2 m-3 text-2xl text-white bg-violet-700 rounded-lg  transition-all duration-300 ${
+          collapse ? "rotate-180" : ""
+        }`}
         onClick={() => toggleCollapse(!collapse)}
       >
         <AiOutlineDoubleLeft className={``} />

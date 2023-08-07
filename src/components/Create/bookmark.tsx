@@ -40,6 +40,7 @@ export default function AddClass({
   useEffect(() => {
     if (isSuccess) {
       setName("");
+      console.log("Successfully created");
     }
     setName(name);
   }, [mutateAsync, isSuccess, name]);

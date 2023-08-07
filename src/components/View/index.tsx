@@ -57,7 +57,7 @@ export default function Views() {
                   className={`flex justify-between p-2 hover:text-[#422AFB] duration-200 ${selected === view.value ? "text-[#422AFB]" : ""
                     }`}
                 >
-                  <Flex alignItems={"center"}>
+                  <Flex cursor={'pointer'} alignItems={"center"}>
                     {view.icon}
                     {view.title}
                   </Flex>{" "}

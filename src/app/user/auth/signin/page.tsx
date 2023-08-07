@@ -1,7 +1,7 @@
 "use client";
 import { FcGoogle } from "@react-icons/all-files/fc/FcGoogle";
 import { Input, useColorMode } from "@chakra-ui/react";
-import { FormEvent, FormEventHandler, useState } from "react";
+import { FormEvent, FormEventHandler, useEffect, useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import Link from "next/link";
@@ -11,6 +11,8 @@ import Image from "next/image";
 import { Checkbox } from "@chakra-ui/react";
 import { getCsrfToken } from "next-auth/react";
 export default function Page() {
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => setIsClient(true), []);
   const { data: session } = useSession();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

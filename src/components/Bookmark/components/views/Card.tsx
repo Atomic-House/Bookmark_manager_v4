@@ -13,6 +13,7 @@ export default function CardView({
   favicon,
   title,
   index,
+  preview,
   mutateAsync,
 }: Bookmark & {
   index: number;
@@ -25,12 +26,7 @@ export default function CardView({
         <div>
           {" "}
           <Link href={url} target="_blank" className="flex gap-3">
-            <Image
-              src={favicon ? favicon : icon}
-              width={30}
-              alt={name!}
-              height={30}
-            />
+            <Image src={preview!} width={90} alt={name!} height={50} />
           </Link>
         </div>
         <div className="flex items-center">

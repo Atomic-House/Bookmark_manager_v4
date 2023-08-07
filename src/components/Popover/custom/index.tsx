@@ -108,7 +108,6 @@ export default function Popover({
       ],
     },
   ];
-  console.log(colors.map((color) => `bg-${color}-500`));
 
   return (
     <>

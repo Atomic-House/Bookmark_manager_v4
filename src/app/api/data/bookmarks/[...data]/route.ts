@@ -55,6 +55,7 @@ export async function POST(
               title: result.ogTitle,
               description: result.ogDescription,
               email: session?.user?.email,
+              preview: result?.ogImage?.at(0)?.url,
             },
           ],
         },

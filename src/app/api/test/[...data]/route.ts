@@ -16,9 +16,7 @@ export async function GET(
   const lk =
     "https://www.taniarascia.com/writing-an-emulator-in-javascript-chip8/";
   const nurl = new URL(url5).toString();
-  // const data = await getMetaData(url);
-  // const data = await urlMetadata(url4);
-  const { result, error } = await ogs({ url: url4 });
+  const { result, error } = await ogs({ url: lk });
   const [id, name] = params.data;
   const json = JSON.parse(JSON.stringify(result));
   return NextResponse.json({
