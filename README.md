@@ -81,7 +81,6 @@ Usage and nesting overview structure
     │   ├── main
     │   └── user
     ├── components
-    │   ├── Accordion
     │   ├── Bookmark
     │   ├── context
     │   ├── Create
@@ -95,7 +94,6 @@ Usage and nesting overview structure
     │   ├── Preferences
     │   ├── Profile
     │   ├── Search
-    │   ├── Select
     │   ├── Sidebar
     │   ├── Sort
     │   ├── Tabs
