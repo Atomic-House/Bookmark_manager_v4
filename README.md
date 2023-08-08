@@ -67,18 +67,6 @@ Usage and nesting overview structure
 
 ## Folder structure and description
 
-- src
-  - app
-    - api
-  - components
-  - functions
-  - hooks
-  - pages
-  - utils
-  - components
-  - functions
-  - types
-
 ```bash
 .
 ├── cypress
