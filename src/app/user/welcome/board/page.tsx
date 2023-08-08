@@ -29,7 +29,7 @@ export default function Page() {
     if (isSuccess) {
       router.push("/main/home/board" + data?.id);
     }
-  }, [router, isSuccess]);
+  }, [router, isSuccess,data?.id]);
   return (
     <div className="flex flex-col">
       <div className="flex flex-col justify-center items-center">

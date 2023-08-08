@@ -48,7 +48,7 @@ export default function AddClass({
     if (isError) {
       console.error(error);
     }
-  }, [mutateAsync, isSuccess, name]);
+  }, [mutateAsync, isSuccess, name,error,isError]);
 
   return (
     <div className={positionStyles}>

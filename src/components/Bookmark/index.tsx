@@ -38,7 +38,7 @@ export default function Bookmark({
       console.log(error);
     }
     setLp(listPrefs?.view);
-  }, [isError, listPrefs?.view]);
+  }, [isError, listPrefs?.view, error]);
 
   const icon = `https://www.google.com/s2/favicons?domain=${
     new URL(url).hostname

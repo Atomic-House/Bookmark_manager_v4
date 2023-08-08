@@ -27,7 +27,7 @@ export default function Page() {
       dispatch(setId(data?.id!));
       router.push("/user/welcome/board");
     }
-  }, [dispatch, isSuccess, data?.id]);
+  }, [dispatch, isSuccess, data?.id,router]);
   return (
     <div className="flex flex-col">
       <div className="flex flex-col justify-center items-center">
