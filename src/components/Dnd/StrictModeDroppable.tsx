@@ -1,4 +1,7 @@
+//StrictModeDroppable for  react strict mode drag and rop usage
+
 "use client"
+
 import { useEffect, useState } from "react";
 import { Droppable, DroppableProps } from "react-beautiful-dnd";
 

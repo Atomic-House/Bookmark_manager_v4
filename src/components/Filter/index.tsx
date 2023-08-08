@@ -1,3 +1,4 @@
+// Filter component for list preferences  
 "use client";
 
 import { BiFilterAlt } from "@react-icons/all-files/bi/BiFilterAlt";

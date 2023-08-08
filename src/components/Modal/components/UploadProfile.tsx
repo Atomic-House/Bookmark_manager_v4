@@ -1,6 +1,7 @@
+//Modal for uploading profile photo and user background using uploadthing's api and components
 "use client";
 import { UploadButton } from "@/utils/uploadthing";
-
+//upload thing css
 import "@uploadthing/react/styles.css";
 import {
   Avatar,
@@ -14,32 +15,32 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import { Dispatch, SetStateAction } from "react";
 export default function UploadImage({
   image,
   onClientUploadComplete,
   onBgClientUploadComplete,
 }: {
   image: string | undefined | null;
+
   onClientUploadComplete?:
     | ((
-      res?:
-        | {
-          fileUrl: string;
-          fileKey: string;
-        }[]
-        | undefined,
-    ) => void)
+        res?:
+          | {
+              fileUrl: string;
+              fileKey: string;
+            }[]
+          | undefined,
+      ) => void)
     | undefined;
   onBgClientUploadComplete?:
     | ((
-      res?:
-        | {
-          fileUrl: string;
-          fileKey: string;
-        }[]
-        | undefined,
-    ) => void)
+        res?:
+          | {
+              fileUrl: string;
+              fileKey: string;
+            }[]
+          | undefined,
+      ) => void)
     | undefined;
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -60,9 +61,8 @@ export default function UploadImage({
           <ModalHeader>Upload Image</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <div className="flex justify-center m-2">
-              Update Profile
-            </div>
+            <div className="flex justify-center m-2">Update Profile</div>
+            {/* UploadButton which handles the recieving and uploading of images */}
             <UploadButton
               endpoint="imageUploader"
               onUploadError={(error: Error) => {
@@ -72,9 +72,7 @@ export default function UploadImage({
               onClientUploadComplete={onClientUploadComplete}
             />
 
-            <div className="flex justify-center  m-2">
-              Update Background
-            </div>
+            <div className="flex justify-center  m-2">Update Background</div>
             <UploadButton
               endpoint="bgUpload"
               onUploadError={(error: Error) => {

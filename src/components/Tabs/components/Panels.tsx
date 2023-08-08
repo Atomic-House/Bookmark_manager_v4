@@ -1,9 +1,11 @@
+//Panels for collection of lists
+
 "use client";
-import { Spinner, TabPanel } from "@chakra-ui/react";
+import { TabPanel } from "@chakra-ui/react";
 import List from "@/components/List";
 import { useFetchData } from "@/functions/queries";
 import { useDnd, useMutations } from "@/functions/mutations";
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import AddClass from "@/components/Create/create";
 import { ListsWithBookmarks, TabWithLists } from "@/types";
@@ -44,22 +46,57 @@ export default function PanelTab({ id, lists }: TabWithLists) {
     "tabs",
     id,
   );
+
   if (isListError || isError) {
-    return <TabPanel>{"listError"}</TabPanel>;
-  }
-  if (isListLoading) {
     return (
-      <>
-        <TabPanel>
-          <Spinner />
-        </TabPanel>
-      </>
+      <TabPanel>
+        <pre>{JSON.stringify("" || createListError || listError)}</pre>
+      </TabPanel>
     );
   }
   const handleDragEnd = (result: DropResult) => {
     console.log(result);
   };
 
+  if (isListLoading) {
+    return (
+      <>
+        <TabPanel>
+          <ListPrefContext.Provider value={{ listPrefs, setListPrefs }}>
+            <div className="flex sticky z-10 gap-5 items-center">
+              <AddClass
+                onSubmit={createList}
+                add_edit={"New "}
+                onChange={(e) => setName(e.target.value)}
+                isLoading={isCreateListLoading}
+                placeholder="+  Add a new list"
+                category="lists"
+                positionStyles="sticky"
+                buttonStyles="dark:bg-blue-800 bg-[#11047A] mb-3 text-white p-2 flex justify-center items-center rounded-lg"
+                isSuccess={createListSuccess}
+              />
+              <Sort />
+              <Filter />
+              <Views />
+            </div>
+            <div
+              className={`grid flex-wrap  gap-25 ${
+                listPrefs?.view === "card" ? "sm:grid-cols-1" : "grid-cols-2"
+              }`}
+            >
+              <DragDropContext onDragEnd={handleDragEnd}>
+                {lists
+                  ?.sort((a, b) => a.name.localeCompare(b.name))
+                  ?.map((list: ListsWithBookmarks) => (
+                    <List listPrefs={listPrefs} {...list} key={list.id} />
+                  ))}
+              </DragDropContext>
+            </div>
+          </ListPrefContext.Provider>
+        </TabPanel>
+      </>
+    );
+  }
   return (
     <>
       <TabPanel key={id}>

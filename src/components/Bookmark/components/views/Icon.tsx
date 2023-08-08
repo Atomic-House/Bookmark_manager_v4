@@ -1,3 +1,5 @@
+"use client";
+//Icons view for lists preferences
 import { Bookmark } from "@prisma/client";
 import { Draggable } from "react-beautiful-dnd";
 import Link from "next/link";

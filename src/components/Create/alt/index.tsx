@@ -1,3 +1,5 @@
+//My custom create popover component made using Tailwindcss only
+
 "use client";
 import {
   ChangeEventHandler,
@@ -27,22 +29,39 @@ export default function Create({
   successElement,
 }: {
   buttonStyle?: string;
+  //Style for the trigger button
   triggerPlaceholder?: string;
+  //text for the trigger
   submitBtnStyle?: string;
+  //Style for the submit button
   cancelBtnStyle?: string;
+  //Style for the cancel button
   bodyStyle?: string;
+  //Style for the body content
   onSubmit?: FormEventHandler<HTMLFormElement | Element>;
+  //on submit handler for the form
   onChange?: ChangeEventHandler<HTMLInputElement | undefined>;
+  //on change handler for the form
   placeholder?: string;
+  //input element placeholder
   type?: string;
+  //Belongins to workspace | boards | inbox | tabs | lists | bookmarks
   label?: string;
+  //label for the input
   content?: ReactNode;
+  //content for the body. Could be an element or just a string
   header?: ReactNode;
+  //header for the body. Could be an element or just a string
   inputStyle?: string;
+  //Style for the input
   isSuccess?: boolean;
+  //Is success
   successElement?: ReactNode;
+  //Render this element if successs
   contentStyle?: string;
+  //Style for the content
   headerStyle?: string;
+  //Style for the header
 }) {
   const [isClose, toggleClose] = useState(false);
   return (

@@ -1,3 +1,4 @@
+//Fuzzy searcing all the undeleted bookmarks in the search bar
 "use client";
 import { BiSearch } from "@react-icons/all-files/bi/BiSearch";
 import { Input, Spinner, useDisclosure } from "@chakra-ui/react";

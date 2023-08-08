@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+//Update the user's name and user name from the User model and UserPreferences model
 export async function POST(
   req: Request,
   { params }: { params: { id: string } },
@@ -30,6 +31,7 @@ export async function POST(
   });
   return NextResponse.json({ user: session.user, data });
 }
+//Gets al the user details and with each one's preferences
 export async function GET(req: Request) {
   const session = await getServerSession(authOptions);
   if (!session) {

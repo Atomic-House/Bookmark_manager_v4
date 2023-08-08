@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { FormEvent } from "react";
-
+//custom useMutations hook which acceps a generic T for the type of data to be returned from the mutation
 export function useMutations<T>(
   mutationKey: string,
   category: string,
@@ -58,6 +58,7 @@ export function useMutations<T>(
     isIdle,
   };
 }
+//hook to perform mutations when user does a drag and drop between lists
 export function useDnd(id: string) {
   const queryClient = useQueryClient();
   const { mutateAsync, mutate, isSuccess, isError, isLoading, error, reset } =
@@ -94,6 +95,7 @@ export function useDnd(id: string) {
     reset,
   };
 }
+//Restore from trash
 export function useRestoreTrash(category: string, lId: string) {
   const queryClient = useQueryClient();
   const session = useSession();
@@ -122,6 +124,7 @@ export function useRestoreTrash(category: string, lId: string) {
     reset,
   };
 }
+//Change list color 
 export function useChangeColor() {
   const { mutateAsync, mutate, isSuccess, isError, isLoading, error, reset } =
     useMutation({
@@ -145,6 +148,7 @@ export function useChangeColor() {
     reset,
   };
 }
+// Add emoji/icon to the list
 export function useAddEmojiToList(
   id: string,
   { name, emoji, color }: { name: string; emoji: string; color: string | null },

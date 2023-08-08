@@ -1,5 +1,5 @@
+//testing api where new functions for the backend are tested
 import { NextResponse } from "next/server";
-import { Client } from "peekalink";
 import ogs from "open-graph-scraper";
 export async function GET(
   req: Request,

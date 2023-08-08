@@ -1,3 +1,4 @@
+//Uploadthing components to upload images
 import { generateComponents } from "@uploadthing/react";
 
 import type { OurFileRouter } from "@/app/api/uploadthing/core";

@@ -1,24 +1,15 @@
+//
+
 "use client";
 import { useMutations } from "@/functions/mutations";
-import {
-  Tabs,
-  TabList,
-  Spinner,
-  TabPanels,
-  Tab,
-  TabIndicator,
-} from "@chakra-ui/react";
-import { useState } from "react";
+import { Tab, TabIndicator, TabList, TabPanels, Tabs } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import AddClass from "../Create/create";
-import { useFetchData } from "@/functions/queries";
 import PanelTab from "./components/Panels";
 import { TabWithLists } from "@/types";
-import { Inbox } from "@prisma/client";
-const style = { className: "flex justify-center items-center" };
 export default function UserTabs({
   tabs,
   isTabsLoading,
-  tabsError,
   isTabsError,
   isTabSuccess,
   isTabStale,
@@ -46,25 +37,11 @@ export default function UserTabs({
     isError,
     error,
   } = useMutations("create tabs", "tabs", name, "", "", id, "POST");
-
-  const {
-    mutateAsync: createList,
-    isLoading: isCreateListLoading,
-    error: createListError,
-    isError: isCreateListError,
-    isSuccess: isCreateListSuccess,
-  } = useMutations(
-    "create lists",
-    "lists",
-    name,
-    "",
-    type === "inbox" ? id : `${id}/${boardId}`,
-    "",
-    "POST",
-  );
-  if (isError || isTabsError || isCreateListError) {
-    console.error(error || createListError);
-  }
+  useEffect(() => {
+    if (isError || isTabsError) {
+      console.error(error);
+    }
+  }, [isError, isTabsError, error]);
   if (isTabSuccess && isTabStale) {
     return (
       <Tabs variant={variant} key={id}>
@@ -74,7 +51,6 @@ export default function UserTabs({
               {tab.name}
             </Tab>
           ))}
-          {isLoading || isTabsLoading ? <Spinner /> : ""}
           <AddClass
             add_edit={"Add a "}
             onSubmit={createTab}

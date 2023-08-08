@@ -1,3 +1,4 @@
+//Context for list color to be shared between list component and panel component
 "use client";
 import { Dispatch, SetStateAction, createContext } from "react";
 

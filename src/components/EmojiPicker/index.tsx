@@ -1,9 +1,8 @@
+//Emoji/Icon Picker component for each list with context and dnd
+
 "use client";
-import dynamic from "next/dynamic";
 import { FcList } from "@react-icons/all-files/fc/FcList";
-import { lazy } from "react";
 import Picker from "emoji-picker-react";
-// const Picker = lazy(async () => await import("emoji-picker-react"));
 import {
   Button,
   Popover,
@@ -19,15 +18,11 @@ import { useContext } from "react";
 import { ListEmojiContext } from "../context/ListEmojiContext";
 import { useAddEmojiToList } from "@/functions/mutations";
 import { ListsWithBookmarks } from "@/types";
-// const Picker = dynamic(async () => await import("emoji-picker-react"), {
-//   ssr: false,
-// });
 export default function EmojiSelect({
   id,
   name,
   color,
   emoji,
-  ...listProps
 }: ListsWithBookmarks) {
   const { listEmoji, setListEmoji } = useContext(ListEmojiContext);
   const { mutateAsync, isLoading } = useAddEmojiToList(id, {

@@ -1,3 +1,4 @@
+//Trash page
 "use client";
 import { useRestoreTrash } from "@/functions/mutations";
 import { useFetchTrash } from "@/functions/queries";
@@ -17,10 +18,14 @@ export default function Page() {
   const [listId, setListId] = useState("");
   const [bookmarkId, setBookmarkId] = useState("");
   const [boardId, setBoardId] = useState("");
+  //Fetches trash lists using useFetchTrash custom hook
   const { data: lists, isLoading: isListLoading } = useFetchTrash("lists");
+  //Fetches trash bookmarks using useFetchTrash custom hook
   const { data: bookmarks, isLoading: isBookmarkLoading } =
     useFetchTrash("bookmarks");
+
   const { data: boards, isLoading: isBoardLoading } = useFetchTrash("boards");
+  //on hover  on each the list/board/bookmark id is set an on clicking the restore button it calls the useRestoreTrash custom hook
   const { mutateAsync: restoreList } = useRestoreTrash("lists", listId);
   const { mutateAsync: restoreBookmark } = useRestoreTrash(
     "bookmarks",
@@ -137,6 +142,7 @@ export default function Page() {
     </div>
   );
 }
+//Compoenent to render each item with it's appropriate props
 function Collection({
   name,
   id,

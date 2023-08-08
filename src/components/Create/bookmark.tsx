@@ -1,3 +1,5 @@
+//Custom create bookmark component
+
 "use client";
 import { useMutations } from "@/functions/mutations";
 import {
@@ -43,13 +45,11 @@ export default function AddClass({
       console.log("Successfully created");
     }
     setName(name);
+    if (isError) {
+      console.error(error);
+    }
   }, [mutateAsync, isSuccess, name]);
-  if (isError) {
-    console.error(error);
-  }
-  if (isLoading) {
-    return <Spinner />;
-  }
+
   return (
     <div className={positionStyles}>
       <Popover

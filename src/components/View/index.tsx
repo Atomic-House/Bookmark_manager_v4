@@ -1,3 +1,4 @@
+"use client";
 import { BiGridAlt } from "@react-icons/all-files/bi/BiGridAlt";
 import { MdFormatListBulleted } from "@react-icons/all-files/md/MdFormatListBulleted";
 import { BsFillEyeFill } from "@react-icons/all-files/bs/BsFillEyeFill";
@@ -54,10 +55,11 @@ export default function Views() {
                     });
                     setSelected(view.value);
                   }}
-                  className={`flex justify-between p-2 hover:text-[#422AFB] duration-200 ${selected === view.value ? "text-[#422AFB]" : ""
-                    }`}
+                  className={`flex justify-between p-2 hover:text-[#422AFB] duration-200 ${
+                    selected === view.value ? "text-[#422AFB]" : ""
+                  }`}
                 >
-                  <Flex cursor={'pointer'} alignItems={"center"}>
+                  <Flex cursor={"pointer"} alignItems={"center"}>
                     {view.icon}
                     {view.title}
                   </Flex>{" "}
@@ -86,22 +88,22 @@ const views: {
   icon: JSX.Element;
   selected: boolean;
 }[] = [
-    {
-      title: "List View",
-      value: "list",
-      icon: <MdFormatListBulleted />,
-      selected: false,
-    },
-    {
-      title: "Card View",
-      value: "card",
-      icon: <BiGridAlt />,
-      selected: false,
-    },
-    {
-      title: "Icon View",
-      value: "icon",
-      icon: <BsFillEyeFill />,
-      selected: false,
-    },
-  ];
+  {
+    title: "List View",
+    value: "list",
+    icon: <MdFormatListBulleted />,
+    selected: false,
+  },
+  {
+    title: "Card View",
+    value: "card",
+    icon: <BiGridAlt />,
+    selected: false,
+  },
+  {
+    title: "Icon View",
+    value: "icon",
+    icon: <BsFillEyeFill />,
+    selected: false,
+  },
+];

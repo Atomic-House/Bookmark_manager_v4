@@ -17,11 +17,13 @@ export const authOptions: NextAuthOptions = {
       from: process.env.NEXT_PUBLIC_EMAIL_FROM!,
     }),
   ],
+  //routes to our custom page at @/src/app/user/auth/sigin and @/src/app/user/welcome
   pages: {
     signIn: "/user/auth/signin",
     newUser: "/user/welcome",
   },
   callbacks: {
+    //Creates a callback and checks if the user has no workspace, then automatically create a new one on a new session or login
     async session({ session, user, newSession, trigger }) {
       const workspaceLength = await prisma.workspace.count({
         where: { email: user.email },

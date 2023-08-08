@@ -2,7 +2,7 @@ import { toggleTheme } from "@/slices/themeSlice";
 import { useAppDispatch } from "@/store/hooks";
 import { useColorMode } from "@chakra-ui/react";
 import { useEffect } from "react";
-
+//Handles toggle theme for tailwindcss and react component together
 export default function useTheme() {
   const dispatch = useAppDispatch();
   const { toggleColorMode, colorMode } = useColorMode();

@@ -1,3 +1,5 @@
+// Profile tab panel
+
 "use client";
 import Left from "./components/Left";
 import Right from "./components/Right";

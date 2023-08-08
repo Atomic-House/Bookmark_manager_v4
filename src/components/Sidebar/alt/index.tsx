@@ -1,3 +1,5 @@
+// Custom sidebar component
+
 "use client";
 import { AiOutlineTeam } from "@react-icons/all-files/ai/AiOutlineTeam";
 import { BiTrashAlt } from "@react-icons/all-files/bi/BiTrashAlt";
@@ -17,13 +19,12 @@ import { useMutations } from "@/functions/mutations";
 import { BoardWithTabs, WorkspaceWithBoards } from "@/types";
 import { useFetchData } from "@/functions/queries";
 import { TiTick } from "@react-icons/all-files/ti/TiTick";
+
 export default function Sidebar({
   ws,
 }: {
   ws?: WorkspaceWithBoards[] | undefined;
 }) {
-  //Custom mutation hook which adds a board
-
   const pathname = usePathname();
   //Set which nav is selected by inferring from pathname
 
@@ -35,7 +36,9 @@ export default function Sidebar({
   const wsId = useAppSelector((state) => state.workspace.id);
   const boards = useAppSelector((state) => state.workspace.array);
   const router = useRouter();
+  //Extracts board id from pathname
   const boardId = pathname.replace("/main/home/board/", "");
+  //Custom mutation hook which adds a board
   const { mutateAsync, isSuccess } = useMutations(
     "create board",
     "boards",
@@ -45,7 +48,7 @@ export default function Sidebar({
     wsId,
     "POST",
   );
-
+//Custom hook to fetch boards from the selected workspace
   const { data: boardsArray, refetch } = useFetchData<BoardWithTabs[]>(
     "boards",
     wsId,

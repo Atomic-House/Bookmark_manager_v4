@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-// import { iconList, IconPicker, IconPickerItem } from "react-fa-icon-picker";
 import { useMutations } from "@/functions/mutations";
 import { Transition } from "@headlessui/react";
 import { TiTick } from "@react-icons/all-files/ti/TiTick";
@@ -9,14 +8,12 @@ import { useRouter } from "next/navigation";
 import { WorkspaceWithBoards } from "@/types";
 import { useAppSelector } from "@/store/hooks";
 import Link from "next/link";
-// import { redirect } from "next/navigation";
 export default function Page() {
-  const [icon, setIcon] = useState("");
   const [name, setName] = useState("");
   const router = useRouter();
-
+  //Grabs the workspace id from the redux store and brings it here for the board to be added to this workspace
   const wsId = useAppSelector((state) => state.workspace.id);
-
+  //Custom useMutations hook which created a board
   const { mutateAsync, isSuccess, isLoading, data } =
     useMutations<WorkspaceWithBoards>(
       "create a board",
@@ -28,7 +25,10 @@ export default function Page() {
       "POST",
     );
   useEffect(() => {
-    router.push("/user/welcome/board");
+    //Routes to the main app with the current board created
+    if (isSuccess) {
+      router.push("/main/home/board" + data?.id);
+    }
   }, [router, isSuccess]);
   return (
     <div className="flex flex-col">
@@ -53,8 +53,7 @@ export default function Page() {
           onChange={(e) => setName(e.target.value)}
         />
         <p>Choose any logo for your board</p>
-        <span className="flex gap-3 items-center mb-4 text-red-400">
-       </span>
+        <span className="flex gap-3 items-center mb-4 text-red-400"></span>
         <button
           onClick={(e) => {
             mutateAsync(e);
@@ -66,6 +65,7 @@ export default function Page() {
         >
           Create board
           {isLoading ? <Spinner /> : ""}
+          {/*  Brings it if the board was successfully created  */}
           <Transition
             show={isSuccess}
             enterFrom="opacity-0 scale-0 transition-all duration-200"
@@ -85,17 +85,3 @@ export default function Page() {
     </div>
   );
 }
-//to be added later
- //          <IconPicker value={icon} onChange={setIcon} />
- //
- //          {iconList.slice(0, 10).map((icon, index) => (
- //            <div key={index}>
- //              <IconPickerItem
- //                icon={icon}
- //                size={24}
- //                color="#ed82bd"
- //                onClick={(v: string) => setIcon(v)}
- //              />
- //            </div>
- //          ))}
- // 

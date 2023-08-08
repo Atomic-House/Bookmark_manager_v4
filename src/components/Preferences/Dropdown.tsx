@@ -1,19 +1,18 @@
+//UI setting for user 
 import {
+  Button,
   Menu,
   MenuButton,
-  MenuList,
-  MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
   MenuDivider,
-  Button,
+  MenuItemOption,
+  MenuList,
+  MenuOptionGroup,
 } from "@chakra-ui/react";
 import { AiFillSetting } from "@react-icons/all-files/ai/AiFillSetting";
 export default function Preferences() {
   return (
     <Menu closeOnSelect={false}>
-      <MenuButton  as={Button} bg={"white"} _hover={{ bg: "white" }}>
+      <MenuButton as={Button} bg={"white"} _hover={{ bg: "white" }}>
         <AiFillSetting />
       </MenuButton>
       <MenuList minWidth="240px">

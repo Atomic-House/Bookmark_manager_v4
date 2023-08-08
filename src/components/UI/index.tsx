@@ -1,3 +1,5 @@
+//UI theme settings menu for user
+"use client";
 export default function UI() {
   return (
     <div>

@@ -1,4 +1,6 @@
+//List view for lists preferences
 "use client";
+
 import { Draggable } from "react-beautiful-dnd";
 import Link from "next/link";
 import Image from "next/image";

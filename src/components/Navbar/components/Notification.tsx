@@ -1,3 +1,5 @@
+//Notification component
+
 "use client";
 
 import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";

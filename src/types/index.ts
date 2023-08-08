@@ -1,3 +1,4 @@
+//Typedefs 
 import { Board, Bookmark, List, Tab, User, Workspace } from "@prisma/client";
 
 export interface ListsWithBookmarks extends List {

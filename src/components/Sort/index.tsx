@@ -1,3 +1,5 @@
+//Sort component for list preferences for workspace
+
 "use client";
 import { FaSortAmountDownAlt } from "@react-icons/all-files/fa/FaSortAmountDownAlt";
 import { FcAlphabeticalSortingAz } from "@react-icons/all-files/fc/FcAlphabeticalSortingAz";

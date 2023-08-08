@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+//Gets all the  lists which matches the given view id and is not deleted
 export async function GET(
   req: NextRequest,
   { params }: { params: { data: string[] } },
@@ -21,6 +22,7 @@ export async function GET(
   });
   return NextResponse.json(lists);
 }
+//Creates a POST request to create a new list by adding the related views id into the view along with user email and name
 export async function POST(
   req: NextRequest,
   { params }: { params: { data: string[] } },
@@ -47,6 +49,7 @@ export async function POST(
   });
   return NextResponse.json(lists);
 }
+//Updates a list name, color, and icon
 export async function PATCH(
   req: Request,
   { params }: { params: { data: string[] } },
@@ -65,7 +68,7 @@ export async function PATCH(
   });
   return NextResponse.json(lists);
 }
-//to change it to deleted or not
+//Moves the list to trash
 export async function PUT(
   req: Request,
   { params }: { params: { data: any[] } },
@@ -81,6 +84,7 @@ export async function PUT(
   });
   return NextResponse.json(lists);
 }
+//Permenantly deletes the list
 export async function DELETE(
   req: Request,
   { params }: { params: { data: any[] } },

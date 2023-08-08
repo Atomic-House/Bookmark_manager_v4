@@ -1,3 +1,4 @@
+// main bookmark component
 "use client";
 import { useMutations } from "@/functions/mutations";
 import { Bookmark } from "@prisma/client";

@@ -1,3 +1,4 @@
+// Dialog model for confirmation of deletion of an item
 "use client";
 import {
   Button,

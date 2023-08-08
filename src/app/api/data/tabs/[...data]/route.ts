@@ -2,7 +2,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-
+//Gets all the tabs matching the given list ids from the database
 export async function GET(
   req: Request,
   { params }: { params: { data: string[] } },
@@ -14,6 +14,9 @@ export async function GET(
     },
     include: {
       lists: {
+        where: {
+          isDeleted: false,
+        },
         include: {
           bookmarks: true,
         },
@@ -22,6 +25,7 @@ export async function GET(
   });
   return NextResponse.json(tabs);
 }
+//Makes a new tab  with a list nested inside
 export async function POST(
   req: Request,
   { params }: { params: { data: string[] } },
@@ -54,6 +58,7 @@ export async function POST(
   });
   return NextResponse.json(tabs);
 }
+//Sends the tab to the trash can
 export async function PUT(
   req: Request,
   { params }: { params: { data: string[] } },
@@ -69,6 +74,7 @@ export async function PUT(
   });
   return NextResponse.json(tabs);
 }
+//Updated the tab name
 export async function PATCH(
   req: Request,
   { params }: { params: { data: string[] } },

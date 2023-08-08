@@ -1,3 +1,6 @@
+//Main create component made with chakra-ui and it's propover component
+//** replace with in house component
+
 "use client";
 
 import {
@@ -9,9 +12,7 @@ import {
   PopoverContent,
   PopoverHeader,
   PopoverTrigger,
-  Portal,
   Spinner,
-  useDisclosure,
 } from "@chakra-ui/react";
 import {
   ChangeEventHandler,
@@ -64,7 +65,6 @@ export default function AddClass({
                   {placeholder}
                 </button>
               </PopoverTrigger>
-              <Portal>
                 <PopoverContent>
                   <PopoverHeader>
                     {add_edit}
@@ -108,7 +108,6 @@ export default function AddClass({
                     </form>
                   </PopoverBody>
                 </PopoverContent>
-              </Portal>
             </>
           );
         }}

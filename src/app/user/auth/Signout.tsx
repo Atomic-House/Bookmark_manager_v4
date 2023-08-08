@@ -1,16 +1,15 @@
 import {
+  Button,
   Popover,
-  PopoverTrigger,
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseButton,
   PopoverContent,
   PopoverHeader,
-  PopoverBody,
-  PopoverFooter,
-  PopoverArrow,
-  PopoverCloseButton,
-  PopoverAnchor,
-  Button,
+  PopoverTrigger,
 } from "@chakra-ui/react";
 import { signOut } from "next-auth/react";
+//Confirm signout popover component
 export default function SignOut() {
   return (
     <Popover>

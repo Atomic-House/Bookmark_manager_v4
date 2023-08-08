@@ -1,6 +1,5 @@
 "use client";
-import { useState } from "react";
-// import { IconPicker, iconList, IconPickerItem } from "react-fa-icon-picker";
+import { useEffect, useState } from "react";
 import { useMutations } from "@/functions/mutations";
 import { Transition } from "@headlessui/react";
 import { TiTick } from "@react-icons/all-files/ti/TiTick";
@@ -10,7 +9,6 @@ import { WorkspaceWithBoards } from "@/types";
 import { useAppDispatch } from "@/store/hooks";
 import { setId } from "@/slices/workspaceSlice";
 export default function Page() {
-  const [icon, setIcon] = useState("");
   const [name, setName] = useState("");
   const router = useRouter();
   const { mutateAsync, isSuccess, isLoading, data } =
@@ -24,10 +22,12 @@ export default function Page() {
       "POST",
     );
   const dispatch = useAppDispatch();
-  if (isSuccess) {
-    dispatch(setId(data?.id!));
-    router.push("/user/welcome/board");
-  }
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(setId(data?.id!));
+      router.push("/user/welcome/board");
+    }
+  }, [dispatch, isSuccess, data?.id]);
   return (
     <div className="flex flex-col">
       <div className="flex flex-col justify-center items-center">
@@ -50,7 +50,7 @@ export default function Page() {
           className="p-4 my-4 rounded-lg bg-slate-100"
           onChange={(e) => setName(e.target.value)}
         />
-        <p>Choose any logo for your workspace</p>
+        <p>Choose any logo void for your workspace</p>
         <span className="flex gap-3 items-center mb-4 text-red-400"></span>
         <button
           onClick={(e) => {
@@ -76,17 +76,3 @@ export default function Page() {
     </div>
   );
 }
-//to be added later
-//          <IconPicker value={icon} onChange={setIcon} />
-//
-//          {iconList.slice(0, 10).map((icon, index) => (
-//            <div key={index}>
-//              <IconPickerItem
-//                icon={icon}
-//                size={24}
-//                color="#ed82bd"
-//                onClick={(v: string) => setIcon(v)}
-//              />
-//            </div>
-//          ))}
-//

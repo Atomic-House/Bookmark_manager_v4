@@ -1,4 +1,6 @@
+// Full navbar component
 "use client";
+
 import useWindowDimension from "@/hooks/window";
 import NavSearch from "../Search";
 import Notification from "./components/Notification";
@@ -17,12 +19,10 @@ export default function Navbar() {
   const { width } = useWindowDimension();
   const { data: session } = useSession();
   const { colorMode } = useColorMode();
-  const { data: user, isError, isLoading, refetch } = useGetUser();
+  // Custom hook to get user data and user Preferences
+  const { data: user } = useGetUser();
   if (!session) {
     redirect("/user/auth/signin");
-  }
-  if (width < 768) {
-    return <div></div>;
   }
   return (
     <div className="flex absolute top-0 right-0 gap-2 m-0 md:my-6 md:mx-8">
@@ -38,8 +38,8 @@ export default function Navbar() {
             session?.user?.image
               ? session.user.image
               : colorMode === "light"
-                ? Svg1
-                : Svg2
+              ? Svg1
+              : Svg2
           }
           display={
             <Image
@@ -47,8 +47,8 @@ export default function Navbar() {
                 session?.user?.image
                   ? session.user.image
                   : colorMode === "light"
-                    ? Svg1
-                    : Svg2
+                  ? Svg1
+                  : Svg2
               }
               alt="image"
               width={30}

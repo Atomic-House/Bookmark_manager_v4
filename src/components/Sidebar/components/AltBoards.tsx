@@ -15,12 +15,8 @@ export default function AltBoards() {
   const {
     data: boards,
     isLoading,
-    isError,
     isSuccess,
-    isFetching,
     refetch,
-    error,
-    isLoadingError,
     isStale,
   } = useFetchData<BoardWithTabs[]>("boards", wsId, false);
   useEffect(() => {

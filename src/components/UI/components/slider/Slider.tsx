@@ -1,3 +1,5 @@
+//Radio slider for selecting list density
+"use client"
 import { useState } from "react";
 import "./slider.css";
 export default function SliderComponent() {

@@ -1,14 +1,13 @@
-import { setId } from "@/slices/workspaceSlice";
-import { useAppDispatch } from "@/store/hooks";
+
 import { WorkspaceWithBoards } from "@/types";
 import { User, UserPreferences } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import { useEffect } from "react";
 interface Prefs extends User {
   userPreferences: UserPreferences;
 }
+//get user along with user preferences
 export function useGetUser() {
   const { data: session } = useSession();
   if (!session) {
@@ -46,6 +45,7 @@ export function useGetUser() {
     refetch,
   };
 }
+//get all workspaces matching the  user and it's email
 export function useFetchWorkspace() {
   const {
     data: workspace,
@@ -168,6 +168,7 @@ export function useFetchTrash(category: string) {
     refetch,
   };
 }
+//Fetches tabs and data from an inbox 
 export function useFetchInbox(wsId: string) {
   const {
     data,

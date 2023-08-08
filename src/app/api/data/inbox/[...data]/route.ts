@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-
+//Handles GET request to get inbox inside a workspace
 export async function GET(
   req: Request,
   { params }: { params: { data: string[] } },
@@ -14,9 +14,9 @@ export async function GET(
       tabs: true,
     },
   });
-
   return NextResponse.json(inbox);
 }
+//Handles post request to add a tab inside a inbox
 export async function POST(
   req: Request,
   { params }: { params: { data: string[] } },

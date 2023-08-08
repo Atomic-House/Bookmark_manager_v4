@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import fetch from "node-fetch";
 import ogs from "open-graph-scraper";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+//Gets all the bookmarks which matches the given lists id and is not deleted
 export async function GET(
   req: NextRequest,
   { params }: { params: { data: string[] } },
@@ -30,7 +30,8 @@ export async function GET(
   });
   return NextResponse.json(bookmarks);
 }
-
+//Creates a POST request to create a new board by adding the related lists id into the board along with user email and name
+//Uses open graph scraper to automatically fetch metadata of the url and save it to the database
 export async function POST(
   req: NextRequest,
   { params }: { params: { data: string[] } },
@@ -64,6 +65,7 @@ export async function POST(
   });
   return NextResponse.json(bookmark);
 }
+//Updates a bookmark name, url, favicon
 export async function PATCH(
   req: Request,
   { params }: { params: { data: string[] } },
@@ -82,7 +84,7 @@ export async function PATCH(
   });
   return NextResponse.json(bookmark);
 }
-//to change it to deleted or not
+//Sends a bookmark to trash which can be restored
 export async function PUT(
   req: Request,
   { params }: { params: { data: any[] } },

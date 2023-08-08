@@ -9,16 +9,20 @@ import Svg1 from "@/../public/Svg-01.svg";
 import Svg2 from "@/../public/Svg-02.svg";
 import Image from "next/image";
 import { Checkbox } from "@chakra-ui/react";
-import { getCsrfToken } from "next-auth/react";
+
 export default function Page() {
+  //making the component run client side
   const [isClient, setIsClient] = useState(false);
+  //set's to client side if hydration fails on initial render
   useEffect(() => setIsClient(true), []);
   const { data: session } = useSession();
+
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   if (session) {
+    //redirects to dashboard if the user is already has logged in
     redirect("/main/home");
   }
+  //Handler which used next-auth signin() function with email credentials
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (
     e: FormEvent,
   ) => {
@@ -27,6 +31,7 @@ export default function Page() {
       email,
     });
   };
+  
   const { colorMode } = useColorMode();
   return (
     <div className="grid grid-cols-2 border-2 border-white h-[100vh]">
@@ -35,6 +40,7 @@ export default function Page() {
         <h2 className="text-xl">Subtitle</h2>
         <div
           className="flex gap-3 justify-center items-center py-6 my-4 bg-blue-200 cursor-pointer rounded-s"
+          //Signs in with google oauth2
           onClick={() => signIn("google")}
         >
           <span>

@@ -1,3 +1,6 @@
+
+//Right component of profile for user status of premium
+
 "use client";
 export default function Right() {
   return (

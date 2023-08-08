@@ -2,11 +2,11 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/route";
-import { redirect } from "next/navigation";
 export async function GET() {
+  //gets all of the bookmarks which are not deleted to be used for fuzzy searching
   const session = await getServerSession(authOptions);
   if (!session) {
-    redirect("/user/auth/signin");
+    throw new Error("Not authenticated");
   }
   const bookmarks = await prisma.bookmark.findMany({
     where: {
@@ -28,7 +28,7 @@ export async function GET() {
     select: {
       name: true,
       tags: true,
-    }
-  })
+    },
+  });
   return NextResponse.json(bookmarks);
 }

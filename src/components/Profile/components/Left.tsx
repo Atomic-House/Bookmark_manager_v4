@@ -1,3 +1,5 @@
+//Left component of profile for user customization
+
 "use client";
 import Image from "next/image";
 import { FormEvent, useEffect, useState } from "react";

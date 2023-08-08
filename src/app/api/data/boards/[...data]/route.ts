@@ -1,3 +1,5 @@
+//Route made to handle requests related to using boards
+
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
@@ -7,6 +9,7 @@ export async function GET(
   { params }: { params: { data: string[] } },
 ) {
   const [id] = params.data;
+  //Gets all the boards which matches the given workspace Id and is not deleted and gets the nested tabs inside it
   const boards = await prisma.board.findMany({
     where: {
       wsId: id,
@@ -23,6 +26,7 @@ export async function GET(
 
   return NextResponse.json(boards);
 }
+//Creates a POST request to create a new board by adding the related workspace id into the board along with user email and name
 export async function POST(
   req: NextRequest,
   { params }: { params: { data: string[] } },
@@ -39,6 +43,7 @@ export async function POST(
   });
   return NextResponse.json(boards);
 }
+//Updates a board name
 export async function PATCH(
   req: Request,
   { params }: { params: { data: string[] } },
@@ -54,7 +59,7 @@ export async function PATCH(
   });
   return NextResponse.json(boards);
 }
-//to change it to deleted or not
+//Sends a board to trash which can be restored
 export async function PUT(
   req: Request,
   { params }: { params: { data: any[] } },
@@ -70,3 +75,4 @@ export async function PUT(
   });
   return NextResponse.json(workspace);
 }
+//Add a delete request here for deleting the board permanently

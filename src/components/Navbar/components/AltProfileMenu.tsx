@@ -1,3 +1,5 @@
+//Profile component rendered in /main/profile route
+
 "use client";
 import {
   Avatar,
@@ -8,9 +10,9 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/react";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { useMutations } from "@/functions/mutations";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppSelector } from "@/store/hooks";
 import Image from "next/image";
 import Link from "next/link";
 import { AiOutlineUser } from "@react-icons/all-files/ai/AiOutlineUser";

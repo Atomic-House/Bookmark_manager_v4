@@ -1,4 +1,7 @@
+//List component for to be mapped inside the tab panel 
+
 "use client";
+
 import { useFetchData } from "@/functions/queries";
 import Bookmark from "../Bookmark";
 import { Box, Spinner } from "@chakra-ui/react";

@@ -1,3 +1,5 @@
+//Select workspace component
+
 "use client";
 import { useAppDispatch } from "@/store/hooks";
 import {
@@ -22,6 +24,7 @@ export default function SelectWorkspace({
   collpase: boolean;
 }) {
   const [isOpen, toggleOpen] = useState(false);
+  //Set selected workspace action
   const [selected, setSelected] = useState(
     ws[0] || {
       name: "Select a workspace",
@@ -31,12 +34,8 @@ export default function SelectWorkspace({
   );
   const [name, setName] = useState("");
   const dispatch = useAppDispatch();
-
-  const {
-    mutateAsync,
-    isLoading,
-    isSuccess: isCreateWorkspaceSuccess,
-  } = useMutations(
+  //Custom hook to create a new workspace
+  const { mutateAsync } = useMutations(
     "create workspace",
     "workspaces",
     name,
@@ -46,6 +45,7 @@ export default function SelectWorkspace({
     "POST",
   );
   useEffect(() => {
+    //dispatches to set the given workspace slice to the redux store
     dispatch(setArray(selected?.boards));
     dispatch(setWsId(selected?.id));
     dispatch(setInboxId(selected?.inbox?.id));

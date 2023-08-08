@@ -20,6 +20,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  //Sends the user to signin page if not logged in
   const session = await getServerSession(authOptions);
   if (!session) redirect("/user/auth/signin");
   return (

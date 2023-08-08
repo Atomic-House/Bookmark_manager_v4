@@ -2,6 +2,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+//Gets all undeleted workspaces of a user from the database
 export async function GET(req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session) throw new Error("Not authenticated");
@@ -17,6 +18,7 @@ export async function GET(req: NextRequest) {
 
   return NextResponse.json(workspace);
 }
+//Creates a workspace and the whole nested models inside  it till the the depth of list
 export async function POST(
   req: NextRequest,
   { params }: { params: { data: string[] } },
@@ -68,6 +70,7 @@ export async function POST(
   });
   return NextResponse.json(workspace);
 }
+//Change's a workspaces name
 export async function PATCH(
   req: Request,
   { params }: { params: { data: string[] } },
@@ -83,7 +86,7 @@ export async function PATCH(
   });
   return NextResponse.json(workspace);
 }
-//to change it to deleted or not
+//Deletes a workspace
 export async function DELETE(
   req: Request,
   { params }: { params: { data: string[] } },

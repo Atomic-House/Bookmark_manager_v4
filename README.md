@@ -46,6 +46,25 @@
 - Client side mutations are made into custom hooks from useMutation are stored
   inside the src/functions/mutations.ts folder
 
+Usage and nesting overview structure
+
+```bash
+.
+└── User
+    └── Workspaces
+        ├── Boards
+        │   └── Tabs
+        │       └── Lists
+        │           └── Bookmarks
+        └── Inbox
+            └── Tabs
+                └── Lists
+                    └── Bookmarks
+```
+
+* Each workspace can have multiple boards but has only one Inbox
+
+
 ## Folder structure and description
 
 - src
@@ -79,7 +98,6 @@
     │   ├── context
     │   ├── Create
     │   ├── Dnd
-    │   ├── Drawer
     │   ├── EmojiPicker
     │   ├── Filter
     │   ├── List
