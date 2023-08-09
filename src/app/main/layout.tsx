@@ -8,6 +8,7 @@ import { redirect } from "next/navigation";
 import type { Metadata } from "next";
 import NextTopLoader from "nextjs-toploader";
 import { Inter } from "next/font/google";
+import { prisma } from "@/lib/prisma";
 
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
@@ -22,12 +23,49 @@ export default async function RootLayout({
 }) {
   //Sends the user to signin page if not logged in
   const session = await getServerSession(authOptions);
+  const workspaces = await prisma.workspace.findMany({
+    where: {
+      email: session?.user?.email,
+    },
+    include: {
+      inbox: {
+        include: {
+          tabs: {
+            include: {
+              listPrefs: true,
+              lists: {
+                include: {
+                  bookmarks: true,
+                },
+              },
+            },
+          },
+        },
+      },
+      boards: {
+        include: {
+          tabs: {
+            include: {
+              listPrefs: true,
+              lists: {
+                include: {
+                  bookmarks: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
   if (!session) redirect("/user/auth/signin");
+
   return (
     <html lang="en">
       <body className={inter.className}>
         <Providers>
-          <Sidebar>
+          <Sidebar ws={workspaces}>
             <NextTopLoader />
             {children}
             <Navbar />

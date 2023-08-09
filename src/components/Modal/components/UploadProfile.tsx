@@ -66,7 +66,7 @@ export default function UploadImage({
             <UploadButton
               endpoint="imageUploader"
               onUploadError={(error: Error) => {
-                console.log("error");
+                console.error("error");
                 alert("Try again \n" + "Error: " + error);
               }}
               onClientUploadComplete={onClientUploadComplete}

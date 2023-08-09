@@ -1,11 +1,20 @@
-//Typedefs 
-import { Board, Bookmark, List, Tab, User, Workspace } from "@prisma/client";
+//Type defs
 
+import {
+  Board,
+  Bookmark,
+  List,
+  ListPrefs,
+  Tab,
+  User,
+  Workspace,
+} from "@prisma/client";
 export interface ListsWithBookmarks extends List {
   bookmarks: Bookmark[];
 }
 export interface TabWithLists extends Tab {
   lists: ListsWithBookmarks[];
+  listPrefs: ListPrefs;
 }
 export interface InboxWithTabs extends TabWithLists {
   tabs: TabWithLists[];
@@ -20,4 +29,9 @@ export interface WorkspaceWithBoards extends Workspace {
 }
 export interface UserWithWorkspace extends User {
   workspace: WorkspaceWithBoards[];
+}
+
+export interface FullData extends Workspace {
+  boards: BoardWithTabs[];
+  inbox: InboxWithTabs;
 }
