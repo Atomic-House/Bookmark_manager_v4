@@ -2,13 +2,12 @@ import "./globals.css";
 import Providers from "@/app/providers";
 import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/Navbar";
-import { getServerSession } from "next-auth";
+import { getServerSession, Session } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
 import NextTopLoader from "nextjs-toploader";
 import { Inter } from "next/font/google";
-
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Bookmark Manager",
@@ -21,8 +20,10 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   //Sends the user to signin page if not logged in
+
   const session = await getServerSession(authOptions);
   if (!session) redirect("/user/auth/signin");
+
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -37,3 +38,4 @@ export default async function RootLayout({
     </html>
   );
 }
+

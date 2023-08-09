@@ -71,7 +71,7 @@ model VerificationToken {
 
 model Workspace {
   name   String
-  userId String
+  userId String?
   id     String  @id @default(cuid())
   email  String?
   boards Board[]

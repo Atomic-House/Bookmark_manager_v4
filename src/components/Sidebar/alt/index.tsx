@@ -48,7 +48,7 @@ export default function Sidebar({
     wsId,
     "POST",
   );
-//Custom hook to fetch boards from the selected workspace
+  //Custom hook to fetch boards from the selected workspace
   const { data: boardsArray, refetch } = useFetchData<BoardWithTabs[]>(
     "boards",
     wsId,
@@ -73,7 +73,7 @@ export default function Sidebar({
   return (
     // This is the full container for sidebar and it's contents
     <div
-      className={`rounded-2xl transition-all duration-300 bg-white h-[100vh] drop-shadow-xl ${
+      className={`rounded-2xl transition-all duration-300 bg-white h-[100vh] drop-shadow-2xl ${
         collapse ? "w-[5vw]" : "w-[18vw]"
       }`}
     >

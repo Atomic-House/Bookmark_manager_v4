@@ -4,15 +4,15 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 export default function Home() {
   const [isClient, setIsClient] = useState(false);
+  const { data: session } = useSession();
   useEffect(() => setIsClient(true), []);
   const router = useRouter();
-  const { data: session } = useSession();
   useEffect(() => {
     if (session) {
       router.push("/main/home");
     }
-    return () => {
-      router.push("/user/auth/signin");
-    };
-  }, [router, session]);
+  }, [session, router]);
+  if (!session) {
+    return <div>SignUp or Login as Guest</div>;
+  }
 }

@@ -36,7 +36,6 @@ export default function Filter() {
     { name: string; color: string }[]
   >([{ name: "", color: "" }]);
   const [selectedLinks, setSelectedLinks] = useState<string[]>([]);
-  console.log(listPrefs);
 
   return (
     <Menu closeOnSelect={false}>
