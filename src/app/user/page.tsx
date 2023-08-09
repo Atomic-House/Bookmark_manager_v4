@@ -13,6 +13,20 @@ export default function Home() {
     }
   }, [session, router]);
   if (!session) {
-    return <div>SignUp or Login as Guest</div>;
+    return (
+      <div className="flex flex-col justify-center items-center h-screen">
+        <button className="text-2xl bg-blue-300 p-2 rounded-lg duration-300 hover:bg-[#368ef2]">
+          {" "}
+          SignUp{" "}
+        </button>{" "}
+        <button className="text-2xl bg-blue-300 p-2 rounded-lg duration-300 hover:bg-[#368ef2]">
+          {" "}
+          or{" "}
+        </button>{" "}
+        <button className="text-2xl bg-blue-300 p-2 rounded-lg duration-300 hover:bg-[#368ef2]">
+          Login as Guest
+        </button>
+      </div>
+    );
   }
 }
