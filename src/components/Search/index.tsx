@@ -6,18 +6,34 @@ import useWindowDimension from "@/hooks/window";
 import { useFetchData } from "@/functions/queries";
 import Link from "next/link";
 import Image from "next/image";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import Fuse from "fuse.js";
 import { Bookmark } from "@prisma/client";
 import { Transition } from "@headlessui/react";
 export default function NavSearch() {
   const { width } = useWindowDimension();
-  const { data, isLoading } = useFetchData<Bookmark[] | undefined>("all");
-  const [results, setResults] = useState<Bookmark[] | undefined>(data);
-  const { isOpen, onToggle, onOpen, onClose } = useDisclosure();
+  const { data, isLoading, refetch } = useFetchData<Bookmark[] | undefined>("all");
+  const [results, setResults] = useState<
+    | {
+        name: string | null;
+        url: string | URL;
+        title: string | null;
+        favicon: string | null;
+      }[]
+    | undefined
+  >(
+    data?.map((d) => {
+      return { name: d.name, url: d.url, title: d.title, favicon: d.favicon };
+    }),
+  );
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const fuse = new Fuse(results!, {
     keys: ["title", "url", "name"],
   });
+
   function handleSearch(event: ChangeEvent<HTMLInputElement>) {
     onOpen();
     const { value } = event.target;
@@ -25,7 +41,7 @@ export default function NavSearch() {
     // If the user searched for an empty string,
     // display all data.
     if (value.length === 0) {
-      setResults(data);
+      setResults(results);
       return;
     }
     const result = fuse.search(value);
@@ -33,12 +49,7 @@ export default function NavSearch() {
     setResults(items);
   }
   return (
-    <div
-      className="sticky"
-      onMouseEnter={onOpen}
-      // onClick={onToggle}
-      onMouseLeave={onClose}
-    >
+    <div className="sticky" onMouseEnter={onOpen} onMouseLeave={onClose}>
       <div className="bg-slate-200 flex items-center p-2 px-4 rounded-full">
         <BiSearch />
 
@@ -64,18 +75,12 @@ export default function NavSearch() {
       >
         {isOpen && (
           <div className="flex flex-col gap-5 justify-center p-2 bg-sky-400 opacity-75 rounded-lg absolute z-50">
-            {results?.map((r) => {
-              const icon = `https://www.google.com/s2/favicons?domain=${new URL(r.url).hostname
-                }&sz=256`;
-
+            {results?.map((r, index) => {
+              const icon = `https://www.google.com/s2/favicons?domain=${
+                new URL(r.url).hostname
+              }&sz=256`;
               return (
-                <Link
-                  as={r.url}
-                  href={r.url}
-                  target="_blank"
-                  key={r.id}
-                  className="flex gap-2"
-                >
+                <Link as={r.url} href={r.url} target="_blank" key={index} className="flex gap-2">
                   <Image
                     src={r.favicon ? r.favicon : icon}
                     alt={r.title ? r.title : "alt"}

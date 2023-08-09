@@ -63,6 +63,7 @@ export default function UserTabs({
           />
         </TabList>
         <TabIndicator
+          position={'relative'}
           mt="-1.5px"
           height="2px"
           mb={3}

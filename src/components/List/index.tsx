@@ -45,7 +45,6 @@ export default function List({
   const [bookmarksList, setBookmarksList] = useState<BookmarkType[]>(
     lists?.bookmarks! || bookmarks,
   );
-  console.log(lists);
 
   const { listPrefs: prefs } = useContext(ListPrefContext);
   useEffect(() => {
@@ -70,7 +69,7 @@ export default function List({
               key={id}
               className={`m-1 h-fit bg-[${listColor}] transition  duration-300 dark:bg-slate-900 p-4 `}
               zIndex={1}
-              boxShadow={"md"}
+              boxShadow={"lg"}
               {...provided.droppableProps}
               bgColor={listColor + (snapshot.isDraggingOver ? ".300" : ".200")}
               ref={provided.innerRef}
@@ -122,7 +121,6 @@ export default function List({
                     }
                   })
                   ?.map((bm: BookmarkType, index: number) => {
-                    console.log(bm);
                     return <Bookmark key={index} index={index} {...bm} />;
                   })}
                 {provided.placeholder}
