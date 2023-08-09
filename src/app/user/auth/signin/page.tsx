@@ -41,7 +41,9 @@ export default function Page() {
         <div
           className="flex gap-3 justify-center items-center py-6 my-4 bg-blue-200 cursor-pointer rounded-s"
           //Signs in with google oauth2
-          onClick={() => signIn("google")}
+          onClick={() => signIn("google",{
+            callbackUrl: "/main/home",
+          })}
         >
           <span>
             {" "}
