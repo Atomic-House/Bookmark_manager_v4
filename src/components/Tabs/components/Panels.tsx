@@ -12,10 +12,9 @@ import { ListsWithBookmarks, TabWithLists } from "@/types";
 import Sort from "@/components/Sort";
 import Filter from "@/components/Filter";
 import Views from "@/components/View";
-import {
-  ListPrefContext,
-  type ListPrefs,
-} from "@/components/context/ListPrefContext";
+import { ListPrefContext, type ListPrefs } from "@/components/context/ListPrefContext";
+import Create from "@/components/Create/alt";
+import { TiTick } from "@react-icons/all-files/ti/TiTick";
 export default function PanelTab({ id, lists }: TabWithLists) {
   const [name, setName] = useState("");
   const {
@@ -35,17 +34,7 @@ export default function PanelTab({ id, lists }: TabWithLists) {
     error: createListError,
     isError,
     isSuccess: createListSuccess,
-  } = useMutations(
-    "create lists",
-    "lists",
-    name,
-    "",
-    "",
-    id,
-    "POST",
-    "tabs",
-    id,
-  );
+  } = useMutations("create lists", "lists", name, "", "", id, "POST", "tabs", id);
 
   if (isListError || isError) {
     return (
@@ -102,16 +91,23 @@ export default function PanelTab({ id, lists }: TabWithLists) {
       <TabPanel key={id}>
         <ListPrefContext.Provider value={{ listPrefs, setListPrefs }}>
           <div className="flex sticky z-10 gap-5 items-center">
-            <AddClass
-              onSubmit={createList}
-              add_edit={"New "}
+            <Create
+              triggerPlaceholder="+ Add a new list"
+              // buttonStyle="text-black rounded-lg hover:bg-slate-200 duration-300 items-center p-2 relative  "
+
+              buttonStyle="dark:bg-blue-800 bg-[#11047A]  mb-3 text-white p-2 flex justify-center items-center rounded-lg"
+              submitBtnStyle="bg-[#422AFB]"
+              bodyStyle="bg-slate-50  p-6 rounded-lg flex flex-col "
+              headerStyle="text-xl font-semibold"
+              header={<p>New List</p>}
+              contentStyle="bg-slate-50 mb-4 mt-2 rounded-lg  "
+              content={<p>Create a new list</p>}
+              inputStyle="bg-slate-50 p-2 rounded-xl placeholder:text-slate-400"
+              placeholder="Type list name here..."
               onChange={(e) => setName(e.target.value)}
-              isLoading={isCreateListLoading}
-              placeholder="+  Add a new list"
-              category="lists"
-              positionStyles="sticky"
-              buttonStyles="dark:bg-blue-800 bg-[#11047A] mb-3 text-white p-2 flex justify-center items-center rounded-lg"
-              isSuccess={createListSuccess}
+              onSubmit={(e) => createList(e)}
+              isSuccess={isSuccess}
+              successElement={<TiTick />}
             />
             <Sort />
             <Filter />

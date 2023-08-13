@@ -23,15 +23,13 @@ export default function Page() {
     redirect("/main/home");
   }
   //Handler which used next-auth signin() function with email credentials
-  const handleSubmit: FormEventHandler<HTMLFormElement> = async (
-    e: FormEvent,
-  ) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e: FormEvent) => {
     e.preventDefault();
     await signIn("email", {
       email,
     });
   };
-  
+
   const { colorMode } = useColorMode();
   return (
     <div className="grid grid-cols-2 border-2 border-white h-[100vh]">
@@ -41,9 +39,11 @@ export default function Page() {
         <div
           className="flex gap-3 justify-center items-center py-6 my-4 bg-blue-200 cursor-pointer rounded-s"
           //Signs in with google oauth2
-          onClick={() => signIn("google",{
-            callbackUrl: "/main/home",
-          })}
+          onClick={() =>
+            signIn("google", {
+              callbackUrl: "/main/home",
+            })
+          }
         >
           <span>
             {" "}
@@ -62,9 +62,7 @@ export default function Page() {
               placeholder="mail@example.com"
             />
 
-            <button className="py-4 text-white bg-purple-700 rounded-s">
-              Done
-            </button>
+            <button className="py-4 text-white bg-purple-700 rounded-s">Done</button>
             <Checkbox mx={"2"} defaultChecked>
               Keep me logged in
             </Checkbox>
@@ -78,12 +76,7 @@ export default function Page() {
             {" "}
             Made in Atomic House
           </Link>
-          <Image
-            src={colorMode === "light" ? Svg1 : Svg2}
-            alt="logo"
-            width={30}
-            height={30}
-          />
+          <Image src={colorMode === "light" ? Svg1 : Svg2} alt="logo" width={30} height={30} />
         </div>
       </div>
     </div>

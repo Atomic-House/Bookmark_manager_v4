@@ -115,7 +115,7 @@ export default function Sidebar({
         {!collapse && (
           <Create
             triggerPlaceholder="+"
-            buttonStyle="text-black rounded-lg hover:bg-slate-200 duration-300 items-center p-2 relative  "
+            buttonStyle="text-black font-bold text-xl rounded-lg hover:bg-slate-200 duration-300 items-center p-2 relative  "
             submitBtnStyle="bg-[#422AFB]"
             bodyStyle="bg-slate-50  p-6 rounded-lg flex flex-col "
             headerStyle="text-xl font-semibold"

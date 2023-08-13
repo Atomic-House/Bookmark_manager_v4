@@ -69,7 +69,7 @@ export default function Create({
       {/* Trigger */}
 
       <button
-        className={`flex text-xl font-bold ${buttonStyle} `}
+        className={`flex ${buttonStyle} `}
         onClick={() => toggleClose(!isClose)}
       >
         {triggerPlaceholder ? triggerPlaceholder : "+"}
