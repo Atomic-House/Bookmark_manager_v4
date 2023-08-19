@@ -39,14 +39,16 @@ model User {
   name            String?
   email           String?          @unique
   emailVerified   DateTime?
-  password        String?
   image           String?
+  password        String?
   accounts        Account[]
   lists           List[]
   sessions        Session[]
   Tab             Tab[]
-  workspaces      Workspace[]
   UserPreferences UserPreferences?
+  workspaces      Workspace[]
+  Team_admin      Team[]           @relation("admin")
+  Team_users      Team[]           @relation("users")
 }
 
 model UserPreferences {
@@ -55,10 +57,8 @@ model UserPreferences {
   isPremiumUser Boolean @default(false)
   userName      String? @unique
   background    String?
+  userId        String  @id @unique
   user          User    @relation(fields: [userId], references: [id])
-  userId        String  @unique
-
-  @@id([userId])
 }
 
 model VerificationToken {
@@ -81,12 +81,12 @@ model Workspace {
 
 model Inbox {
   id          String     @id @default(cuid())
-  name        String     @default("Inbox")
+  userId      String?
   email       String?
   workspaceId String?    @unique
+  name        String     @default("Inbox")
   workspace   Workspace? @relation(fields: [workspaceId], references: [id])
   tabs        Tab[]
-  userId      String?
 }
 
 model Board {
@@ -98,6 +98,73 @@ model Board {
   isPublic  Boolean   @default(false)
   workspace Workspace @relation(fields: [wsId], references: [id], onDelete: Cascade)
   tabs      Tab[]
+}
+
+model ListPrefs {
+  id       String   @id @default(cuid())
+  view     View?    @default(LIST)
+  sort     Sort?    @default(NEWEST)
+  linkType Link?    @default(MOST)
+  tags     String[]
+  tab      Tab?
+}
+
+model Tab {
+  id         String     @id @default(cuid())
+  name       String
+  isDeleted  Boolean    @default(false)
+  boardId    String?
+  email      String?
+  isPublic   Boolean    @default(false)
+  userId     String?
+  inboxId    String?
+  listPrefId String?    @unique
+  lists      List[]
+  board      Board?     @relation(fields: [boardId], references: [id])
+  Inbox      Inbox?     @relation(fields: [inboxId], references: [id])
+  listPrefs  ListPrefs? @relation(fields: [listPrefId], references: [id])
+  User       User?      @relation(fields: [userId], references: [id])
+}
+
+model List {
+  name      String
+  id        String     @id @default(cuid())
+  isDeleted Boolean    @default(false)
+  email     String?
+  isPublic  Boolean    @default(false)
+  userId    String?
+  tabId     String?
+  color     String?    @default("slategray")
+  createdAt DateTime?  @default(now())
+  emoji     String?
+  tags      String[]
+  bookmarks Bookmark[]
+  tab       Tab?       @relation(fields: [tabId], references: [id], onDelete: Cascade)
+  User      User?      @relation(fields: [userId], references: [id])
+}
+
+model Bookmark {
+  name        String?
+  title       String?
+  description String?
+  url         String
+  id          String    @id @default(cuid())
+  isDeleted   Boolean   @default(false)
+  listId      String
+  favicon     String?
+  tags        String[]
+  createdAt   DateTime? @default(now())
+  email       String?
+  preview     String?
+  list        List      @relation(fields: [listId], references: [id], onDelete: Cascade)
+}
+
+model Team {
+  id      String  @id
+  name    String
+  adminId String?
+  admin   User[]  @relation("admin")
+  members User[]  @relation("users")
 }
 
 enum Sort {
@@ -117,70 +184,4 @@ enum Link {
   MOST
   BROKEN
   DUPLICATE
-}
-
-model Filter {
-  id        String     @id @default(cuid())
-  tags      String[]
-  link      Link?
-  listPrefs ListPrefs?
-}
-
-model ListPrefs {
-  id       String  @id @default(cuid())
-  view     View?
-  sort     Sort?
-  filter   Filter? @relation(fields: [filterId], references: [id])
-  filterId String? @unique
-  tab      Tab?
-}
-
-model Tab {
-  id         String     @id @default(cuid())
-  name       String
-  isDeleted  Boolean    @default(false)
-  boardId    String?
-  email      String?
-  isPublic   Boolean    @default(false)
-  userId     String?
-  inboxId    String?
-  lists      List[]
-  board      Board?     @relation(fields: [boardId], references: [id])
-  Inbox      Inbox?     @relation(fields: [inboxId], references: [id])
-  User       User?      @relation(fields: [userId], references: [id])
-  listPrefId String?    @unique
-  listPrefs  ListPrefs? @relation(fields: [listPrefId], references: [id])
-}
-
-model List {
-  name      String
-  id        String     @id @default(cuid())
-  isDeleted Boolean    @default(false)
-  email     String?
-  isPublic  Boolean    @default(false)
-  emoji     String?
-  userId    String?
-  tabId     String?
-  tags      String[]
-  color     String?    @default("slategray")
-  createdAt DateTime?  @default(now())
-  bookmarks Bookmark[]
-  tab       Tab?       @relation(fields: [tabId], references: [id], onDelete: Cascade)
-  User      User?      @relation(fields: [userId], references: [id])
-}
-
-model Bookmark {
-  name        String?
-  title       String?
-  description String?
-  url         String
-  id          String    @id @default(cuid())
-  isDeleted   Boolean   @default(false)
-  listId      String
-  favicon     String?
-  preview     String?
-  tags        String[]
-  createdAt   DateTime? @default(now())
-  email       String?
-  list        List      @relation(fields: [listId], references: [id], onDelete: Cascade)
 }
