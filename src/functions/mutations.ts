@@ -12,6 +12,7 @@ export function useMutations<T>(
   fetchType: "GET" | "POST" | "PUT" | "DELETE" | "PATCH",
   parent?: string,
   parentId?: string,
+  refetch?: Function,
 ) {
   const queryClient = useQueryClient();
 
@@ -124,7 +125,7 @@ export function useRestoreTrash(category: string, lId: string) {
     reset,
   };
 }
-//Change list color 
+//Change list color
 export function useChangeColor() {
   const { mutateAsync, mutate, isSuccess, isError, isLoading, error, reset } =
     useMutation({

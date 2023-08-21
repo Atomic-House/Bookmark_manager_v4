@@ -3,14 +3,14 @@
 "use client";
 import Image from "next/image";
 import { FormEvent, useEffect, useState } from "react";
-import { Avatar, Input, Spinner } from "@chakra-ui/react";
+import { Input, Spinner } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import "@uploadthing/react/styles.css";
 import UploadImage from "@/components/Modal/components/UploadProfile";
 import { useGetUser } from "@/functions/queries";
-import { User, UserPreferences } from "@prisma/client";
+// import { User, UserPreferences } from "@prisma/client";
 export default function Left() {
   const { data: user, isLoading: isBgLoading, refetch } = useGetUser();
   const { data: session, update } = useSession();

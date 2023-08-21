@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+
 interface Member {
   name: string;
   email: string;
@@ -8,7 +9,7 @@ interface Member {
   image: string;
 }
 
-export function generateFakeData(length: number): Member[] {
+export function generateUserData(length: number): Member[] {
   let members: Member[] = [];
   for (let i = 0; i < length; i++) {
     members.push({

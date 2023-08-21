@@ -47,8 +47,9 @@ model User {
   Tab             Tab[]
   UserPreferences UserPreferences?
   workspaces      Workspace[]
-  Team_admin      Team[]           @relation("admin")
-  Team_users      Team[]           @relation("users")
+  memberships     Member[]
+  adminOfTeams    Admin[]
+  ownerOfTeams    Owner[]
 }
 
 model UserPreferences {
@@ -160,11 +161,37 @@ model Bookmark {
 }
 
 model Team {
-  id      String  @id
+  id      String   @id @default(cuid())
   name    String
-  adminId String?
-  admin   User[]  @relation("admin")
-  members User[]  @relation("users")
+  members Member[]
+  admins  Admin[]
+  owner   Owner?
+}
+
+model Member {
+  id     String @id @default(cuid())
+  teamId String
+  team   Team   @relation(fields: [teamId], references: [id])
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+  role   Role   @default(MEMBER)
+}
+
+model Admin {
+  id     String @id @default(cuid())
+  teamId String
+  team   Team   @relation(fields: [teamId], references: [id])
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+  role   Role   @default(ADMIN)
+}
+
+model Owner {
+  id     String @id @default(cuid())
+  teamId String @unique()
+  team   Team   @relation(fields: [teamId], references: [id])
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
 }
 
 enum Sort {
@@ -184,4 +211,9 @@ enum Link {
   MOST
   BROKEN
   DUPLICATE
+}
+
+enum Role {
+  ADMIN
+  MEMBER
 }

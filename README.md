@@ -62,8 +62,7 @@ Usage and nesting overview structure
                     └── Bookmarks
 ```
 
-* Each workspace can have multiple boards but has only one Inbox
-
+- Each workspace can have multiple boards but has only one Inbox
 
 ## Folder structure and description
 
