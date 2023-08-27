@@ -27,9 +27,9 @@ export default function Page() {
   useEffect(() => {
     //Routes to the main app with the current board created
     if (isSuccess) {
-      router.push("/main/home/board" + data?.id);
+      router.push("/main/home/board/" + data?.id);
     }
-  }, [router, isSuccess,data?.id]);
+  }, [router, isSuccess, data?.id]);
   return (
     <div className="flex flex-col">
       <div className="flex flex-col justify-center items-center">

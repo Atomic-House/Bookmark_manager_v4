@@ -1,12 +1,12 @@
 // main bookmark component
 "use client";
 import { useMutations } from "@/functions/mutations";
-import { Bookmark } from "@prisma/client";
+import { $Enums, Bookmark } from "@prisma/client";
 import { useContext, useEffect, useState } from "react";
 import { ListPrefContext } from "../context/ListPrefContext";
 import IconView from "./components/views/Icon";
 import ListView from "./components/views/List";
-import CardView from "./components/views/Card";
+import CardView, { AltCardView } from "./components/views/Card";
 export default function Bookmark({
   name,
   id,
@@ -21,8 +21,8 @@ export default function Bookmark({
   index: number;
 }) {
   const { listPrefs } = useContext(ListPrefContext);
-  const [lp, setLp] = useState<"list" | "icon" | "card" | undefined>(
-    listPrefs?.view || "list",
+  const [lp, setLp] = useState<$Enums.View>(
+    listPrefs?.view || $Enums.View.LIST,
   );
   const { mutateAsync, isError, error } = useMutations(
     "delete bookmark",
@@ -37,14 +37,14 @@ export default function Bookmark({
     if (isError) {
       console.log(error);
     }
-    setLp(listPrefs?.view);
+    setLp(listPrefs?.view!);
   }, [isError, listPrefs?.view, error]);
 
   const icon = `https://www.google.com/s2/favicons?domain=${
     new URL(url).hostname
   }&sz=256`;
 
-  if (lp === "icon") {
+  if (lp === $Enums.View.ICON) {
     return (
       <IconView
         mutateAsync={mutateAsync}
@@ -61,7 +61,8 @@ export default function Bookmark({
       />
     );
   }
-  if (lp === "list") {
+
+  if (lp === $Enums.View.LIST) {
     return (
       <ListView
         icon={icon}
@@ -78,7 +79,7 @@ export default function Bookmark({
       />
     );
   }
-  if (lp === "card") {
+  if (lp === $Enums.View.CARD) {
     return (
       <CardView
         icon={icon}

@@ -1,4 +1,4 @@
-// Filter component for list preferences  
+// Filter component for list preferences
 "use client";
 
 import { BiFilterAlt } from "@react-icons/all-files/bi/BiFilterAlt";
@@ -22,6 +22,7 @@ import {
 import { useContext, useEffect } from "react";
 import { ListPrefContext } from "../context/ListPrefContext";
 import { useState } from "react";
+import { $Enums } from "@prisma/client";
 const tags = [
   { name: "tag 1", color: "pink" },
   { name: "tag 2", color: "cyan" },
@@ -35,7 +36,9 @@ export default function Filter() {
   const [selectedTags, setSelectedTags] = useState<
     { name: string; color: string }[]
   >([{ name: "", color: "" }]);
-  const [selectedLinks, setSelectedLinks] = useState<string[]>([]);
+  const [selectedLinks, setSelectedLinks] = useState<$Enums.Link | null>(
+    $Enums.Link.MOST,
+  );
 
   return (
     <Menu closeOnSelect={false}>
@@ -49,7 +52,7 @@ export default function Filter() {
       >
         <BiFilterAlt />
       </MenuButton>
-      <MenuList p={4} w={"300px"} h={"50vh"}>
+      <MenuList p={4} w={"300px"} h={"full"}>
         <MenuGroup>
           Filter
           <p className="text-xs">Filter through</p>
@@ -73,11 +76,9 @@ export default function Filter() {
                   key={index}
                   onClick={() => {
                     setListPrefs({
-                      ...listPrefs,
-                      filter: {
-                        tags: [...selectedTags.map((t) => t.name)],
-                        linksType: [...selectedLinks],
-                      },
+                      ...listPrefs!,
+                      tags: [...selectedTags.map((t) => t.name)],
+                      linkType: selectedLinks,
                     });
                     setSelectedTags([...new Set([...selectedTags, tag])]);
                   }}
@@ -98,22 +99,37 @@ export default function Filter() {
         </MenuGroup>
         <MenuDivider />
         <MenuGroup>
-          <CheckboxGroup
-            onChange={(e) => {
-              setSelectedLinks([...e.map((e) => e.toString().valueOf())]);
-            }}
-            colorScheme="blue"
-          >
-            <Checkbox value={"Most"}>Most viewed</Checkbox>
-            <Checkbox value={"Broken"}>Broken links</Checkbox>
-            <Checkbox value={"Duplicate"}>Duplicate links</Checkbox>
-          </CheckboxGroup>
+          {/* <CheckboxGroup colorScheme="blue"> */}
+          <form className="form-control">
+            <label className="cursor-pointer label">
+              <span className="label-text">Most Visited</span>
+              <input
+                type="checkbox"
+                className="checkbox checkbox-accent checkbox-xs"
+              />
+            </label>
+            <label className="cursor-pointer label">
+              <span className="label-text">Broken Links</span>
+              <input
+                type="checkbox"
+                className="checkbox checkbox-accent checkbox-xs"
+              />
+            </label>
+            <label className="cursor-pointer label">
+              <span className="label-text">Duplicate Links</span>
+              <input
+                type="checkbox"
+                className="checkbox checkbox-accent checkbox-xs"
+              />
+            </label>
+          </form>
         </MenuGroup>
-
         <MenuDivider />
         <MenuGroup>
           <div className="flex float-right gap-5">
-            <button className="duration-300 hover:text-red-900">Reset</button>
+            <button type="reset" className="duration-300 hover:text-red-900">
+              Reset
+            </button>
             <button className="bg-[#422AFB] py-2 rounded-full px-9 text-white hover:bg-blue-600 duration-300">
               Apply
             </button>

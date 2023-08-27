@@ -4,8 +4,8 @@
 import { FaSortAmountDownAlt } from "@react-icons/all-files/fa/FaSortAmountDownAlt";
 import { FcAlphabeticalSortingAz } from "@react-icons/all-files/fc/FcAlphabeticalSortingAz";
 import { FcAlphabeticalSortingZa } from "@react-icons/all-files/fc/FcAlphabeticalSortingZa";
-import {ImSortNumbericDesc} from "@react-icons/all-files/im/ImSortNumbericDesc"
-import {ImSortNumericAsc} from "@react-icons/all-files/im/ImSortNumericAsc"
+import { ImSortNumbericDesc } from "@react-icons/all-files/im/ImSortNumbericDesc";
+import { ImSortNumericAsc } from "@react-icons/all-files/im/ImSortNumericAsc";
 import {
   Box,
   Menu,
@@ -18,6 +18,7 @@ import {
 } from "@chakra-ui/react";
 import { useContext, useState } from "react";
 import { ListPrefContext } from "../context/ListPrefContext";
+import { $Enums } from "@prisma/client";
 export default function Sort() {
   const [selected, setSelected] = useState("");
   const { listPrefs, setListPrefs } = useContext(ListPrefContext);
@@ -25,31 +26,34 @@ export default function Sort() {
     name: string;
     icon: JSX.Element;
     selected: boolean;
-    value: "a_z" | "z_a" | "oldest" | "newest";
+    value: $Enums.Sort;
   }[] = [
     {
       name: "A-Z",
       icon: <FcAlphabeticalSortingAz />,
       selected: false,
-      value: "a_z",
+      value: $Enums.Sort.A_Z,
     },
     {
       name: "Z-A",
       icon: <FcAlphabeticalSortingZa />,
       selected: false,
-      value: "z_a",
+
+      value: $Enums.Sort.Z_A,
     },
     {
       name: "New to Old",
-      icon: <ImSortNumbericDesc/>,
+      icon: <ImSortNumbericDesc />,
       selected: false,
-      value: "newest",
+
+      value: $Enums.Sort.NEWEST,
     },
     {
       name: "Old to New",
-      icon: <ImSortNumericAsc/>,
+      icon: <ImSortNumericAsc />,
       selected: false,
-      value: "oldest",
+
+      value: $Enums.Sort.OLDEST,
     },
   ];
 
@@ -71,7 +75,7 @@ export default function Sort() {
                 key={option.value}
                 onClick={() => {
                   setListPrefs({
-                    ...listPrefs,
+                    ...listPrefs!,
                     sort: option.value,
                   });
                   setSelected(option.value);

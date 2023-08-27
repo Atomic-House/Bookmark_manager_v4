@@ -35,21 +35,21 @@ model Session {
 }
 
 model User {
-  id              String           @id @default(cuid())
-  name            String?
-  email           String?          @unique
-  emailVerified   DateTime?
-  image           String?
-  password        String?
-  accounts        Account[]
-  lists           List[]
-  sessions        Session[]
-  Tab             Tab[]
-  UserPreferences UserPreferences?
-  workspaces      Workspace[]
-  memberships     Member[]
-  adminOfTeams    Admin[]
-  ownerOfTeams    Owner[]
+  id                 String           @id @default(cuid())
+  name               String?
+  email              String?          @unique
+  emailVerified      DateTime?
+  image              String?
+  password           String?
+  accounts           Account[]
+  lists              List[]
+  sessions           Session[]
+  Tab                Tab[]
+  UserPreferences    UserPreferences?
+  workspaces         Workspace[]
+  membershipsOfTeams Member[]
+  adminOfTeams       Admin[]
+  ownerOfTeams       Owner[]
 }
 
 model UserPreferences {
@@ -105,7 +105,7 @@ model ListPrefs {
   id       String   @id @default(cuid())
   view     View?    @default(LIST)
   sort     Sort?    @default(NEWEST)
-  linkType Link?    @default(MOST)
+  linkType Link[]   @default(MOST)
   tags     String[]
   tab      Tab?
 }
@@ -169,12 +169,12 @@ model Team {
 }
 
 model Member {
-  id     String @id @default(cuid())
-  teamId String
-  team   Team   @relation(fields: [teamId], references: [id])
+  id     String  @id @default(cuid())
+  teamId String?
+  team   Team?   @relation(fields: [teamId], references: [id])
   userId String
-  user   User   @relation(fields: [userId], references: [id])
-  role   Role   @default(MEMBER)
+  user   User    @relation(fields: [userId], references: [id])
+  role   Role    @default(MEMBER)
 }
 
 model Admin {
@@ -187,11 +187,11 @@ model Admin {
 }
 
 model Owner {
-  id     String @id @default(cuid())
-  teamId String @unique()
-  team   Team   @relation(fields: [teamId], references: [id])
+  id     String  @id @default(cuid())
+  teamId String? @unique()
+  team   Team?   @relation(fields: [teamId], references: [id])
   userId String
-  user   User   @relation(fields: [userId], references: [id])
+  user   User    @relation(fields: [userId], references: [id])
 }
 
 enum Sort {
