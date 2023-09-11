@@ -1,0 +1,1 @@
+ALTER TABLE "board" RENAME COLUMN "workspace_id" TO "workspaceId";

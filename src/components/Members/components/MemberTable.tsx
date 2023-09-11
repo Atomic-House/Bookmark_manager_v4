@@ -1,6 +1,5 @@
 "use client";
 import { generateUserData } from "@/functions/fakedata";
-import { Image } from "@chakra-ui/react";
 // import Image from "next/image";
 export default function MemberTable() {
   const userData = generateUserData(6);

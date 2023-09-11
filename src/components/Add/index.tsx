@@ -1,5 +1,4 @@
 import { ChangeEventHandler, FormEventHandler } from "react";
-
 export default function Add({
   addText,
   heading,

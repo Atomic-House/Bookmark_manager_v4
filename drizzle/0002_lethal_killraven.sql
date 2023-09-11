@@ -1,0 +1,1 @@
+ALTER TABLE "board" DROP CONSTRAINT "board_id_unique";

@@ -4,37 +4,16 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "unsplash.com",
-      },
-      {
-        protocol: "https",
-        hostname: "**.unsplash.com",
-      },
-      {
-        protocol: "https",
-        hostname: "lh3.googleusercontent.com",
-      },
-      {
-        protocol: "https",
-        hostname: "www.google.com",
-      },
-      {
-        protocol: "https",
-        hostname: "uploadthing.com",
-      },
-      // {
-      //   protocol: "https",
-      //   hostname: "**.com",
-      // },
-      {
-        protocol: "https",
         hostname: "**",
-      },
-    ],
-  },
-  eslint: {
-    dirs: ["src", "src/app"],
-  },
-};
+      }
+      ,
+      {
+        protocol: "https",
+        hostname: "variety.com",
+      }
 
-module.exports = nextConfig;
+    ]
+  }
+}
+
+module.exports = nextConfig
