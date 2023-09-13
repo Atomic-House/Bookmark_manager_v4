@@ -155,7 +155,6 @@ export default function Popover({
           </div>
         </Transition>
       </div>
-      <main>Hello world I am you buddy</main>
     </>
   );
 }

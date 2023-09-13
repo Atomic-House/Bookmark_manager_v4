@@ -7,17 +7,17 @@ describe("<Add />", () => {
     // see: https://on.cypress.io/mounting-react
     cy.viewport("macbook-13")
     cy.mount(
-    <>
-    <ThemeProvider/>
-      <Add
-        addText="Single"
-        inputPlaceholder="Add email here"
-        heading="Add single member"
-        content="Send request to anyone using email"
-        confirmBtnText="Send Request"
-        cancelBtnText="Reset"
-      />
-</>
+      <>
+        <ThemeProvider />
+        <Add
+          triggerText="Single"
+          inputPlaceholder="Add email here"
+          heading="Add single member"
+          content="Send request to anyone using email"
+          confirmBtnText="Send Request"
+          cancelBtnText="Reset"
+        />
+      </>
       ,
     );
   });

@@ -5,12 +5,12 @@ import { list } from "./list";
 export const bookmark = pgTable("bookmark", {
 	id: text("id").primaryKey().notNull(),
 	name: text("name"),
-	url: text("url").$type<URL | null>(),
+	url: text("url").$type<URL | string | null>(),
 	listId: text("listId"),
 	title: text("title"),
 	description: text("description"),
-	favicon: text("favicon").$type<URL | null>(),
-	preview: text("preview").$type<URL | null>(),
+	favicon: text("favicon").$type<URL | string | null>(),
+	preview: text("preview").$type<URL | string | null>(),
 	isDeleted: boolean("isDeleted").default(false)
 })
 
