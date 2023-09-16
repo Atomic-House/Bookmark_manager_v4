@@ -1,12 +1,12 @@
 import React from 'react'
-import List from './List'
+import ListView from './List'
 import "@/app/globals.css"
 describe('<List />', () => {
   it('renders', () => {
     // see: https://on.cypress.io/mounting-react
     cy.mount(
       <span className='flex items-center w-[20-vw] border-white border-2 justify-center'>
-        <List url={`/laskjflks/l;aksdjdfa;s`} id='al;sjasldk' title='Google' icon='https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png' />
+        <ListView url={`/laskjflks/l;aksdjdfa;s`} id='al;sjasldk' title='Google' icon='https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png' />
       </span>
     )
   })

@@ -1,3 +1,4 @@
+import { useOverlayRef } from "@/hooks/util"
 import data from "@emoji-mart/data"
 import Picker from "@emoji-mart/react"
 import { Transition } from "@headlessui/react"
@@ -13,15 +14,15 @@ interface Icon {
 	emoticons: string[]
 }
 export default function IconPicker() {
-
+	const { ref, open, toggleOpen } = useOverlayRef()
 	const [icon, setIcon] = useState<Icon>()
-	const [open, toggleOpen] = useState(false)
 	return (
 		<div>
 			<div>
-				<button onClick={()=>toggleOpen(!open)}>{icon?.native ? icon?.native : '🔖'}</button>
+				<button onClick={() => toggleOpen(!open)}>{icon?.native ? icon?.native : '🔖'}</button>
 			</div>
 			<Transition
+				ref={ref}
 				as="div"
 				show={open}
 				className="flex flex-col gap-2 px-8 absolute"

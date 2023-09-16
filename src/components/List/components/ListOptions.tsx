@@ -15,7 +15,7 @@ export default function EditListOptions({
   rounded,
   text,
   contentStyle,
-  trigger
+  trigger,
 }: {
   bg?: string;
   rounded?: string;
@@ -24,20 +24,22 @@ export default function EditListOptions({
   trigger?: string | ReactNode;
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const overLayRef = useRef<HTMLDivElement | null>(null)
+  const overLayRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     function handleOverlayClose(event: MouseEvent) {
-      if (overLayRef.current && !overLayRef.current.contains(event.target as Node)) {
-        setIsOpen(false)
+      if (
+        overLayRef.current &&
+        !overLayRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
       }
     }
     if (isOpen) {
-      document.addEventListener('click', handleOverlayClose)
+      document.addEventListener("click", handleOverlayClose);
+    } else {
+      document.removeEventListener("click", handleOverlayClose);
     }
-    else {
-      document.removeEventListener("click", handleOverlayClose)
-    }
-  })
+  });
   //List of edit list options
   const items = [
     {
@@ -128,50 +130,43 @@ export default function EditListOptions({
 
   return (
     <>
-      <div className="relative">
+      <div className="dropdown dropdown-left ">
         {/* Trigger to open popover   */}
-        <button className="cursor-pointer" onClick={() => setIsOpen(!isOpen)}>
+        <label tabIndex={0} className=" cursor-pointer">
           {trigger}{" "}
-        </button>
-        <Transition
-          as="div"
-          ref={overLayRef}
-          className="dark:text-white "
-          show={isOpen}
-          enterFrom="opacity-0 -translate-y-2  transition-all duration-300"
-          enterTo="opacity-100 translate-y-0 scale-100 transition-all duration-300"
+        </label>
+
+        <div
+          className={`dark:text-white z-[1000] w-60 dropdown-content p-4 ${contentStyle} rounded-lg absolute dark:bg-slate-900  ${text}`}
+          tabIndex={0}
         >
-          <div
-            className={`p-4 ${contentStyle} ${rounded} absolute ${bg} ${text}`}
-          >
-            <ul className="flex flex-col gap-2">
-              {items.map(({ id, item }) => (
-                <li key={id}>
-                  {item.map((i) => (
-                    <div
-                      key={i.id}
-                      className="flex hover:dark:text-black gap-2 items-center p-2 font-light rounded-lg duration-300 cursor-pointer hover:bg-slate-300"
-                      onClick={i.onClick}
-                    >
-                      {i.icon} {i.title}
-                    </div>
-                  ))}
-                  <hr />
-                </li>
-              ))}
-              <li className="grid grid-cols-5 grid-rows-2 colors">
-                {colors.map((color, index) => (
+          <ul className="flex flex-col gap-2">
+            {items.map(({ id, item }) => (
+              <li key={id}>
+                {item.map((i) => (
                   <div
-                    key={index}
-                    className={`w-1 h-1 ${color
-                      .toString()
-                      .trimEnd()} p-2`}
-                  ></div>
+                    key={i.id}
+                    className="flex hover:dark:text-black gap-2 items-center p-2 font-light rounded-lg duration-300 cursor-pointer hover:bg-slate-300"
+                    onClick={i.onClick}
+                  >
+                    {i.icon} {i.title}
+                  </div>
                 ))}
+                <hr />
               </li>
-            </ul>
-          </div>
-        </Transition>
+            ))}
+            <li className="grid grid-cols-5 grid-rows-2 colors gap-2">
+              {colors.map((color, index) => (
+                <div
+                  key={index}
+                  className={`w-1 h-1 hover:${color
+                    .replace("500", "300")
+                    .trim()} ${color} p-2`}
+                ></div>
+              ))}
+            </li>
+          </ul>
+        </div>
       </div>
     </>
   );
