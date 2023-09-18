@@ -1,3 +1,4 @@
+"use client";
 import { RiListSettingsLine } from "@react-icons/all-files/ri/RiListSettingsLine";
 
 export default function Settings() {

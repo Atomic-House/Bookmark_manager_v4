@@ -1,3 +1,4 @@
+"use client";
 import { ChangeEventHandler, FormEventHandler, ReactNode } from "react";
 export default function Add({
   triggerText,

@@ -1,8 +1,8 @@
 "use client";
-import { generateUserData } from "@/functions/fakedata";
-// import Image from "next/image";
+import { fakerUser } from "@/functions/fakedata";
+import Image from "next/image";
 export default function MemberTable() {
-  const userData = generateUserData(6);
+  const userData = fakerUser();
   return (
     <div>
       <table className="table">
@@ -19,7 +19,7 @@ export default function MemberTable() {
           {userData.map((user) => (
             <tr className="font-semibold" key={user.name}>
               <td>
-                <img
+                <Image
                   width={60}
                   height={60}
                   className="avatar rounded-full w-20 mx-2"

@@ -1,3 +1,4 @@
+"use client";
 import { FiFilter } from "@react-icons/all-files/fi/FiFilter";
 import { BiSearch } from "@react-icons/all-files/bi/BiSearch";
 import Settings from "@/svgs/visibility-conditional1";

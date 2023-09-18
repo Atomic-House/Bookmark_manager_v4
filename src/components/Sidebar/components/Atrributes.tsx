@@ -12,6 +12,7 @@ import { IoAppsOutline } from "@react-icons/all-files/io5/IoAppsOutline";
 import { BiReceipt } from "@react-icons/all-files/bi/BiReceipt";
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Transition } from "@headlessui/react";
 export default function Atrributes({ collapse }: { collapse?: boolean }) {
   const [isOpen, toggleOpen] = useState(true);

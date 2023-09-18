@@ -3,6 +3,7 @@ import { Workspace } from "@/schema/workspace";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { BiChevronUp } from "@react-icons/all-files/bi/BiChevronUp";
+import Image from "next/image";
 export default function Select({
   workspaces,
   collapse,
@@ -25,7 +26,7 @@ export default function Select({
         className="flex items-center  gap-2 bg-[#11047A] p-3 text-white relative w-full "
       >
         {/* Trigger */}
-        <img
+        <Image
           className="avatar"
           src={selected.icon!}
           width={!collapse ? 24 : 30}
@@ -66,7 +67,7 @@ export default function Select({
             key={workspace.id}
             onClick={() => setSelected(workspace)}
           >
-            <img
+            <Image
               className="avatar "
               loading="lazy"
               src={workspace.icon!}

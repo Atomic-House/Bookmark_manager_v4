@@ -3,6 +3,7 @@ import Add from "@/components/Add";
 import { Board } from "@/schema/board";
 import { Transition } from "@headlessui/react";
 import Link from "next/link";
+import Image from "next/image";
 import React, { useState } from "react";
 import { BiChevronUp } from "@react-icons/all-files/bi/BiChevronUp";
 import { MdDashboard } from "@react-icons/all-files/md/MdDashboard";
@@ -65,7 +66,7 @@ export default function SelectBoards({
             href={`/board/${board.id}`}
             className={collapse ? "" : `flex gap-4`}
           >
-            <img
+            <Image
               src={board.icon!}
               width={collapse ? 25 : 20}
               alt={board.name}

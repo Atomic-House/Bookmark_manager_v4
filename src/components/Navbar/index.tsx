@@ -1,3 +1,4 @@
+"use client";
 import Notifications from "./components/Notifications";
 import Profile from "./components/Profile";
 import Search from "./components/Search";

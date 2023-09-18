@@ -1,3 +1,4 @@
+"use client";
 import { ViewWithLists } from "@/schema/view";
 import { Tab } from "@headlessui/react";
 import { Fragment } from "react";

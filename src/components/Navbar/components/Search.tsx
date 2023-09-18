@@ -1,3 +1,4 @@
+"use client";
 import { AiOutlineSearch } from "@react-icons/all-files/ai/AiOutlineSearch";
 export default function Search() {
   return (

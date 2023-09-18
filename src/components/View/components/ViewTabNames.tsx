@@ -1,3 +1,5 @@
+"use client";
+
 import { View } from "@/schema/view";
 import { Tab } from "@headlessui/react";
 

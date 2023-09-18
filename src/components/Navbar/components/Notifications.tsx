@@ -1,4 +1,4 @@
-import React from "react";
+"use client";
 import { BiMessageRoundedDots } from "@react-icons/all-files/bi/BiMessageRoundedDots";
 export default function Notifications() {
   return (

@@ -1,11 +1,12 @@
+"use client";
 import { faker } from "@faker-js/faker";
-
+import Image from "next/image";
 export default function Profile() {
   return (
     <div className="dropdown dropdown-left dropdown-bottom">
       <div className="avatar" tabIndex={0}>
         <div className="w-12 rounded-full flex items-center">
-          <img src={faker.image.url()} alt="image" width={40} />
+          <Image src={faker.image.url()} alt="image" width={40} />
         </div>
       </div>
       <ul
