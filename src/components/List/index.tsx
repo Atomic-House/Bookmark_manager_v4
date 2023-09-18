@@ -8,7 +8,7 @@ import { BiDotsVerticalRounded } from "@react-icons/all-files/bi/BiDotsVerticalR
 import ListView from "../Bookmark/components/view/List";
 export default function List({ ...props }: ListWithBookmarks) {
   return (
-    <div className="p-4 flex flex-col gap-5 shadow-black hover:shadow-slate-900 duration-300 shadow-xl bg-slate-950 rounded-lg m-4 z-20">
+    <div className="p-4 flex flex-col gap-5 shadow-black hover:shadow-slate-900 duration-300 shadow-xl bg-slate-950 rounded-lg m-4 ">
       {/* list name div */}
       <div className="flex justify-between items-center px-4">
         <span className="flex justify-between gap-2">

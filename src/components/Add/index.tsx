@@ -8,6 +8,8 @@ export default function Add({
   cancelBtnText,
   onSubmit,
   onChange,
+  dropdownX,
+  dropdownY,
 }: {
   triggerText?: string | ReactNode;
   heading?: string;
@@ -17,9 +19,11 @@ export default function Add({
   cancelBtnText?: string;
   onSubmit?: FormEventHandler<HTMLFormElement>;
   onChange?: ChangeEventHandler<HTMLInputElement>;
+  dropdownX?: "dropdown-left" | "dropdown-right";
+  dropdownY?: "dropdown-top" | "dropdown-bottom";
 }) {
   return (
-    <div className="dropdown dropdown-left dropdown-bottom">
+    <div className={`dropdown ${dropdownY} ${dropdownX} `}>
       <label className="cursor-pointer " tabIndex={0}>
         {/* trigger */}
         {triggerText}

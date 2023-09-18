@@ -5,6 +5,7 @@ import { fakerBoards, fakerWorkspaces } from "@/functions/fakedata";
 import Select from "./components/Select";
 import SelectBoards from "./components/SelectBoards";
 import { MdKeyboardArrowLeft } from "@react-icons/all-files/md/MdKeyboardArrowLeft";
+import { SiLighthouse } from "@react-icons/all-files/si/SiLighthouse";
 import { ReactNode, useState } from "react";
 const ws = fakerWorkspaces(10);
 const boards = fakerBoards(4);
@@ -13,12 +14,20 @@ export default function Sidebar({ children }: { children: ReactNode }) {
   return (
     <main className="flex gap-2">
       <section
-        className={`transition-all duration-300 h-screen flex flex-col gap-3 lg:w-[25vw] drop-shadow-lg dark:bg-[#1A1A1A] rounded-3xl my-4 ${
+        className={`transition-all duration-300 h-fit pb-8 flex flex-col gap-3 lg:w-[25vw] drop-shadow-lg dark:bg-[#1A1A1A] rounded-3xl my-4 ${
           !collapse ? "" : "lg:w-[6vw]"
         }`}
       >
-        <h1 className="text-3xl font-bold text-black dark:text-white mx-2 my-4 py-5 text-center">
-          Brand
+        <h1
+          className={`text-3xl font-bold text-black dark:text-white  mx-2 my-4 py-5 text-center`}
+        >
+          {collapse ? (
+            <span className="flex items-center w-full justify-center ">
+              <SiLighthouse className="" />
+            </span>
+          ) : (
+            "Brand"
+          )}
         </h1>
         <Select workspaces={ws} collapse={collapse} />
         <Attributes collapse={collapse} />

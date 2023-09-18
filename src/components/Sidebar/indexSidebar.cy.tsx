@@ -7,7 +7,7 @@ import Navbar from "../Navbar";
 describe("<Sidebar />", () => {
   it("renders", () => {
     // see: https://on.cypress.io/mounting-react
-    cy.viewport("macbook-16");
+    cy.viewport("macbook-13");
     cy.mount(
       <Sidebar>
         <div className="flex flex-col items-end">

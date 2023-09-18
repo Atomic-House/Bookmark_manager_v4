@@ -15,4 +15,5 @@ export const inboxToWorkspaceRelation = relations(inbox, ({ one }) => ({
 export const inboxToBookmarksRelation = relations(inbox, ({ many }) => ({
   bookmarks: many(bookmark),
 }));
+
 export type Inbox = typeof inbox.$inferInsert;

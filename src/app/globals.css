@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 *{
-	margin:0;
+	margin:0px;
 	font-family: 'DM Sans', sans-serif;
+}
+body{
+	overflow-x:hidden;
 }

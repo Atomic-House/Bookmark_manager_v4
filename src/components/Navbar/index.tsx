@@ -5,7 +5,7 @@ import Settings from "./components/Settings";
 
 export default function Navbar() {
   return (
-    <div className="flex items-center gap-2 bg-slate-900 w-fit py-2 rounded-full px-4">
+    <div className="flex items-center gap-2 bg-slate-900 w-fit py-1 rounded-full px-4">
       <Search />
       <Settings />
       <Notifications />

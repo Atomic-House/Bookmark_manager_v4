@@ -15,8 +15,13 @@ import Link from "next/link";
 import { Transition } from "@headlessui/react";
 export default function Atrributes({ collapse }: { collapse?: boolean }) {
   const [isOpen, toggleOpen] = useState(true);
+  const [settingsOpen, toggleSettingsOpen] = useState(false);
   return (
-    <div className="flex flex-col gap-3">
+    <div
+      className={`flex flex-col gap-3 ${
+        collapse ? "items-center" : "items-start"
+      }`}
+    >
       <button
         onClick={() => toggleOpen(!isOpen)}
         className="flex gap-2 justify-between items-center px-8"
@@ -58,19 +63,37 @@ export default function Atrributes({ collapse }: { collapse?: boolean }) {
             {!collapse && attr.name}
           </Link>
         ))}
-        <div className={`collapse w-fit dark:bg-slate-950`}>
-          <input type="checkbox" />
-          <div className="collapse-title flex relative text-xl ">
-            <AiOutlineSetting className="flex items-center absolute gap-2" />
-            <span className="absolute">{!collapse && "Settings"}</span>
+        <div
+          className={` hover:dark:bg-slate-950 py-2 px-4 flex flex-col gap-2 rounded-md duration-300 transition-all ease-linear`}
+        >
+          <div
+            className="  flex items-center text-xl gap-3 "
+            onClick={() => toggleSettingsOpen(!settingsOpen)}
+          >
+            <AiOutlineSetting />
+            {!collapse && <span>Settings</span>}
           </div>
-          <div className="collapse-content flex flex-col gap-3">
-            {settings.map((s) => (
-              <Link key={s.name} href={s.url}>
-                <s.icon className={`${collapse ? "text-2xl" : "text-xl"}`} />
-                {!collapse && s.name}
-              </Link>
-            ))}
+          <div className=" flex flex-col gap-4 ">
+            <Transition
+              show={settingsOpen}
+              enter="transition-opacity ease-linear duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="transition-opacity ease-linear duration-300"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              {settings.map((s) => (
+                <Link
+                  key={s.name}
+                  href={s.url}
+                  className="flex p-2 rounded-lg gap-2 hover:dark:bg-slate-900"
+                >
+                  <s.icon className={` ${collapse ? "text-2xl" : "text-xl"}`} />
+                  {!collapse && s.name}
+                </Link>
+              ))}
+            </Transition>
           </div>
         </div>
       </Transition>

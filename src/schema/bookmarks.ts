@@ -28,10 +28,10 @@ export const bookmarkToListRelation = relations(bookmark, ({ one }) => ({
   }),
 }));
 
-export const bookmarksToInboxRelation = relations(inbox, ({ one }) => ({
-  inbox: one(bookmark, {
-    fields: [inbox.id],
-    references: [bookmark.inboxId],
+export const bookmarksToInboxRelation = relations(bookmark, ({ one }) => ({
+  inbox: one(inbox, {
+    fields: [bookmark.inboxId],
+    references: [inbox.id],
   }),
 }));
 
