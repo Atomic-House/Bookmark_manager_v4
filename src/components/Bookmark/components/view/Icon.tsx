@@ -31,7 +31,12 @@ export default function Icon({
       </div>
 
       <Link href={url!}>
-        <Image src={icon} alt={title} width={`50`} className="-z-10 avatar " />
+        <Image
+          src={icon!}
+          alt={title ? title : name ? name : "alt"}
+          width={`50`}
+          className="-z-10 avatar "
+        />
       </Link>
     </div>
   );
