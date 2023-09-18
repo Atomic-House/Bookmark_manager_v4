@@ -1,4 +1,4 @@
-export default function CODE.TSX() { return (export default function CODE() {
+export default function CODETSX() {
   return (
     <svg
       width="24"
@@ -22,5 +22,4 @@ export default function CODE.TSX() { return (export default function CODE() {
     </svg>
   );
 }
-) 
- }
+
