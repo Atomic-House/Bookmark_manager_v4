@@ -69,6 +69,7 @@ export default function SelectBoards({
             <Image
               src={board.icon!}
               width={collapse ? 25 : 20}
+              height={collapse ? 25 : 20}
               alt={board.name}
             />
             {!collapse && board.name}

@@ -8,13 +8,15 @@
     "start": "next start",
     "lint": "next lint",
     "generate": "drizzle-kit generate:pg",
-    "cypress": "cypress open"
+    "cypress": "cypress open",
+    "test": "jest"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^0.3.2",
     "@emoji-mart/data": "^1.1.2",
     "@emoji-mart/react": "^1.1.1",
     "@headlessui/react": "^1.7.17",
+    "@paralleldrive/cuid2": "^2.2.2",
     "@radix-ui/react-select": "^1.2.2",
     "@react-icons/all-files": "^4.1.0",
     "@tanstack/react-query": "^4.35.3",

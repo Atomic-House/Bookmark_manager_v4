@@ -50,7 +50,7 @@ export default function Select({
         tabIndex={0}
         className={` ${
           collapse ? "w-[24vw]" : ""
-        } absolute dropdown-content z-50 flex flex-col gap-4 dark:bg-slate-900  p-3 rounded-xl drop-shadow-lg duration-300 transition-all justify-center  `}
+        } absolute dropdown-content z-50 flex flex-col gap-4 bg-white dark:bg-slate-900  p-3 rounded-xl drop-shadow-lg duration-300 transition-all justify-center  `}
       >
         <li className="flex items-center justify-center">
           <Link

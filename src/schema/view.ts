@@ -2,11 +2,11 @@ import { relations } from "drizzle-orm";
 import { pgTable, text, boolean, timestamp } from "drizzle-orm/pg-core";
 import { List, list } from "./list";
 import { board } from "./board";
-import { inbox } from "./inbox";
 import { layout } from "./layout";
+import { createId } from "@paralleldrive/cuid2";
 
 export const view = pgTable("view", {
-  id: text("id").notNull().primaryKey(),
+  id: text("id").$defaultFn(() => createId()),
   name: text("name").notNull(),
   isDeleted: boolean("is_deleted").default(false),
   boardId: text("board_id"),

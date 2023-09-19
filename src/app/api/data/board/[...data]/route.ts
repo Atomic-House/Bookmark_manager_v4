@@ -1,10 +1,9 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { workspace } from "@/schema/workspace";
+import { board } from "@/schema/board";
 import { db } from "@/server/db";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-
 export async function GET(
   request: Request,
   { params }: { params: { data: string[] } },
@@ -13,14 +12,18 @@ export async function GET(
   if (!session) {
     return NextResponse.json({ error: "Unauthorized", status: 401 });
   }
-  const user = await db.query.users.findFirst({
-    where: (users, { eq }) => eq(users.email, session.user?.email!),
-    columns: { id: true },
-  });
-  const workspaces = await db.query.workspace.findMany({
-    where: (workspaces, { eq }) => eq(workspaces.userId, user?.id!),
-  });
-  return NextResponse.json(workspaces);
+  const body: { workspaceId: string; isDeleted: boolean } =
+    await request.json();
+  const boards = await db
+    .select()
+    .from(board)
+    .where(
+      and(
+        eq(board.workspaceId, body.workspaceId),
+        eq(board.isDeleted, body.isDeleted),
+      ),
+    );
+  return NextResponse.json(boards);
 }
 export async function POST(
   request: Request,
@@ -33,19 +36,16 @@ export async function POST(
   const body: {
     name: string;
     icon: string;
+    workspaceId: string;
   } = await request.json();
-  const user = await db.query.users.findFirst({
-    where: (users, { eq }) => eq(users.email, session.user?.email!),
-    columns: { id: true },
-  });
   const ws = await db
-    .insert(workspace)
+    .insert(board)
     .values({
       name: body!.name!,
-      userId: user?.id!,
+      workspaceId: body.workspaceId,
       icon: body.icon,
     })
-    .returning({ id: workspace.id });
+    .returning({ id: board.id });
   return NextResponse.json(ws[0].id);
 }
 
@@ -61,17 +61,15 @@ export async function PATCH(
     name: string;
     icon: string;
     id: string;
+    isDeleted: boolean;
   } = await request.json();
-  const user = await db.query.users.findFirst({
-    where: (users, { eq }) => eq(users.email, session.user?.email!),
-    columns: { id: true },
-  });
   const ws = await db
-    .update(workspace)
-    .set({ name: body.name, icon: body.icon })
-    .where(eq(workspace.id, body.id));
+    .update(board)
+    .set({ name: body.name, icon: body.icon, isDeleted: body.isDeleted })
+    .where(eq(board.id, body.id));
   return NextResponse.json(ws);
 }
+
 export async function DELETE(
   request: Request,
   { params }: { params: { data: string[] } },
@@ -86,6 +84,6 @@ export async function DELETE(
     id: string;
   } = await request.json();
 
-  const ws = await db.delete(workspace).where(eq(workspace.id, body.id));
+  const ws = await db.delete(board).where(eq(board.id, body.id));
   return NextResponse.json(ws);
 }

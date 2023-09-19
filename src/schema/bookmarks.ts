@@ -2,11 +2,11 @@ import { relations } from "drizzle-orm";
 import { pgTable, text, boolean, timestamp } from "drizzle-orm/pg-core";
 import { list } from "./list";
 import { inbox } from "./inbox";
-
+import { createId } from "@paralleldrive/cuid2";
 export const bookmark = pgTable("bookmark", {
-  id: text("id").primaryKey().notNull(),
+  id: text("id").$defaultFn(() => createId()),
   name: text("name"),
-  url: text("url").$type<URL | string | null>(),
+  url: text("url").$type<URL | string | null>().notNull(),
   listId: text("listId"),
   title: text("title"),
   description: text("description"),

@@ -1,5 +1,4 @@
 "use client";
-
 import Attributes from "./components/Atrributes";
 import { fakerBoards, fakerWorkspaces } from "@/functions/fakedata";
 import Select from "./components/Select";
