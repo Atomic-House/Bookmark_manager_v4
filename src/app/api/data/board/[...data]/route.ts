@@ -38,15 +38,15 @@ export async function POST(
     icon: string;
     workspaceId: string;
   } = await request.json();
-  const ws = await db
+  const bd = await db
     .insert(board)
     .values({
       name: body!.name!,
       workspaceId: body.workspaceId,
       icon: body.icon,
     })
-    .returning({ id: board.id });
-  return NextResponse.json(ws[0].id);
+    .returning();
+  return NextResponse.json(bd[0].id);
 }
 
 export async function PATCH(

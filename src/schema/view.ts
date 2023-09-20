@@ -6,7 +6,9 @@ import { layout } from "./layout";
 import { createId } from "@paralleldrive/cuid2";
 
 export const view = pgTable("view", {
-  id: text("id").$defaultFn(() => createId()),
+  id: text("id")
+    .$defaultFn(() => createId())
+    .primaryKey(),
   name: text("name").notNull(),
   isDeleted: boolean("is_deleted").default(false),
   boardId: text("board_id"),

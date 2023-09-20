@@ -45,7 +45,7 @@ export async function POST(
       userId: user?.id!,
       icon: body.icon,
     })
-    .returning({ id: workspace.id });
+    .returning();
   return NextResponse.json(ws[0].id);
 }
 

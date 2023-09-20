@@ -3,7 +3,9 @@ import { boolean, pgTable, text } from "drizzle-orm/pg-core";
 import { users } from "./auth";
 import { createId } from "@paralleldrive/cuid2";
 export const profile = pgTable("profile", {
-  id: text("id").$defaultFn(() => createId()),
+  id: text("id")
+    .$defaultFn(() => createId())
+    .primaryKey(),
   defaultWs: text("default_default_ws_id"),
   userName: text("user_name"),
   userId: text("user_id"),

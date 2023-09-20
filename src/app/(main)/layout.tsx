@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import Providers from "@/app/providers";
 import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/Navbar";
+import ThemeProvider from "@/components/Theme/themeProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -17,19 +18,19 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <Providers>
-        <body className={inter.className}>
+      <body className={inter.className}>
+        <Providers>
           <Sidebar>
             <div className="flex flex-col items-end">
-              <div className="right-0">
-                <Navbar />
+              <div className="hidden">
+                <ThemeProvider />
               </div>
+
               <div className="">{children}</div>
             </div>
           </Sidebar>
-          ,
-        </body>
-      </Providers>
+        </Providers>
+      </body>
     </html>
   );
 }

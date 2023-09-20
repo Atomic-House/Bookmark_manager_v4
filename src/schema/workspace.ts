@@ -4,7 +4,9 @@ import { relations } from "drizzle-orm";
 import { users } from "./auth";
 import { createId } from "@paralleldrive/cuid2";
 export const workspace = pgTable("workspace", {
-  id: text("id").$defaultFn(() => createId()),
+  id: text("id")
+    .$defaultFn(() => createId())
+    .primaryKey(),
   name: text("name").notNull(),
   userId: text("userId"),
   icon: text("icon").$type<string | null>(),

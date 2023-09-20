@@ -1,11 +1,13 @@
 import { pgTable, text } from "drizzle-orm/pg-core";
-import { linkTypeEnum, listViewEnum, sortOrderEnum } from "./enums";
+import { linkTypeEnum, layoutEnum, sortOrderEnum } from "./enums";
 import { relations } from "drizzle-orm";
 import { view } from "./view";
 import { createId } from "@paralleldrive/cuid2";
 export const layout = pgTable("listPrefs", {
-  id: text("id").$defaultFn(() => createId()),
-  viewType: listViewEnum("viewType").default("list"),
+  id: text("id")
+    .$defaultFn(() => createId())
+    .primaryKey(),
+  viewType: layoutEnum("viewType").default("list"),
   sortOrder: sortOrderEnum("sortOrder").default("newest"),
   linkType: linkTypeEnum("linkType").default("most"),
   tags: text("tags").$type<string[]>(),

@@ -22,12 +22,12 @@ export default function Page() {
     error,
     failureReason,
   } = useCreate<string, { name: string; icon: string }>(
-    "workspace",
+    "board",
     {
       name: name,
       icon: icon,
     },
-    "workspace",
+    "board",
   );
   console.log(name, icon);
 
@@ -37,7 +37,7 @@ export default function Page() {
     } else if (isSuccess) {
       setCurrState("success");
 
-      router.push(`/new/${data}`);
+      router.push(`/board/${data}`);
     } else if (isError) {
       setCurrState("error");
       console.error(error, failureReason);
@@ -49,23 +49,23 @@ export default function Page() {
 
       <h1 className="text-4xl text-[#5D60EF] mb-10">Brand</h1>
       <p>Step 1/2</p>
-      <h2 className="text-4xl font-semibold">Create a new Workspace</h2>
+      <h2 className="text-4xl font-semibold">Create a new board</h2>
       <p className="font-medium text-xs">
-        Create a new Worksapce or add workspace link to send request
+        Create a new Worksapce or add board link to send request
       </p>
       <form action="" onSubmit={mutateAsync} className="mt-5 w-[50vw]">
         <label htmlFor="name">
-          <p>Enter your workspace name</p>
+          <p>Enter your board name</p>
           <input
             type="text"
             className="input w-full"
             name="name"
-            placeholder="Workspace name..."
+            placeholder="board name..."
             onChange={(e) => setName(e.target.value)}
           />
         </label>
         <div>
-          <p>Choose any logo for your workspace</p>
+          <p>Choose any logo for your board</p>
           <IconContext.Provider value={{ icon: icon, setIcon: setIcon }}>
             <div className="flex gap-5 m-3 items-center">
               <IconPicker trigger={icon} />
@@ -85,7 +85,7 @@ export default function Page() {
         </div>
         <button type="submit" className="btn btn-primary w-full mt-5">
           {currState === "stale" ? (
-            "Create Workspace"
+            "Create Board"
           ) : currState === "loading" ? (
             <span className="loading loading-ball loading-lg"></span>
           ) : (

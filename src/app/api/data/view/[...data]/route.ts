@@ -1,5 +1,7 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { list } from "@/schema/list";
+import { LayoutEnum, LinkTypeEnum, SortOrderEnum } from "@/schema/enums";
+import { layout } from "@/schema/layout";
+import { view } from "@/schema/view";
 import { db } from "@/server/db";
 import { and, eq } from "drizzle-orm";
 import { getServerSession } from "next-auth";
@@ -13,13 +15,15 @@ export async function GET(
     return NextResponse.json({ error: "Unauthorized", status: 401 });
   }
   const body: { boardId: string; isDeleted: boolean } = await request.json();
-  const lists = await db
+  const views = await db
     .select()
-    .from(list)
+    .from(view)
     .where(
-      and(eq(list.boardId, body.boardId), eq(list.isDeleted, body.isDeleted)),
-    );
-  return NextResponse.json(lists);
+      and(eq(view.boardId, body.boardId), eq(view.isDeleted, body.isDeleted)),
+    )
+    .leftJoin(layout, eq(layout.id, view.layoutId));
+
+  return NextResponse.json(views);
 }
 export async function POST(
   request: Request,
@@ -31,18 +35,16 @@ export async function POST(
   }
   const body: {
     name: string;
-    icon: string;
     boardId: string;
   } = await request.json();
-  const ws = await db
-    .insert(list)
+  const views = await db
+    .insert(view)
     .values({
       name: body!.name!,
       boardId: body.boardId,
-      icon: body.icon,
     })
-    .returning({ id: list.id });
-  return NextResponse.json(ws[0].id);
+    .returning({ id: view.id });
+  return NextResponse.json(views[0].id);
 }
 
 export async function PATCH(
@@ -58,12 +60,23 @@ export async function PATCH(
     icon: string;
     id: string;
     isDeleted: boolean;
+    view: LayoutEnum;
+    sort: SortOrderEnum;
+    linkType: LinkTypeEnum;
   } = await request.json();
-  const ws = await db
-    .update(list)
-    .set({ name: body.name, icon: body.icon, isDeleted: body.isDeleted })
-    .where(eq(list.id, body.id));
-  return NextResponse.json(ws);
+  const vw = await db
+    .update(view)
+    .set({ name: body.name, isDeleted: body.isDeleted })
+    .where(eq(view.id, body.id));
+  const viewLayout = await db
+    .update(layout)
+    .set({
+      viewType: body.view,
+      linkType: body.linkType,
+      sortOrder: body.sort,
+    })
+    .where(eq(layout.viewId, body.id));
+  return NextResponse.json({ status: 200 });
 }
 
 export async function DELETE(
@@ -79,7 +92,6 @@ export async function DELETE(
     icon: string;
     id: string;
   } = await request.json();
-
-  const ws = await db.delete(list).where(eq(list.id, body.id));
-  return NextResponse.json(ws);
+  const vw = await db.delete(view).where(eq(view.id, body.id));
+  return NextResponse.json(vw);
 }

@@ -26,8 +26,8 @@ export default function SelectBoards({
         <button
           className={`px-8  flex items-center gap-2 duration-300 ${
             collapse
-              ? "xl:text-4xl md:text-3xl sm:text-2xl "
-              : "sm:text-xl md:text-2xl"
+              ? "xl:text-3xl md:text-2xl sm:text-1xl "
+              : "sm:text-md md:text-md"
           }`}
           onClick={() => toggleOpen(!open)}
         >

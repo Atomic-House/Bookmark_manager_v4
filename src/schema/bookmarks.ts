@@ -4,7 +4,9 @@ import { list } from "./list";
 import { inbox } from "./inbox";
 import { createId } from "@paralleldrive/cuid2";
 export const bookmark = pgTable("bookmark", {
-  id: text("id").$defaultFn(() => createId()),
+  id: text("id")
+    .$defaultFn(() => createId())
+    .primaryKey(),
   name: text("name"),
   url: text("url").$type<URL | string | null>().notNull(),
   listId: text("listId"),

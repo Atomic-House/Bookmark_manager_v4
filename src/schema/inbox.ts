@@ -4,7 +4,9 @@ import { workspace } from "./workspace";
 import { bookmark } from "./bookmarks";
 import { createId } from "@paralleldrive/cuid2";
 export const inbox = pgTable("inbox", {
-  id: text("id").$defaultFn(() => createId()),
+  id: text("id")
+    .$defaultFn(() => createId())
+    .primaryKey(),
   workspaceId: text("workspaceId"),
 });
 export const inboxToWorkspaceRelation = relations(inbox, ({ one }) => ({

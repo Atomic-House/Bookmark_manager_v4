@@ -3,7 +3,9 @@ import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { Bookmark, bookmark } from "./bookmarks";
 import { createId } from "@paralleldrive/cuid2";
 export const list = pgTable("list", {
-  id: text("id").$defaultFn(() => createId()),
+  id: text("id")
+    .$defaultFn(() => createId())
+    .primaryKey(),
   name: text("name"),
   boardId: text("board_id"),
   viewId: text("view_id"),

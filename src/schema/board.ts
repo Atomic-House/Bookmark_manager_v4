@@ -5,7 +5,9 @@ import { view } from "./view";
 import { createId } from "@paralleldrive/cuid2";
 //board schema
 export const board = pgTable("board", {
-  id: text("id").$defaultFn(() => createId()),
+  id: text("id")
+    .$defaultFn(() => createId())
+    .primaryKey(),
   name: text("name").notNull(),
   workspaceId: text("workspaceId"),
   isDeleted: boolean("isDeleted").default(false),

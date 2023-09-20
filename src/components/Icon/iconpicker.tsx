@@ -1,7 +1,8 @@
 "use client";
+import { IconContext } from "@/context/icon";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useContext, useState } from "react";
 
 interface Icon {
   id: string;
@@ -17,7 +18,7 @@ export default function IconPicker({
 }: {
   trigger?: string | ReactNode;
 }) {
-  const [icon, setIcon] = useState<Icon["native"]>("");
+  const { icon, setIcon } = useContext(IconContext);
   return (
     <div className="dropdown">
       <span

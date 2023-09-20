@@ -26,8 +26,9 @@ export default function Atrributes({ collapse }: { collapse?: boolean }) {
         onClick={() => toggleOpen(!isOpen)}
         className="flex gap-2 justify-between items-center px-8"
       >
-        <span className="flex items-center gap-2">
-          <MdDashboard className={` ${collapse ? "text-4xl" : "text-xl"}`} />
+        <span className="flex items-center gap-2 text-md">
+          <MdDashboard className={` ${collapse ? "text-4xl" : ""}`} />
+
           {!collapse && "Attributes 6"}
         </span>
         {!collapse && (
@@ -43,7 +44,9 @@ export default function Atrributes({ collapse }: { collapse?: boolean }) {
       <Transition
         as="div"
         show={isOpen}
-        className={`flex flex-col gap-2 px-8 ${collapse ? "items-center" : ""}`}
+        className={`flex flex-col gap-2  px-8 ${
+          collapse ? "items-center" : "items-start text-sm"
+        }`}
         enter="transition ease-out duration-100"
         enterFrom="transform opacity-0 scale-95"
         enterTo="transform opacity-100 scale-100"
@@ -55,8 +58,8 @@ export default function Atrributes({ collapse }: { collapse?: boolean }) {
           <Link
             key={attr.name}
             href={attr.url}
-            className={`flex gap-2 p-2 cursor-pointer hover:bg-slate-950  ${
-              collapse ? "m-auto " : "text-lg "
+            className={`flex gap-2 p-2 cursor-pointer dark:hover:bg-slate-950  hover:bg-slate-300 ${
+              collapse ? "m-auto " : "text-md"
             }  rounded-lg duration-300 `}
           >
             <attr.icon className={`${collapse ? "text-2xl" : "text-xl"}`} />
@@ -64,10 +67,10 @@ export default function Atrributes({ collapse }: { collapse?: boolean }) {
           </Link>
         ))}
         <div
-          className={` hover:dark:bg-slate-950 py-2 px-4 flex flex-col gap-2 rounded-md duration-300 transition-all ease-linear`}
+          className={` hover:dark:bg-slate-950 items-start text-md py-2 px-4 flex flex-col gap-2 hover:bg-slate-200 dark:hover:bg-slate-900 rounded-md duration-300 transition-all ease-linear`}
         >
           <div
-            className="  flex items-center text-xl gap-3 "
+            className="flex items-center gap-3 cursor-pointer p-1"
             onClick={() => toggleSettingsOpen(!settingsOpen)}
           >
             <AiOutlineSetting />
@@ -87,7 +90,7 @@ export default function Atrributes({ collapse }: { collapse?: boolean }) {
                 <Link
                   key={s.name}
                   href={s.url}
-                  className="flex p-2 rounded-lg gap-2 hover:dark:bg-slate-900"
+                  className="flex p-2 rounded-lg gap-2 hover:dark:bg-slate-800"
                 >
                   <s.icon className={` ${collapse ? "text-2xl" : "text-xl"}`} />
                   {!collapse && s.name}
