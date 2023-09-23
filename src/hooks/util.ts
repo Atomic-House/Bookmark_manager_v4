@@ -1,3 +1,5 @@
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 export function useOverlayRef() {
@@ -17,4 +19,16 @@ export function useOverlayRef() {
     }
   }, [open]);
   return { ref, toggleOpen, open };
+}
+
+export function useAuth(id: string) {
+  const router = useRouter();
+  const { status } = useSession();
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/signin");
+    } else {
+      router.push(`/board/${id}`);
+    }
+  }, [router, status, id]);
 }

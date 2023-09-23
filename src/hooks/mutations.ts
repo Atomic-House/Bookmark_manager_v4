@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FormEvent } from "react";
 
 export function useCreate<T, B>(
@@ -7,16 +7,8 @@ export function useCreate<T, B>(
   typeId?: "workspace" | "board" | "view" | "list" | "inbox" | "bookmark",
   mutationType?: "create" | "update" | "delete" | "trash",
 ) {
-  const {
-    mutateAsync,
-    isSuccess,
-    isError,
-    isLoading,
-    reset,
-    failureReason,
-    data,
-    error,
-  } = useMutation({
+  const queryClient = useQueryClient();
+  const mutate = useMutation({
     mutationKey: [mutationKey, typeId],
     mutationFn: async (e: FormEvent) => {
       e.preventDefault();
@@ -26,15 +18,9 @@ export function useCreate<T, B>(
       });
       return (await d.json()) as T;
     },
+    onSuccess() {
+      queryClient.invalidateQueries([mutationKey, typeId]);
+    },
   });
-  return {
-    mutateAsync,
-    data,
-    isSuccess,
-    isError,
-    isLoading,
-    reset,
-    failureReason,
-    error,
-  };
+  return mutate;
 }

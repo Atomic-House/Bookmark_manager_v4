@@ -6,21 +6,20 @@ import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 export async function GET(
   request: Request,
-  { params }: { params: { data: string[] } },
+  { params }: { params: { data: string[] | boolean[] } },
 ) {
   const session = await getServerSession(authOptions);
   if (!session) {
     return NextResponse.json({ error: "Unauthorized", status: 401 });
   }
-  const body: { workspaceId: string; isDeleted: boolean } =
-    await request.json();
+  const [workspaceId, isDeleted] = params.data;
   const boards = await db
     .select()
     .from(board)
     .where(
       and(
-        eq(board.workspaceId, body.workspaceId),
-        eq(board.isDeleted, body.isDeleted),
+        eq(board.workspaceId, workspaceId.toString()),
+        eq(board.isDeleted, isDeleted != "true"),
       ),
     );
   return NextResponse.json(boards);
@@ -65,7 +64,11 @@ export async function PATCH(
   } = await request.json();
   const ws = await db
     .update(board)
-    .set({ name: body.name, icon: body.icon, isDeleted: body.isDeleted })
+    .set({
+      name: body.name,
+      icon: body.icon,
+      isDeleted: body.isDeleted,
+    })
     .where(eq(board.id, body.id));
   return NextResponse.json(ws);
 }

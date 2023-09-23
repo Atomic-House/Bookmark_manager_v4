@@ -5,15 +5,21 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "**",
-      }
-      ,
+      },
       {
         protocol: "https",
         hostname: "variety.com",
-      }
+      },
+      {
+        protocol: "https",
+        hostname: "githubusercontent.com",
+      },
+      {
+        protocol: "https",
+        hostname: "cloudflare-ipfs.com",
+      },
+    ],
+  },
+};
 
-    ]
-  }
-}
-
-module.exports = nextConfig
+module.exports = nextConfig;

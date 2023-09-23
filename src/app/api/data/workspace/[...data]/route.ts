@@ -1,4 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { board } from "@/schema/board";
 import { workspace } from "@/schema/workspace";
 import { db } from "@/server/db";
 import { eq } from "drizzle-orm";
@@ -18,8 +19,14 @@ export async function GET(
     columns: { id: true },
   });
   const workspaces = await db.query.workspace.findMany({
+    with: { board: true },
     where: (workspaces, { eq }) => eq(workspaces.userId, user?.id!),
   });
+  const wsAndboard = await db
+    .select()
+    .from(workspace)
+    .where(eq(workspace.userId, user?.id!))
+    .fullJoin(board, eq(workspace.id, board.workspaceId));
   return NextResponse.json(workspaces);
 }
 export async function POST(

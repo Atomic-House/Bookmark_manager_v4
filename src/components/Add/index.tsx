@@ -11,6 +11,7 @@ export default function Add({
   onChange,
   dropdownX,
   dropdownY,
+  loading,
 }: {
   triggerText?: string | ReactNode;
   heading?: string;
@@ -22,6 +23,9 @@ export default function Add({
   onChange?: ChangeEventHandler<HTMLInputElement>;
   dropdownX?: "dropdown-left" | "dropdown-right";
   dropdownY?: "dropdown-top" | "dropdown-bottom";
+  loading?: React.JSX.Element;
+  isSuccess?: boolean;
+  isLoading?: boolean;
 }) {
   return (
     <div className={`dropdown ${dropdownY} ${dropdownX} `}>
@@ -39,7 +43,7 @@ export default function Add({
         <div>
           <input
             type="text"
-            className="p-2 rounded-lg bg-slate-900 w-fit"
+            className="p-2 rounded-lg dark:bg-slate-900 w-fit"
             placeholder={inputPlaceholder}
             onChange={onChange}
           />

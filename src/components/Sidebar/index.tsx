@@ -1,29 +1,49 @@
 "use client";
 import Attributes from "./components/Atrributes";
-import { fakerBoards, fakerWorkspaces } from "@/functions/fakedata";
 import Select from "./components/Select";
 import SelectBoards from "./components/SelectBoards";
 import { MdKeyboardArrowLeft } from "@react-icons/all-files/md/MdKeyboardArrowLeft";
 import { SiLighthouse } from "@react-icons/all-files/si/SiLighthouse";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useFetch } from "@/hooks/queries";
 import { Workspace } from "@/schema/workspace";
 import { WorkspaceContext } from "@/context/workspace";
-const ws = fakerWorkspaces(10);
-const boards = fakerBoards(4);
+import { useLoading } from "@/hooks/states";
+import { Board } from "@/schema/board";
 export default function Sidebar({ children }: { children: ReactNode }) {
   const [collapse, toggleCollapse] = useState(false);
-  const [defaultId, setDefaultId] = useState(
-    window.localStorage.getItem("defaultWs") || ws[0].id,
-  );
-  const { data, isError, isSuccess, isLoading, refetch } = useFetch<Workspace>(
-    "",
-    "workspace",
-  );
+  const {
+    data: ws,
+    isError,
+    isSuccess,
+    isLoading,
+    refetch,
+  } = useFetch<Workspace[]>("", "workspace");
+  const [defaultWorkspace, setDefaultWorkpace] = useState<
+    Workspace | undefined
+  >(ws?.at(0));
+
+  const {
+    data: boards,
+    isLoading: isBoardLoading,
+    refetch: refetchBoards,
+  } = useFetch<Board[] | undefined>(defaultWorkspace?.id!, "board");
+
+  // const loading = useLoading(isLoading);
+  // const boardLoading = useLoading(isBoardLoading);
+  useEffect(() => {
+    window.localStorage.getItem("defaultWs");
+    window.localStorage.setItem("defaultWs", `${defaultWorkspace?.id}`);
+    refetchBoards();
+  }, [defaultWorkspace, ws, refetchBoards]);
+
   return (
     <main className="flex gap-2 ">
       <WorkspaceContext.Provider
-        value={{ defaultWorkspaceId: defaultId, setDefault: setDefaultId }}
+        value={{
+          defaultWorkspace: defaultWorkspace,
+          setDefault: setDefaultWorkpace,
+        }}
       >
         <section
           className={`transition-all shadow-lg dark:shadow-white shadow-slate-300 duration-300 h-fit pb-8 flex flex-col gap-3   drop-shadow-lg dark:bg-[#1A1A1A] rounded-3xl my-2 ${
@@ -41,10 +61,15 @@ export default function Sidebar({ children }: { children: ReactNode }) {
               "Brand"
             )}
           </h1>
-          <Select workspaces={ws} collapse={collapse} />
+          <Select workspaces={ws} collapse={collapse} /* loading={loading} */ />
           <Attributes collapse={collapse} />
           <hr className="dark:border-x-white border-x-black" />
-          <SelectBoards boards={boards} collapse={collapse} />
+          <SelectBoards
+            wsId={defaultWorkspace?.id}
+            // loading={boardLoading}
+            boards={boards}
+            collapse={collapse}
+          />
           <div className="flex justify-evenly items-center">
             {!collapse && (
               <button className="dark:bg-yellow-700 dark:text-white  px-8 py-2 rounded-xl ">

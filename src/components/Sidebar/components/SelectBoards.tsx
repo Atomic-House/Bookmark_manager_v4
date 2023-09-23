@@ -7,14 +7,24 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { BiChevronUp } from "@react-icons/all-files/bi/BiChevronUp";
 import { MdDashboard } from "@react-icons/all-files/md/MdDashboard";
+import { useCreate } from "@/hooks/mutations";
 export default function SelectBoards({
   boards,
   collapse,
+  wsId,
+  loading,
 }: {
-  boards: Board[];
+  wsId?: string;
+  boards?: Board[];
   collapse?: boolean;
+  loading?: React.JSX.Element;
 }) {
   const [open, toggleOpen] = useState(true);
+  const [name, setName] = useState("");
+  const { mutateAsync, isLoading, isError, error, failureReason } = useCreate<
+    Board,
+    { name: string; icon: string }
+  >(wsId!, { name: name, icon: "" }, "board", "create");
   return (
     <div>
       {/* Trigger  */}
@@ -32,13 +42,15 @@ export default function SelectBoards({
           onClick={() => toggleOpen(!open)}
         >
           <MdDashboard />
-          {!collapse && <span> Boards {boards.length}</span>}
+          {!collapse && <span> Boards {boards?.length}</span>}
         </button>
         <span className={`flex items-center gap-2 pr-2 mr-3 `}>
           {!collapse && (
             <Add
-              dropdownX={collapse ? "dropdown-right" : "dropdown-left"}
-              dropdownY="dropdown-top"
+              onChange={(e) => setName(e.target.value)}
+              onSubmit={mutateAsync}
+              dropdownX={"dropdown-right"}
+              dropdownY="dropdown-bottom"
               confirmBtnText="Add"
               cancelBtnText="Reset"
               triggerText="+"
@@ -60,7 +72,7 @@ export default function SelectBoards({
         show={open}
         className={`grid grid-cols-1 ${collapse ? "" : "px-8"}  gap-3`}
       >
-        {boards.map((board) => (
+        {boards?.map((board) => (
           <Link
             key={board.id}
             href={`/board/${board.id}`}

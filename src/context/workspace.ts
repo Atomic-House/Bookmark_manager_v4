@@ -1,9 +1,12 @@
+import { Workspace } from "@/schema/workspace";
 import { Dispatch, SetStateAction, createContext } from "react";
 
 export const WorkspaceContext = createContext<{
-  defaultWorkspaceId: string | undefined;
-  setDefault: Dispatch<SetStateAction<string | undefined>>;
+  defaultWorkspace: Workspace | undefined;
+  setDefault: Dispatch<SetStateAction<Workspace | undefined>>;
 }>({
-  defaultWorkspaceId: "",
+  defaultWorkspace: {
+    name: "",
+  },
   setDefault: () => {},
 });

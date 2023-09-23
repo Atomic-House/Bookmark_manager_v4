@@ -5,22 +5,19 @@ import Link from "next/link";
 import { BiChevronUp } from "@react-icons/all-files/bi/BiChevronUp";
 import Image from "next/image";
 import { WorkspaceContext } from "@/context/workspace";
+import { useFetch } from "@/hooks/queries";
 export default function Select({
   workspaces,
   collapse,
+  loading,
 }: {
-  workspaces: Workspace[];
+  workspaces?: Workspace[];
   collapse?: boolean;
+  loading?: React.JSX.Element;
 }) {
-  const [selected, setSelected] = useState<Workspace>(
-    workspaces.find(
-      (w) => w.id === window.localStorage.getItem("defaultWs")!,
-    ) || workspaces[0],
-  );
-  const { defaultWorkspaceId, setDefault } = useContext(WorkspaceContext);
-  useEffect(() => {
-    window.localStorage.setItem("defaultWs", `${selected.id}`);
-  }, [selected]);
+  const { defaultWorkspace: selected, setDefault: setSelected } =
+    useContext(WorkspaceContext);
+
   return (
     <div className="dropdown w-full">
       <label
@@ -28,17 +25,11 @@ export default function Select({
         className="flex items-center text-md gap-2 bg-[#11047A] p-3 text-white relative w-full "
       >
         {/* Trigger */}
-        <Image
-          className="avatar"
-          src={selected.icon!}
-          width={!collapse ? 24 : 30}
-          height={24}
-          alt={selected.name}
-        />
+        {selected?.icon ? <>{selected?.icon}</> : "📋"}
         {!collapse && (
           <>
             {" "}
-            <span>{selected.name}</span>
+            <span>{selected?.name}</span>
             <span>
               <BiChevronUp className={` transition-all duration-300`} />
             </span>
@@ -47,7 +38,6 @@ export default function Select({
       </label>
 
       {/* Options  */}
-
       <ul
         tabIndex={0}
         className={` ${
@@ -62,21 +52,20 @@ export default function Select({
             {" "}
             <span className="text-2xl">+</span> Create workspace
           </Link>
+
+          {loading}
         </li>
-        {workspaces.map((workspace) => (
+
+        {workspaces?.map((workspace) => (
           <li
             className="flex gap-2 cursor-pointer hover:bg-slate-100   p-1 rounded-lg duration-300"
             key={workspace.id}
-            onClick={() => setSelected(workspace)}
+            onClick={() => {
+              window.localStorage.setItem("defaultWs", workspace.id!);
+              setSelected(workspace);
+            }}
           >
-            <Image
-              className="avatar "
-              loading="lazy"
-              src={workspace.icon!}
-              width={24}
-              height={24}
-              alt={selected.name}
-            />
+            <span>{workspace.icon}</span>
             <p>{workspace.name}</p>
           </li>
         ))}
