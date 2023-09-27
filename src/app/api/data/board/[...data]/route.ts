@@ -1,12 +1,13 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { board } from "@/schema/board";
+import { workspace } from "@/schema/workspace";
 import { db } from "@/server/db";
 import { and, eq } from "drizzle-orm";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 export async function GET(
   request: Request,
-  { params }: { params: { data: string[] | boolean[] } },
+  { params }: { params: { data: string[] } },
 ) {
   const session = await getServerSession(authOptions);
   if (!session) {
@@ -19,7 +20,7 @@ export async function GET(
     .where(
       and(
         eq(board.workspaceId, workspaceId.toString()),
-        eq(board.isDeleted, isDeleted != "true"),
+        eq(board.isDeleted, isDeleted != "false"),
       ),
     );
   return NextResponse.json(boards);
@@ -43,9 +44,10 @@ export async function POST(
       name: body!.name!,
       workspaceId: body.workspaceId,
       icon: body.icon,
+      createdBy: session.user?.email!,
     })
     .returning();
-  return NextResponse.json(bd[0].id);
+  return NextResponse.json(bd[0]);
 }
 
 export async function PATCH(

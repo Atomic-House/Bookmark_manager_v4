@@ -1,20 +1,21 @@
 import { relations } from "drizzle-orm";
 import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { workspace } from "./workspace";
-import { view } from "./view";
+import { View, ViewWithLists, view } from "./view";
 import { createId } from "@paralleldrive/cuid2";
 //board schema
 export const board = pgTable("board", {
   id: text("id")
     .$defaultFn(() => createId())
     .primaryKey(),
-  name: text("name").notNull(),
+  name: text("name").$type<string>().notNull(),
   workspaceId: text("workspaceId"),
   isDeleted: boolean("isDeleted").default(false),
   icon: text("icon").$type<string | null>(),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()
     .defaultNow(),
+  createdBy: text("createdBy"),
 });
 //Workspace to boards -> many to one
 export const boardToWorkspace = relations(board, ({ one }) => ({
@@ -29,3 +30,6 @@ export const boardToViewsRelation = relations(board, ({ many }) => ({
 }));
 
 export type Board = typeof board.$inferInsert;
+export interface BoardWithViews extends Board {
+  views: ViewWithLists[];
+}

@@ -1,4 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { board } from "@/schema/board";
 import { LayoutEnum, LinkTypeEnum, SortOrderEnum } from "@/schema/enums";
 import { layout } from "@/schema/layout";
 import { view } from "@/schema/view";
@@ -10,18 +11,18 @@ export async function GET(
   request: Request,
   { params }: { params: { data: string[] } },
 ) {
+  const [boardId, isDeleted] = params.data;
+
   const session = await getServerSession(authOptions);
   if (!session) {
     return NextResponse.json({ error: "Unauthorized", status: 401 });
   }
-  const body: { boardId: string; isDeleted: boolean } = await request.json();
   const views = await db
     .select()
     .from(view)
     .where(
-      and(eq(view.boardId, body.boardId), eq(view.isDeleted, body.isDeleted)),
-    )
-    .leftJoin(layout, eq(layout.id, view.layoutId));
+      and(eq(view.boardId, boardId), eq(view.isDeleted, isDeleted == "true")),
+    );
 
   return NextResponse.json(views);
 }

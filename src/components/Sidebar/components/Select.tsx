@@ -1,19 +1,17 @@
 "use client";
 import { Workspace } from "@/schema/workspace";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import Link from "next/link";
 import { BiChevronUp } from "@react-icons/all-files/bi/BiChevronUp";
-import Image from "next/image";
 import { WorkspaceContext } from "@/context/workspace";
-import { useFetch } from "@/hooks/queries";
 export default function Select({
   workspaces,
   collapse,
-  loading,
+  isLoading,
 }: {
   workspaces?: Workspace[];
   collapse?: boolean;
-  loading?: React.JSX.Element;
+  isLoading?: boolean;
 }) {
   const { defaultWorkspace: selected, setDefault: setSelected } =
     useContext(WorkspaceContext);
@@ -25,6 +23,7 @@ export default function Select({
         className="flex items-center text-md gap-2 bg-[#11047A] p-3 text-white relative w-full "
       >
         {/* Trigger */}
+        {isLoading ? <span className="loading loading-ball loading-md" /> : ""}
         {selected?.icon ? <>{selected?.icon}</> : "📋"}
         {!collapse && (
           <>
@@ -52,8 +51,6 @@ export default function Select({
             {" "}
             <span className="text-2xl">+</span> Create workspace
           </Link>
-
-          {loading}
         </li>
 
         {workspaces?.map((workspace) => (

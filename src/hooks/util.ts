@@ -21,14 +21,14 @@ export function useOverlayRef() {
   return { ref, toggleOpen, open };
 }
 
-export function useAuth(id: string) {
+export function useAuth() {
   const router = useRouter();
   const { status } = useSession();
   useEffect(() => {
     if (status === "unauthenticated") {
       router.push("/signin");
     } else {
-      router.push(`/board/${id}`);
+      router.push(`/board/default`);
     }
-  }, [router, status, id]);
+  }, [router, status,]);
 }

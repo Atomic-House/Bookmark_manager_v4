@@ -3,28 +3,36 @@ import Add from "@/components/Add";
 import { Board } from "@/schema/board";
 import { Transition } from "@headlessui/react";
 import Link from "next/link";
-import Image from "next/image";
-import React, { useState } from "react";
+import React, { FormEventHandler, useState, ChangeEventHandler } from "react";
 import { BiChevronUp } from "@react-icons/all-files/bi/BiChevronUp";
 import { MdDashboard } from "@react-icons/all-files/md/MdDashboard";
-import { useCreate } from "@/hooks/mutations";
 export default function SelectBoards({
   boards,
   collapse,
-  wsId,
-  loading,
+  createBoard,
+  onChange,
+  isFetching,
+  isSuccess,
+  isError,
+  error,
+  isMutating,
+  currBoard,
 }: {
   wsId?: string;
   boards?: Board[];
   collapse?: boolean;
-  loading?: React.JSX.Element;
+  createBoard: FormEventHandler<HTMLFormElement>;
+  onChange: ChangeEventHandler<HTMLInputElement>;
+  isFetching?: boolean;
+  isMutating?: boolean;
+  isSuccess?: boolean;
+  isError?: boolean;
+  error?: unknown;
+  currBoard?: { icon: string; name: string };
 }) {
   const [open, toggleOpen] = useState(true);
-  const [name, setName] = useState("");
-  const { mutateAsync, isLoading, isError, error, failureReason } = useCreate<
-    Board,
-    { name: string; icon: string }
-  >(wsId!, { name: name, icon: "" }, "board", "create");
+  console.log(currBoard);
+
   return (
     <div>
       {/* Trigger  */}
@@ -47,8 +55,9 @@ export default function SelectBoards({
         <span className={`flex items-center gap-2 pr-2 mr-3 `}>
           {!collapse && (
             <Add
-              onChange={(e) => setName(e.target.value)}
-              onSubmit={mutateAsync}
+              // emojiSelector={<IconPicker icon="🔖" />}
+              onChange={onChange}
+              onSubmit={createBoard}
               dropdownX={"dropdown-right"}
               dropdownY="dropdown-bottom"
               confirmBtnText="Add"
@@ -56,6 +65,10 @@ export default function SelectBoards({
               triggerText="+"
               heading="New Board"
               inputPlaceholder="board name..."
+              isLoading={isMutating}
+              isSuccess={isSuccess}
+              isError={isError}
+              error={error}
             />
           )}
           <BiChevronUp
@@ -68,25 +81,26 @@ export default function SelectBoards({
       </div>
       {/* Options  */}
       <Transition
-        as="div"
+        as="ul"
         show={open}
         className={`grid grid-cols-1 ${collapse ? "" : "px-8"}  gap-3`}
       >
         {boards?.map((board) => (
           <Link
             key={board.id}
-            href={`/board/${board.id}`}
+            href={`/board?id=${board.id}&name=${board.name}&icon=${board.icon}`}
             className={collapse ? "" : `flex gap-4`}
           >
-            <Image
-              src={board.icon!}
-              width={collapse ? 25 : 20}
-              height={collapse ? 25 : 20}
-              alt={board.name}
-            />
+            <span>{board.icon}</span>
             {!collapse && board.name}
           </Link>
         ))}
+
+        {isFetching ? (
+          <span className="loading  loading-md loading-ring" />
+        ) : (
+          ""
+        )}
       </Transition>
     </div>
   );

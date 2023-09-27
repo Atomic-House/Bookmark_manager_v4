@@ -4,8 +4,10 @@ import { Tab } from "@headlessui/react";
 import { Fragment } from "react";
 import List from "../List";
 import { fakeBookmarks } from "@/functions/fakedata";
-
-export default function ViewTabs({ views }: { views: ViewWithLists[] }) {
+import Add from "../Add";
+import { AiFillPlusCircle } from "@react-icons/all-files/ai/AiFillPlusCircle";
+import { AiOutlinePlus } from "@react-icons/all-files/ai/AiOutlinePlus";
+export default function ViewTabs({ views }: { views?: ViewWithLists[] }) {
   return (
     <div>
       <Tab.Group>
@@ -21,6 +23,18 @@ export default function ViewTabs({ views }: { views: ViewWithLists[] }) {
               )}
             </Tab>
           ))}
+          <button className="">
+            <Add
+              triggerText={<AiOutlinePlus className="font-bold" />}
+              dropdownX="dropdown-right"
+              dropdownY="dropdown-bottom"
+              heading="Add a new Layout"
+              inputPlaceholder="Layout Name"
+              content="Add a new layout"
+              confirmBtnText="Add"
+              cancelBtnText="Reset"
+            />
+          </button>
         </Tab.List>
         <Tab.Panels as="div">
           {views?.map((v) => (

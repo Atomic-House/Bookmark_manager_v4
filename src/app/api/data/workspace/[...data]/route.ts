@@ -14,20 +14,12 @@ export async function GET(
   if (!session) {
     return NextResponse.json({ error: "Unauthorized", status: 401 });
   }
-  const user = await db.query.users.findFirst({
-    where: (users, { eq }) => eq(users.email, session.user?.email!),
-    columns: { id: true },
-  });
-  const workspaces = await db.query.workspace.findMany({
-    with: { board: true },
-    where: (workspaces, { eq }) => eq(workspaces.userId, user?.id!),
-  });
-  const wsAndboard = await db
-    .select()
-    .from(workspace)
-    .where(eq(workspace.userId, user?.id!))
-    .fullJoin(board, eq(workspace.id, board.workspaceId));
-  return NextResponse.json(workspaces);
+  const wsAndBoard = await db.query.workspace.findMany({
+    with: {
+      boards: true
+    }
+  })
+  return NextResponse.json(wsAndBoard);
 }
 export async function POST(
   request: Request,
@@ -41,18 +33,7 @@ export async function POST(
     name: string;
     icon: string;
   } = await request.json();
-  const user = await db.query.users.findFirst({
-    where: (users, { eq }) => eq(users.email, session.user?.email!),
-    columns: { id: true },
-  });
-  const ws = await db
-    .insert(workspace)
-    .values({
-      name: body!.name!,
-      userId: user?.id!,
-      icon: body.icon,
-    })
-    .returning();
+  const ws = await db.insert(workspace).values({ name: body.name, icon: body.icon, createdBy: session.user?.email }).returning({ id: workspace.id });
   return NextResponse.json(ws[0].id);
 }
 
@@ -69,10 +50,6 @@ export async function PATCH(
     icon: string;
     id: string;
   } = await request.json();
-  const user = await db.query.users.findFirst({
-    where: (users, { eq }) => eq(users.email, session.user?.email!),
-    columns: { id: true },
-  });
   const ws = await db
     .update(workspace)
     .set({ name: body.name, icon: body.icon })

@@ -20,15 +20,14 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Providers>
-          <Sidebar>
-            <div className="flex flex-col items-end">
+          <main>
+            <Sidebar>
               <div className="hidden">
                 <ThemeProvider />
               </div>
-
-              <div className="">{children}</div>
-            </div>
-          </Sidebar>
+              <div>{children}</div>
+            </Sidebar>
+          </main>
         </Providers>
       </body>
     </html>

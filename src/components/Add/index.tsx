@@ -1,5 +1,10 @@
 "use client";
-import { ChangeEventHandler, FormEventHandler, ReactNode } from "react";
+import {
+  ChangeEventHandler,
+  FormEventHandler,
+  ReactNode,
+  useEffect,
+} from "react";
 export default function Add({
   triggerText,
   heading,
@@ -11,7 +16,11 @@ export default function Add({
   onChange,
   dropdownX,
   dropdownY,
-  loading,
+  isError,
+  isLoading,
+  isSuccess,
+  error,
+  emojiSelector,
 }: {
   triggerText?: string | ReactNode;
   heading?: string;
@@ -23,16 +32,23 @@ export default function Add({
   onChange?: ChangeEventHandler<HTMLInputElement>;
   dropdownX?: "dropdown-left" | "dropdown-right";
   dropdownY?: "dropdown-top" | "dropdown-bottom";
-  loading?: React.JSX.Element;
   isSuccess?: boolean;
   isLoading?: boolean;
+  isError?: boolean;
+  error?: unknown;
+  emojiSelector?: React.JSX.Element;
 }) {
+  useEffect(() => {
+    if (error) {
+      console.error(error);
+    }
+  }, [error, isError]);
   return (
-    <div className={`dropdown ${dropdownY} ${dropdownX} `}>
-      <label className="cursor-pointer " tabIndex={0}>
+    <div className={`dropdown ${dropdownY} ${dropdownX} z-50 `}>
+      <span className="cursor-pointer " tabIndex={0}>
         {/* trigger */}
         {triggerText}
-      </label>
+      </span>
       <form
         tabIndex={0}
         onSubmit={onSubmit}
@@ -41,6 +57,7 @@ export default function Add({
         <div>{heading}</div>
         <div>{content}</div>
         <div>
+          {emojiSelector}
           <input
             type="text"
             className="p-2 rounded-lg dark:bg-slate-900 w-fit"
@@ -50,14 +67,38 @@ export default function Add({
         </div>
         <div className=" w-fit  flex gap-2">
           <button
-            className="bg-[#5D60EF] dark:text-white py-2 px-8 rounded-lg"
+            className="bg-[#5D60EF] dark:text-white   py-2 px-8 rounded-lg"
             type="submit"
           >
-            {confirmBtnText}
+            {isLoading ? (
+              <span className="loading loading-ball loading-sm"></span>
+            ) : isSuccess ? (
+              <TickSvg />
+            ) : (
+              confirmBtnText
+            )}
+            {/* {confirmBtnText} */}
           </button>
           <button type="reset">{cancelBtnText}</button>
         </div>
       </form>
     </div>
+  );
+}
+function TickSvg() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="stroke-current shrink-0 h-6 w-6"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+      />
+    </svg>
   );
 }

@@ -1,5 +1,5 @@
 import { timestamp, pgTable, text, uuid } from "drizzle-orm/pg-core";
-import { board } from "./board";
+import { Board, board } from "./board";
 import { relations } from "drizzle-orm";
 import { users } from "./auth";
 import { createId } from "@paralleldrive/cuid2";
@@ -8,7 +8,7 @@ export const workspace = pgTable("workspace", {
     .$defaultFn(() => createId())
     .primaryKey(),
   name: text("name").notNull(),
-  userId: text("userId"),
+  createdBy: text("created_by"),
   icon: text("icon").$type<string | null>(),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()
@@ -25,8 +25,13 @@ export const userToWorkspaceRelations = relations(users, ({ many }) => ({
 
 export const workspaceToUserRelations = relations(workspace, ({ one }) => ({
   user: one(users, {
-    fields: [workspace.userId],
+    fields: [workspace.createdBy],
     references: [users.id],
   }),
 }));
 export type Workspace = typeof workspace.$inferInsert;
+
+
+export interface WorkspaceAndBoards extends Workspace {
+  boards?: Board[]
+} 

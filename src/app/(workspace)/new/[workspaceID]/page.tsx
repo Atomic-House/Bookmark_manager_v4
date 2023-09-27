@@ -28,7 +28,7 @@ export default function Page({ params }: { params: { workspaceID: string } }) {
       icon: icon,
       workspaceId: params.workspaceID,
     },
-    "board",
+    params.workspaceID,
   );
   console.log(name, icon);
 
@@ -49,7 +49,7 @@ export default function Page({ params }: { params: { workspaceID: string } }) {
       <ThemeProvider />
 
       <h1 className="text-4xl text-[#5D60EF] mb-10">Brand</h1>
-      <p>Step 1/2</p>
+      <p>Step 2/2</p>
       <h2 className="text-4xl font-semibold">Create a new board</h2>
       <p className="font-medium text-xs">
         Create a new Worksapce or add board link to send request

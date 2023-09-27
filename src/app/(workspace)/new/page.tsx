@@ -2,13 +2,12 @@
 
 import IconPicker from "@/components/Icon/iconpicker";
 import ThemeProvider from "@/components/Theme/themeProvider";
-import { IconContext } from "@/context/icon";
 import { useCreate } from "@/hooks/mutations";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 export default function Page() {
   const [name, setName] = useState("");
-  const [icon, setIcon] = useState("");
+  const [icon, setIcon] = useState<string>("");
   const router = useRouter();
   const [currState, setCurrState] = useState<
     "loading" | "success" | "error" | "stale"
@@ -27,7 +26,7 @@ export default function Page() {
       name: name,
       icon: icon,
     },
-    "workspace",
+    "read",
   );
   console.log(name, icon);
 
@@ -66,22 +65,25 @@ export default function Page() {
         </label>
         <div>
           <p>Choose any logo for your workspace</p>
-          <IconContext.Provider value={{ icon: icon, setIcon: setIcon }}>
-            <div className="flex gap-5 m-3 items-center">
-              <IconPicker trigger={icon} />
-              {workEmojis.map((e) => (
-                <span
-                  key={e}
-                  className="cursor-pointer hover:bg-black rounded-md p-2"
-                  onClick={() => {
-                    setIcon(e);
-                  }}
-                >
-                  {e}
-                </span>
-              ))}
-            </div>
-          </IconContext.Provider>
+
+          <div className="flex gap-5 m-3 items-center">
+            <IconPicker
+              trigger={icon}
+              icon={icon}
+              onEmojiSelect={(e) => setIcon(e.native)}
+            />
+            {workEmojis.map((e) => (
+              <span
+                key={e}
+                className="cursor-pointer hover:bg-black rounded-md p-2"
+                onClick={() => {
+                  setIcon(e);
+                }}
+              >
+                {e}
+              </span>
+            ))}
+          </div>
         </div>
         <button type="submit" className="btn btn-primary w-full mt-5">
           {currState === "stale" ? (

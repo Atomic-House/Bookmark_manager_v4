@@ -120,6 +120,34 @@
       "when": 1695208805103,
       "tag": "0016_organic_lilandra",
       "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "5",
+      "when": 1695588500379,
+      "tag": "0017_colossal_korvac",
+      "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "5",
+      "when": 1695588606863,
+      "tag": "0018_remarkable_cammi",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "5",
+      "when": 1695589525360,
+      "tag": "0019_large_black_bolt",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "5",
+      "when": 1695589696167,
+      "tag": "0020_sloppy_sir_ram",
+      "breakpoints": true
     }
   ]
 }

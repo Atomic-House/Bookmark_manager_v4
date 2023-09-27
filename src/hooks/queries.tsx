@@ -7,7 +7,7 @@ export function useFetch<T>(
   refetchInterval?: number | false,
 ) {
   const data = useQuery<T>({
-    queryKey: [queryKey, id],
+    queryKey: [queryKey, { id: id }],
     queryFn: async () => {
       const data = await fetch(
         `/api/data/${queryKey}/${id}/${String(isDeleted)}/read`,

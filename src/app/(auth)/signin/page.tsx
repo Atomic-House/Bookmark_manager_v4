@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 export default async function Page() {
   const session = await getServerSession(authOptions);
   if (session) {
-    redirect("/board/1");
+    redirect("/board/default");
   }
   return (
     <div className="grid grid-cols-2 h-[100vh] ">
