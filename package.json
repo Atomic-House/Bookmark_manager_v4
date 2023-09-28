@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "generate": "drizzle-kit generate:pg",
+    "push": "drizzle-kit push:pg",
     "cypress": "cypress open",
     "test": "jest"
   },

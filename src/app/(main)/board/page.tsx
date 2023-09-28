@@ -1,13 +1,19 @@
 "use client";
 import ViewTabs from "@/components/View";
-import { useCreate } from "@/hooks/mutations";
-import { useFetch } from "@/hooks/queries";
-import { useAuth } from "@/hooks/util";
 import { usePageData } from "@/hooks/viewPageFunctions";
-import { ViewWithLists } from "@/schema/view";
-import { useSearchParams } from "next/navigation";
 export default function Page() {
-  const { viewsData, boardName, icon } = usePageData();
+  const {
+    viewsData,
+    boardName,
+    icon,
+    setView,
+    view,
+    createViews,
+    listsData,
+    createList,
+    list,
+    setList,
+  } = usePageData();
   return (
     <div className="">
       <div>
@@ -15,7 +21,15 @@ export default function Page() {
         <span>{icon}</span>
         <span>{boardName}</span>
       </div>
-      <ViewTabs views={viewsData.data} />
+      <ViewTabs
+        views={viewsData.data}
+        onChange={(e) => setView({ ...view, name: e.target.value })}
+        createView={createViews.mutateAsync}
+        isMutating={createViews.isLoading}
+        isError={createViews.isError}
+        isMutatingSuccess={createViews.isSuccess}
+        error={createViews.error}
+      />
     </div>
   );
 }

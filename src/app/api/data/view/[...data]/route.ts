@@ -17,12 +17,15 @@ export async function GET(
   if (!session) {
     return NextResponse.json({ error: "Unauthorized", status: 401 });
   }
-  const views = await db
-    .select()
-    .from(view)
-    .where(
-      and(eq(view.boardId, boardId), eq(view.isDeleted, isDeleted == "true")),
-    );
+  const views = await db.query.view.findMany({
+    where: and(
+      eq(view.boardId, boardId),
+      eq(view.isDeleted, isDeleted === "true"),
+    ),
+    with: {
+      lists: true,
+    },
+  });
 
   return NextResponse.json(views);
 }
@@ -44,8 +47,9 @@ export async function POST(
       name: body!.name!,
       boardId: body.boardId,
     })
-    .returning({ id: view.id });
-  return NextResponse.json(views[0].id);
+    .returning();
+  const a = { ...views[0], lists: [] };
+  return NextResponse.json(a);
 }
 
 export async function PATCH(

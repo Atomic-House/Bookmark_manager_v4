@@ -8,6 +8,7 @@ export const list = pgTable("list", {
     .primaryKey(),
   name: text("name"),
   boardId: text("board_id"),
+  color: text("color"),
   viewId: text("view_id"),
   inboxId: text("inbox_id"),
   isDeleted: boolean("isDeleted").default(false),

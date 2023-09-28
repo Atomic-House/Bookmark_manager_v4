@@ -4,6 +4,7 @@ import IconPicker from "@/components/Icon/iconpicker";
 import ThemeProvider from "@/components/Theme/themeProvider";
 import { IconContext } from "@/context/icon";
 import { useCreate } from "@/hooks/mutations";
+import { Board } from "@/schema/board";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 export default function Page({ params }: { params: { workspaceID: string } }) {
@@ -21,7 +22,7 @@ export default function Page({ params }: { params: { workspaceID: string } }) {
     isError,
     error,
     failureReason,
-  } = useCreate<string, { name: string; icon: string; workspaceId: string }>(
+  } = useCreate<Board, { name: string; icon: string; workspaceId: string }>(
     "board",
     {
       name: name,
@@ -38,7 +39,7 @@ export default function Page({ params }: { params: { workspaceID: string } }) {
     } else if (isSuccess) {
       setCurrState("success");
 
-      router.push(`/board/${data}`);
+      router.push(`/board?id=${data.id}&name=${data.name}`);
     } else if (isError) {
       setCurrState("error");
       console.error(error, failureReason);
@@ -69,7 +70,11 @@ export default function Page({ params }: { params: { workspaceID: string } }) {
           <p>Choose any logo for your board</p>
           <IconContext.Provider value={{ icon: icon, setIcon: setIcon }}>
             <div className="flex gap-5 m-3 items-center">
-              <IconPicker trigger={icon} />
+              <IconPicker
+                trigger={icon}
+                onEmojiSelect={(e) => setIcon(e.native)}
+                icon=""
+              />
               {workEmojis.map((e) => (
                 <span
                   key={e}

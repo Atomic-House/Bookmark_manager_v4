@@ -44,7 +44,7 @@ export default function Add({
     }
   }, [error, isError]);
   return (
-    <div className={`dropdown ${dropdownY} ${dropdownX} z-50 `}>
+    <div className={`dropdown ${dropdownY} ${dropdownX} `}>
       <span className="cursor-pointer " tabIndex={0}>
         {/* trigger */}
         {triggerText}

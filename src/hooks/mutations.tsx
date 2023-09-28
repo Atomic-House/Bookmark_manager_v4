@@ -26,7 +26,7 @@ export function useCreate<T, B>(
 
       queryClient.setQueryData(
         [invalidate?.parentType, { id: invalidate?.id }],
-        prevData?.concat([data]),
+        prevData?.concat(data),
       );
     },
   });

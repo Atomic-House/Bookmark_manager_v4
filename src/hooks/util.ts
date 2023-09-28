@@ -28,7 +28,7 @@ export function useAuth() {
     if (status === "unauthenticated") {
       router.push("/signin");
     } else {
-      router.push(`/board/default`);
+      router.push(`/board`);
     }
-  }, [router, status,]);
+  }, [router, status]);
 }

@@ -6,32 +6,34 @@ import { AiFillPlusCircle } from "@react-icons/all-files/ai/AiFillPlusCircle";
 import EditListOptions from "./components/ListOptions";
 import { BiDotsVerticalRounded } from "@react-icons/all-files/bi/BiDotsVerticalRounded";
 import ListView from "../Bookmark/components/view/List";
-export default function List({ ...props }: ListWithBookmarks) {
+export default function List({ ...list }: ListWithBookmarks) {
   return (
-    <div className="p-4 flex flex-col gap-5 shadow-black hover:shadow-slate-900 duration-300 shadow-xl bg-slate-950 rounded-lg m-4 ">
+    <div
+      className={`p-4 flex flex-col gap-5 shadow-black hover:shadow-slate-900 duration-300 shadow-xl  rounded-lg m-4 ${list.color} `}
+    >
       {/* list name div */}
       <div className="flex justify-between items-center px-4">
         <span className="flex justify-between gap-2">
-          <IconPicker />
-          {props.name}
+          <IconPicker icon={list.icon ? list.icon : ""} />
+          {list.name}
         </span>
         <span className="flex justify-between gap-2 z-20">
           <Add
-            inputPlaceholder="List name..."
+            inputPlaceholder="Bookmark name..."
             confirmBtnText="Add"
             cancelBtnText="Reset"
             triggerText={
               <AiFillPlusCircle className="dark:text-blue-700 text-blue-500 " />
             }
-            heading="New List"
-            content="Add a new List"
+            heading="New Bookmark"
+            content="Add a new bookmark"
           />
           <EditListOptions trigger={<BiDotsVerticalRounded />} />
         </span>
       </div>
       {/* bookmarks */}
       <ul className="grid grid-cols-1 gap-4 ">
-        {props?.bookmarks?.map((bookmark) => (
+        {list?.bookmarks?.map((bookmark) => (
           <ListView {...bookmark} key={bookmark.id} />
         ))}
       </ul>

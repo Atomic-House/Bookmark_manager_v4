@@ -12,13 +12,17 @@ export async function GET(
   if (!session) {
     return NextResponse.json({ error: "Unauthorized", status: 401 });
   }
-  const body: { viewId: string; isDeleted: boolean } = await request.json();
-  const lists = await db
-    .select()
-    .from(list)
-    .where(
-      and(eq(list.viewId, body.viewId), eq(list.isDeleted, body.isDeleted)),
-    );
+  const [viewId, isDeleted] = params.data;
+
+  const lists = await db.query.list.findMany({
+    where: and(
+      eq(list.viewId, viewId),
+      eq(list.isDeleted, isDeleted != "true"),
+    ),
+    with: {
+      bookmarks: true,
+    },
+  });
   return NextResponse.json(lists);
 }
 export async function POST(
@@ -34,15 +38,15 @@ export async function POST(
     icon: string;
     viewId: string;
   } = await request.json();
-  const ws = await db
+  const lists = await db
     .insert(list)
     .values({
       name: body!.name!,
       viewId: body.viewId,
       icon: body.icon,
     })
-    .returning({ id: list.id });
-  return NextResponse.json(ws[0].id);
+    .returning();
+  return NextResponse.json(lists[0]);
 }
 
 export async function PATCH(
