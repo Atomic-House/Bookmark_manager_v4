@@ -1,19 +1,12 @@
 "use client";
 import ViewTabs from "@/components/View";
 import { usePageData } from "@/hooks/viewPageFunctions";
+import { useSearchParams } from "next/navigation";
 export default function Page() {
-  const {
-    viewsData,
-    boardName,
-    icon,
-    setView,
-    view,
-    createViews,
-    listsData,
-    createList,
-    list,
-    setList,
-  } = usePageData();
+  const searchParams = useSearchParams();
+  const { viewsData, boardName, icon, setView, view, createViews } =
+    usePageData();
+
   return (
     <div className="">
       <div>

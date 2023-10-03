@@ -10,7 +10,7 @@ export default function ListView({ favicon, title, name, url }: Bookmark) {
       <div>
         <Link href={url!} className="flex items-center gap-2">
           <span>
-            <Image src={favicon?.toString()} alt={name!} width={50} />
+            <Image src={favicon?.toString()!} alt={name!} width={50} />
           </span>
           <span className="flex flex-col items-center text-sm">
             <p className="font-semibold">

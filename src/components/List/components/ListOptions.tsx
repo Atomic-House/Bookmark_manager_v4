@@ -137,7 +137,7 @@ export default function EditListOptions({
         </label>
 
         <div
-          className={`dark:text-white bg-white z-[1000] w-60 dropdown-content p-4 ${contentStyle} rounded-lg absolute dark:bg-slate-900  ${text}`}
+          className={`dark:text-white bg-white z-[1000] shadow-black drop-shadow-lg w-60 dropdown-content p-4 ${contentStyle} rounded-lg absolute dark:bg-slate-900  ${text}`}
           tabIndex={0}
         >
           <ul className="flex flex-col gap-2">

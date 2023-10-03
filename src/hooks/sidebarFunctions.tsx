@@ -33,7 +33,6 @@ export function useSidebarDataHandle() {
       workspaceId: defaultWorkspace?.id!,
     },
     "create",
-    { parentType: "board", id: defaultWorkspace?.id },
     boardData.data,
   );
 

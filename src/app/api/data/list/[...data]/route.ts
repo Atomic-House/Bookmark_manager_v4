@@ -17,7 +17,7 @@ export async function GET(
   const lists = await db.query.list.findMany({
     where: and(
       eq(list.viewId, viewId),
-      eq(list.isDeleted, isDeleted != "true"),
+      eq(list.isDeleted, isDeleted === "true"),
     ),
     with: {
       bookmarks: true,

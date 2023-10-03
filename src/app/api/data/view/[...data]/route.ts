@@ -1,7 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { board } from "@/schema/board";
 import { LayoutEnum, LinkTypeEnum, SortOrderEnum } from "@/schema/enums";
-import { layout } from "@/schema/layout";
 import { view } from "@/schema/view";
 import { db } from "@/server/db";
 import { and, eq } from "drizzle-orm";
@@ -71,17 +69,16 @@ export async function PATCH(
   } = await request.json();
   const vw = await db
     .update(view)
-    .set({ name: body.name, isDeleted: body.isDeleted })
-    .where(eq(view.id, body.id));
-  const viewLayout = await db
-    .update(layout)
     .set({
-      viewType: body.view,
-      linkType: body.linkType,
+      name: body.name,
+      isDeleted: body.isDeleted,
       sortOrder: body.sort,
+      linkType: body.linkType,
+      viewType: body.view,
     })
-    .where(eq(layout.viewId, body.id));
-  return NextResponse.json({ status: 200 });
+    .where(eq(view.id, body.id));
+
+  return NextResponse.json({ status: 200, vw });
 }
 
 export async function DELETE(

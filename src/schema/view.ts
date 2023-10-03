@@ -2,8 +2,8 @@ import { relations } from "drizzle-orm";
 import { pgTable, text, boolean, timestamp } from "drizzle-orm/pg-core";
 import { List, list } from "./list";
 import { board } from "./board";
-import { layout } from "./layout";
 import { createId } from "@paralleldrive/cuid2";
+import { layoutEnum } from "./enums";
 
 export const view = pgTable("view", {
   id: text("id")
@@ -15,14 +15,10 @@ export const view = pgTable("view", {
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()
     .defaultNow(),
-  layoutId: text("layout_id"),
+  viewType: layoutEnum("view_type").default("list"),
+  tags: text("tags").$type<string[]>(),
 });
-export const viewToLayoutRelation = relations(view, ({ one }) => ({
-  layout: one(layout, {
-    fields: [view.layoutId],
-    references: [layout.id],
-  }),
-}));
+
 export const viewToListsRelation = relations(view, ({ many }) => ({
   lists: many(list),
 }));

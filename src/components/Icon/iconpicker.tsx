@@ -25,7 +25,7 @@ export default function IconPicker({
     <div className="dropdown dropdown-hover">
       <span
         tabIndex={0}
-        className="p-2  cursor-pointer hover:bg-black duration-300"
+        className="p-2  cursor-pointer hover:shadow-md duration-300"
       >
         {icon ? icon : trigger}
       </span>

@@ -5,7 +5,6 @@ export function useCreate<T, B>(
   mutationKey: "workspace" | "board" | "view" | "list" | "inbox" | "bookmark",
   { ...body }: B,
   typeId?: string,
-  invalidate?: { parentType: typeof mutationKey; id?: string },
   prevData?: T[],
 ) {
   const queryClient = useQueryClient();
@@ -21,11 +20,11 @@ export function useCreate<T, B>(
     },
     onSuccess(data) {
       console.log("Successfully created", mutationKey);
-      console.log("Invalidating...", invalidate?.parentType, invalidate?.id);
+      console.log("Invalidating...", mutationKey, typeId);
       console.log(data);
 
       queryClient.setQueryData(
-        [invalidate?.parentType, { id: invalidate?.id }],
+        [mutationKey, { id: typeId }],
         prevData?.concat(data),
       );
     },

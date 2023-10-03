@@ -1,16 +1,23 @@
 import { Board } from "@/schema/board";
 import { Bookmark } from "@/schema/bookmarks";
-import { View, ViewWithLists } from "@/schema/view";
+import { ViewWithLists } from "@/schema/view";
 import { Workspace } from "@/schema/workspace";
 import { faker } from "@faker-js/faker";
-import { List, ListWithBookmarks } from "@/schema/list";
-
-export function fakerUser() {
-  return {
-    name: faker.person.fullName(),
-    email: faker.internet.email(),
-    city: faker.company.name(),
-  };
+import { ListWithBookmarks } from "@/schema/list";
+import { User } from "@/schema/auth";
+export function fakerUser(length: number): User[] {
+  let users: User[] = [];
+  for (let i = 0; i < length; i++) {
+    users.push({
+      name: faker.person.fullName(),
+      email: faker.internet.email(),
+      id: faker.database.mongodbObjectId(),
+      image: faker.image.avatar(),
+      emailVerified: faker.date.past(),
+      profileId: faker.database.mongodbObjectId(),
+    });
+  }
+  return users;
 }
 export function fakerWorkspaces(length: number) {
   let ws: Workspace[] = [];
@@ -63,6 +70,7 @@ export function fakeView(length: number): ViewWithLists[] {
   }
   return views;
 }
+
 export function fakeLists(length: number): ListWithBookmarks[] {
   let lists: ListWithBookmarks[] = [];
   for (let i = 0; i < length; i++) {
