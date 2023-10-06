@@ -72,8 +72,6 @@ export async function PATCH(
     .set({
       name: body.name,
       isDeleted: body.isDeleted,
-      sortOrder: body.sort,
-      linkType: body.linkType,
       viewType: body.view,
     })
     .where(eq(view.id, body.id));
