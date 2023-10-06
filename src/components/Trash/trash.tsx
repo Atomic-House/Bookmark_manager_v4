@@ -10,7 +10,7 @@ interface ITrash {
 }
 export default function Trash() {
   const [id, setId] = useState("");
-  const lists = useFetch("");
+  // const lists = useFetch("");
   const trashBookmark = useTrash<Bookmark>("bookmark", id, true);
   const trashList = useTrash<List>("list", id, true);
   const trashBoard = useTrash<Board>("board", id, true);
