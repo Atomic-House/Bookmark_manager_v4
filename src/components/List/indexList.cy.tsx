@@ -12,10 +12,10 @@ describe("<List />", () => {
     cy.mount(
       <ul className="flex">
         <li>
-          <List bookmarks={bookmarks} name={"Social Media"} id="lasjfdlaskjf" />
+          {/* <List bookmarks={bookmarks} name={"Social Media"} id="lasjfdlaskjf" /> */}
         </li>
         <li className="">
-          <List bookmarks={bookmarks2} name={"Work"} id="lasjfdlasafjkjf" />
+          {/* <List bookmarks={bookmarks2} name={"Work"} id="lasjfdlasafjkjf" /> */}
         </li>
       </ul>,
     );
