@@ -3,6 +3,7 @@ import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { workspace } from "./workspace";
 import { View, ViewWithLists, view } from "./view";
 import { createId } from "@paralleldrive/cuid2";
+import { User } from "./auth";
 //board schema
 export const board = pgTable("board", {
   id: text("id")
@@ -11,6 +12,7 @@ export const board = pgTable("board", {
   name: text("name").$type<string>().notNull(),
   workspaceId: text("workspaceId"),
   isDeleted: boolean("isDeleted").default(false),
+  hasAccess: text("access").$type<string[] | null>(),
   icon: text("icon").$type<string | null>(),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()
@@ -29,7 +31,7 @@ export const boardToViewsRelation = relations(board, ({ many }) => ({
   views: many(view),
 }));
 
-export type Board = typeof board.$inferInsert;
+export type Board = typeof board.$inferSelect;
 export interface BoardWithViews extends Board {
   views: ViewWithLists[];
 }

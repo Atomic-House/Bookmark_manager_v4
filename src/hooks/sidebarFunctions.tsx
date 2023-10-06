@@ -7,7 +7,7 @@ import { useFetch } from "./queries";
 import { useEffect, useState } from "react";
 
 export function useSidebarDataHandle() {
-  const workspaceData = useFetch<WorkspaceAndBoards[]>("read", "workspace");
+  const workspaceData = useFetch<WorkspaceAndBoards[]>("", "workspace");
   const defaultId = window.localStorage.getItem("defaultWs");
   const [defaultWorkspace, setDefaultWorkspace] = useState(
     workspaceData.data?.find((workspace) => workspace.id === defaultId) ||
@@ -16,12 +16,8 @@ export function useSidebarDataHandle() {
 
   const boardData = useFetch<Board[]>(defaultWorkspace?.id!, "board", false);
   const [board, setBoard] = useState({ name: "", icon: "🔖" });
-  // const [boards, setBoards] = useState(
-  //   boardData.data ||
-  //     workspaceData.data?.find((workspace) => workspace.id === defaultId)
-  //       ?.boards,
-  // );
   const [boards, setBoards] = useState(boardData.data);
+
   const createBoard = useCreate<
     Board,
     { name: string; icon: string; workspaceId: string }
@@ -32,21 +28,14 @@ export function useSidebarDataHandle() {
       icon: board.icon,
       workspaceId: defaultWorkspace?.id!,
     },
-    "create",
-    boardData.data,
+    defaultWorkspace?.id!,
+    boardData?.data,
   );
 
   useEffect(() => {
     setDefaultWorkspace(
       workspaceData.data?.find((workspace) => workspace.id === defaultId),
     );
-    // if (createBoard.isSuccess) {
-    //   const b = Array.from(boardData.data!);
-    //   setBoards([...b, createBoard.data!]);
-    // }
-    // if (boardData.isSuccess) {
-    //   setBoards(boardData.data!);
-    // }
     setBoards(boardData.data);
   }, [
     defaultWorkspace,

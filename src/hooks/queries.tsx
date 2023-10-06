@@ -3,7 +3,7 @@ import { useQueries, useQuery } from "@tanstack/react-query";
 
 export function useFetch<T>(
   id: string,
-  queryKey: "list" | "workspace" | "board" | "bookmarks" | "view" | "inbox",
+  queryKey: "list" | "workspace" | "board" | "bookmark" | "view" | "inbox",
   isDeleted?: boolean,
   refetchInterval?: number | false,
 ) {

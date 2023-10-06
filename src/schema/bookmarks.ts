@@ -15,6 +15,7 @@ export const bookmark = pgTable("bookmark", {
   favicon: text("favicon").$type<URL | string | undefined>(),
   preview: text("preview").$type<URL | string | undefined>(),
   isDeleted: boolean("isDeleted").default(false),
+  createdBy: text("created_by"),
   createdAt: timestamp("create_at", { withTimezone: true })
     .notNull()
     .defaultNow(),

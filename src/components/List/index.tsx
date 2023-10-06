@@ -11,9 +11,8 @@ export default function ListMain({ ...list }: List) {
   const { createBookmark, setBookmark, bookmarksData, bookmark } = useBookmarks(
     list?.id,
   );
-
   return (
-    <div
+    <li
       className={`p-4 flex flex-col gap-5 shadow-black hover:shadow-slate-900 duration-300 shadow-md   rounded-lg m-4 ${list.color} `}
     >
       {/* list name div */}
@@ -48,6 +47,6 @@ export default function ListMain({ ...list }: List) {
           <ListView {...bookmark} key={bookmark.id!} />
         ))}
       </ul>
-    </div>
+    </li>
   );
 }

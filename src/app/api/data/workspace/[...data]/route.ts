@@ -15,10 +15,11 @@ export async function GET(
     return NextResponse.json({ error: "Unauthorized", status: 401 });
   }
   const wsAndBoard = await db.query.workspace.findMany({
+    where: eq(workspace.createdBy, session.user?.email!),
     with: {
-      boards: true
-    }
-  })
+      boards: true,
+    },
+  });
   return NextResponse.json(wsAndBoard);
 }
 export async function POST(
@@ -33,7 +34,14 @@ export async function POST(
     name: string;
     icon: string;
   } = await request.json();
-  const ws = await db.insert(workspace).values({ name: body.name, icon: body.icon, createdBy: session.user?.email }).returning({ id: workspace.id });
+  const ws = await db
+    .insert(workspace)
+    .values({
+      name: body.name,
+      icon: body.icon,
+      createdBy: session.user?.email,
+    })
+    .returning({ id: workspace.id });
   return NextResponse.json(ws[0].id);
 }
 

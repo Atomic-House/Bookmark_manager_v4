@@ -12,6 +12,7 @@ export const list = pgTable("list", {
   viewId: text("view_id"),
   inboxId: text("inbox_id"),
   isDeleted: boolean("isDeleted").default(false),
+  createdBy: text("created_by"),
   icon: text("icon").$type<string | null>(),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()

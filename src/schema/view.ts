@@ -12,6 +12,7 @@ export const view = pgTable("view", {
   name: text("name").notNull(),
   isDeleted: boolean("is_deleted").default(false),
   boardId: text("board_id"),
+  createdBy: text("created_by"),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()
     .defaultNow(),

@@ -5,24 +5,19 @@ import { NextResponse } from "next/server";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 
-import ogs from "open-graph-scraper";
-import { OpenGraphScraperOptions } from "open-graph-scraper/dist/lib/types";
 import { getMetaData } from "@/functions/ogscraper";
 export async function GET(
   request: Request,
   { params }: { params: { data: string[] } },
 ) {
-  const [listId] = params.data;
-  const body: {
-    listId: string;
-    isDeleted: boolean;
-  } = await request.json();
-  const bookmarks = await db
-    .select()
-    .from(bookmark)
-    .where(
-      and(eq(bookmark.listId, listId), eq(bookmark.isDeleted, body.isDeleted)),
-    );
+  const [listId, isDeleted] = params.data;
+  const bookmarks = await db.query.bookmark.findMany({
+    where: and(
+      eq(bookmark.listId, listId),
+      eq(bookmark.isDeleted, isDeleted === "true"),
+    ),
+  });
+
   return NextResponse.json(bookmarks);
 }
 export async function POST(

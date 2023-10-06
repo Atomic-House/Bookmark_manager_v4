@@ -125,7 +125,7 @@ export default function EditBookmarkOption({
                 {item.map((i) => (
                   <div
                     key={i.id}
-                    className="flex dark:text-white hover:dark:text-black gap-2 items-center p-2 font-light rounded-md duration-300 cursor-pointer hover:bg-slate-300"
+                    className="flex dark:text-white hover:dark:text-black gap-2 items-center p-2 font-light rounded-md duration-300 cursor-pointer dark:hover:bg-slate-300"
                     onClick={i.onClick}
                   >
                     {i.icon} {i.title}

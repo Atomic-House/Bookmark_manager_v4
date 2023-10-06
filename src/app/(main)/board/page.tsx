@@ -3,7 +3,6 @@ import ViewTabs from "@/components/View";
 import { usePageData } from "@/hooks/viewPageFunctions";
 import { useSearchParams } from "next/navigation";
 export default function Page() {
-  const searchParams = useSearchParams();
   const { viewsData, boardName, icon, setView, view, createViews } =
     usePageData();
 

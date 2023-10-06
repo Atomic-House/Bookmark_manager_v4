@@ -75,7 +75,7 @@ export async function PATCH(
   return NextResponse.json(ws);
 }
 
-export async function DELETE(
+export async function PUT(
   request: Request,
   { params }: { params: { data: string[] } },
 ) {
@@ -84,11 +84,16 @@ export async function DELETE(
     throw new Error("Unauthorized");
   }
   const body: {
-    name: string;
-    icon: string;
     id: string;
+    isDeleting: boolean;
   } = await request.json();
 
-  const ws = await db.delete(board).where(eq(board.id, body.id));
+  const ws = await db
+    .update(board)
+    .set({
+      isDeleted: body.isDeleting,
+    })
+    .where(eq(board.isDeleted, body.isDeleting))
+    .returning();
   return NextResponse.json(ws);
 }

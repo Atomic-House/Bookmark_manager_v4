@@ -39,7 +39,6 @@ export default function ViewTabs({
     [searchParams],
   );
   const { data: lists, createList, setList, list } = useGetLists(viewId);
-  console.log(lists.data);
 
   return (
     <div>
@@ -106,9 +105,9 @@ export default function ViewTabs({
         />
       </div>
       <div>
-        <div className="grid lg:grid-cols-4 place-items-center  md:grid-cols-3 sm:grid-cols-2 ">
+        <ul className="grid lg:grid-cols-4 place-items-center  md:grid-cols-3 sm:grid-cols-2 ">
           {lists.data?.map((l) => <List {...l} key={l.id} />)}
-        </div>
+        </ul>
       </div>
     </div>
   );

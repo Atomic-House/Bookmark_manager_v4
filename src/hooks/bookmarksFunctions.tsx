@@ -4,7 +4,7 @@ import { useCreate } from "./mutations";
 import { useState } from "react";
 
 export function useBookmarks(listId?: string) {
-  const bookmarksData = useFetch<Bookmark[]>(listId!, "bookmarks", false);
+  const bookmarksData = useFetch<Bookmark[]>(listId!, "bookmark", false);
   const [bookmark, setBookmark] = useState<Bookmark>();
   const createBookmark = useCreate<
     Bookmark,
