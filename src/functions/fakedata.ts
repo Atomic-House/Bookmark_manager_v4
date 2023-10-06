@@ -38,6 +38,11 @@ export function fakerBoards(length: number) {
       name: faker.science.unit().name,
       id: faker.database.mongodbObjectId(),
       icon: faker.image.avatar(),
+      isDeleted: false,
+      hasAccess: [],
+      createdBy: faker.database.mongodbObjectId(),
+      createdAt: faker.date.past(),
+      workspaceId: faker.database.mongodbObjectId(),
     });
   }
   return boards;
