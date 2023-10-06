@@ -1,14 +1,12 @@
 "use client";
 import { useOverlayRef } from "@/hooks/util";
-import { Layout } from "@/schema/layout";
 import { RiArrowDownLine } from "@react-icons/all-files/ri/RiArrowDownLine";
 import { RiArrowUpDownLine } from "@react-icons/all-files/ri/RiArrowUpDownLine";
 import { useState, Fragment } from "react";
 import { Transition } from "@headlessui/react";
+import { SortOrderEnum } from "@/schema/enums";
 export default function Sort() {
-  const [selected, setSelected] = useState<Layout["sortOrder"] | string>(
-    "newest",
-  );
+  const [selected, setSelected] = useState<SortOrderEnum | string>("newest");
   const { ref, toggleOpen, open } = useOverlayRef();
   return (
     <div className="relative">
