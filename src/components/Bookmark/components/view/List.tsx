@@ -12,7 +12,7 @@ export default function ListView({ favicon, title, name, url }: Bookmark) {
           <span>
             <Image
               src={favicon?.toString()!}
-              alt={name!}
+              alt={name ? name : title!}
               width={50}
               height={50}
             />
@@ -25,11 +25,11 @@ export default function ListView({ favicon, title, name, url }: Bookmark) {
                 ? title.slice(0, 10).concat("...")
                 : url?.toString()}
             </p>
-            <p className="">
+            <div className="">
               <p className="tooltip" data-tip={url}>
                 <button className="text-xs ">Link</button>
               </p>
-            </p>
+            </div>
           </span>
         </Link>
       </div>

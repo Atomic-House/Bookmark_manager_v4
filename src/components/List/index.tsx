@@ -1,5 +1,5 @@
 "use client";
-import type { List, ListWithBookmarks } from "@/schema/list";
+import type { List } from "@/schema/list";
 import IconPicker from "../Icon/iconpicker";
 import Add from "../Add";
 import { AiFillPlusCircle } from "@react-icons/all-files/ai/AiFillPlusCircle";

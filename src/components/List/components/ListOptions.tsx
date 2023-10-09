@@ -11,14 +11,10 @@ import { BiDuplicate } from "@react-icons/all-files/bi/BiDuplicate";
 import { BiCollapse } from "@react-icons/all-files/bi/BiCollapse";
 import { BiTrashAlt } from "@react-icons/all-files/bi/BiTrashAlt";
 export default function EditListOptions({
-  bg,
-  rounded,
   text,
   contentStyle,
   trigger,
 }: {
-  bg?: string;
-  rounded?: string;
   text?: string;
   contentStyle?: string;
   trigger?: string | ReactNode;

@@ -36,19 +36,22 @@ export async function POST(
     snoozeTime: Date;
   } = await request.json();
   const data = await getMetaData(body.url);
-  const bm = await db.insert(bookmark).values({
-    listId: body.listId,
-    name: body?.name!,
-    url: body.url,
-    snoozeEnabled: body.isSnoozed,
-    snoozeTime: body.snoozeTime,
-    isDeleted: false,
-    favicon: data.favicon,
-    preview: data.preview,
-    title: data.title,
-    description: data.desciption,
-  });
-  return NextResponse.json(bm);
+  const bm = await db
+    .insert(bookmark)
+    .values({
+      listId: body.listId,
+      name: body?.name!,
+      url: body.url,
+      snoozeEnabled: body.isSnoozed,
+      snoozeTime: body.snoozeTime,
+      isDeleted: false,
+      favicon: data.favicon,
+      preview: data.preview,
+      title: data.title,
+      description: data.desciption,
+    })
+    .returning();
+  return NextResponse.json(bm[0]);
 }
 export async function PATCH(
   request: Request,

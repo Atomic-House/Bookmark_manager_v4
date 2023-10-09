@@ -6,6 +6,8 @@ import Link from "next/link";
 import React, { FormEventHandler, useState, ChangeEventHandler } from "react";
 import { BiChevronUp } from "@react-icons/all-files/bi/BiChevronUp";
 import { MdDashboard } from "@react-icons/all-files/md/MdDashboard";
+import { AiOutlinePlus } from "@react-icons/all-files/ai/AiOutlinePlus";
+import { AiOutlineFolderAdd } from "@react-icons/all-files/ai/AiOutlineFolderAdd";
 export default function SelectBoards({
   boards,
   collapse,
@@ -16,6 +18,7 @@ export default function SelectBoards({
   isError,
   error,
   isMutating,
+  wsId,
   currBoard,
 }: {
   wsId?: string;
@@ -54,22 +57,28 @@ export default function SelectBoards({
         </button>
         <span className={`flex items-center gap-2 pr-2 mr-3 `}>
           {!collapse && (
-            <Add
-              // emojiSelector={<IconPicker icon="🔖" />}
-              onChange={onChange}
-              onSubmit={createBoard}
-              dropdownX={"dropdown-right"}
-              dropdownY="dropdown-bottom"
-              confirmBtnText="Add"
-              cancelBtnText="Reset"
-              triggerText="+"
-              heading="New Board"
-              inputPlaceholder="board name..."
-              isLoading={isMutating}
-              isSuccess={isSuccess}
-              isError={isError}
-              error={error}
-            />
+            <div className="dropdown">
+              <label tabIndex={0} className=" m-1">
+                +
+              </label>
+              <ul
+                tabIndex={0}
+                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+              >
+                <li>
+                  <Link href={`/new/${wsId}`}>
+                    <AiOutlinePlus className="font-bold text-2xl" /> Create a
+                    new board
+                  </Link>
+                </li>
+                <li>
+                  <Link href={`/folder`}>
+                    <AiOutlineFolderAdd className="font-bold text-2xl" />
+                    Add a folder
+                  </Link>
+                </li>
+              </ul>
+            </div>
           )}
           <BiChevronUp
             onClick={() => toggleOpen(!open)}

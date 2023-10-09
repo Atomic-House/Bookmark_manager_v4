@@ -5,11 +5,12 @@ import ThemeProvider from "@/components/Theme/themeProvider";
 import { IconContext } from "@/context/icon";
 import { useCreate } from "@/hooks/mutations";
 import { Board } from "@/schema/board";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 export default function Page({ params }: { params: { workspaceID: string } }) {
   const [name, setName] = useState("");
   const [icon, setIcon] = useState("");
+  const pathname = usePathname();
   const router = useRouter();
   const [currState, setCurrState] = useState<
     "loading" | "success" | "error" | "stale"
@@ -39,22 +40,31 @@ export default function Page({ params }: { params: { workspaceID: string } }) {
     } else if (isSuccess) {
       setCurrState("success");
 
-      router.push(`/board?id=${data.id}&name=${data.name}`);
+      router.push(`/new/${params.workspaceID}/${data.id}`);
     } else if (isError) {
       setCurrState("error");
       console.error(error, failureReason);
     }
-  }, [isLoading, isSuccess, isError, data, router, error, failureReason]);
+  }, [
+    isLoading,
+    params.workspaceID,
+    isSuccess,
+    isError,
+    data,
+    router,
+    error,
+    failureReason,
+    pathname,
+  ]);
+
   return (
     <main className="flex flex-col justify-center items-center gap-3 m-4 ">
       <ThemeProvider />
 
       <h1 className="text-4xl text-[#5D60EF] mb-10">Brand</h1>
-      <p>Step 2/2</p>
-      <h2 className="text-4xl font-semibold">Create a new board</h2>
-      <p className="font-medium text-xs">
-        Create a new Worksapce or add board link to send request
-      </p>
+      <p>Step 2/3</p>
+      <h2 className="text-4xl font-semibold">Create a board</h2>
+      <p className="font-medium text-xs">Give a name and create a board</p>
       <form action="" onSubmit={mutateAsync} className="mt-5 w-[50vw]">
         <label htmlFor="name">
           <p>Enter your board name</p>

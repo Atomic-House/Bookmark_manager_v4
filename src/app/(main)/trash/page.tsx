@@ -1,37 +1,52 @@
 "use client";
 
-import { useCallback } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
+import { useState } from "react";
+import { List } from "@/schema/list";
+import { Bookmark } from "@/schema/bookmarks";
+import { Board } from "@/schema/board";
+import Trash from "@/components/Trash/trash";
+
+type TrashType = "Bookmarks" | "Lists" | "Boards" | "Members";
+
 export default function Page({
   searchParams,
 }: {
-  searchParams: { tab: string };
+  searchParams: { tab: TrashType };
 }) {
-  const router = useRouter();
   const pathname = usePathname();
+  const [selectData, setSelectData] = useState<TrashType>(searchParams.tab);
   return (
     <div>
       <h1>Main Page / </h1>
       <h2>Trash / {searchParams.tab} </h2>
-      <ul className="flex gap-4 mt-12 tabs ">
-        {tabs.map((tab, i) => (
-          <Link
-            href={`${pathname}?tab=${tab.name}`}
-            key={i}
-            className={` cursor-pointer  ${
-              searchParams.tab === tab.name ? "border-b-2 border-b-black" : ""
-            }`}
-          >
-            {tab.name}
-          </Link>
-        ))}
-      </ul>
+      <div>
+        <ul className="flex gap-4 mt-12 tabs ">
+          {tabs.map((tab, i) => (
+            <Link
+              href={`${pathname}?tab=${tab.name}`}
+              key={i}
+              onClick={() => setSelectData(tab.name)}
+              className={` cursor-pointer  ${
+                searchParams.tab === tab.name ? "border-b-2 border-b-black" : ""
+              }`}
+            >
+              {tab.name}
+            </Link>
+          ))}
+        </ul>
+      </div>
+      <div></div>
+
+      <Trash type={selectData} />
     </div>
   );
 }
-
-const tabs = [
+const tabs: {
+  name: TrashType;
+  icon: string;
+}[] = [
   { name: "Bookmarks", icon: "" },
   { name: "Lists", icon: "" },
   { name: "Boards", icon: "" },

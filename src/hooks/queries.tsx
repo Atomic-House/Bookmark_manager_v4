@@ -45,3 +45,18 @@ export function useListQueries(listIds: string[]) {
   });
   return data;
 }
+export function useGetTrash<T>(queryKey: "board" | "list" | "bookmark") {
+  const data = useQuery<T>({
+    queryKey: [queryKey, "trash"],
+    queryFn: async () => {
+      const d = await fetch(`/api/trash/${queryKey}/trash/read`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      return (await d.json()) as T;
+    },
+  });
+  return data;
+}

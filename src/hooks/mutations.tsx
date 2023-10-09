@@ -41,8 +41,8 @@ export function useTrash<T>(
   const mutate = useMutation<T>({
     mutationKey: [mutationKey, id],
     mutationFn: async () => {
-      const d = await fetch(`/api/data/${mutationKey}/${id}/delete`, {
-        method: "PUT",
+      const d = await fetch(`/api/trash/${mutationKey}/${id}/trash`, {
+        method: "PATCH",
         body: JSON.stringify({ id: id, isDeleting: isDeleting }),
         headers: {
           "Content-Type": "application/json",
@@ -58,6 +58,24 @@ export function useTrash<T>(
       );
       console.log("Invalidating...", mutationKey, id);
       queryClient.invalidateQueries([mutationKey, { id: id }]);
+    },
+  });
+  return mutate;
+}
+
+export function useAddMembers(boardId: string, members: string[]) {
+  const mutate = useMutation({
+    mutationKey: ["board", boardId, "members"],
+    mutationFn: async (e: FormEvent) => {
+      e.preventDefault();
+      const res = await fetch(`/api/data/member/create`, {
+        method: "POST",
+        body: JSON.stringify({ boardId, members }),
+      });
+      return (await res.json()) as string;
+    },
+    onSuccess(data) {
+      console.log("Successfully added members", data);
     },
   });
   return mutate;

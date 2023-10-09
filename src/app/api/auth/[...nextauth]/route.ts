@@ -14,7 +14,6 @@ export const authOptions: NextAuthOptions = {
   pages: {
     newUser: "/new",
   },
-
 };
 const handler = NextAuth(authOptions);
 
