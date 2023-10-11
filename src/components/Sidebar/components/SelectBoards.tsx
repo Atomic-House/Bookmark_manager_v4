@@ -11,8 +11,6 @@ import { AiOutlineFolderAdd } from "@react-icons/all-files/ai/AiOutlineFolderAdd
 export default function SelectBoards({
   boards,
   collapse,
-  createBoard,
-  onChange,
   isFetching,
   isSuccess,
   isError,

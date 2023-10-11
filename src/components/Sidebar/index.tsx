@@ -71,7 +71,6 @@ export default function Sidebar({ children }: { children: ReactNode }) {
                 Upgrade Now
               </button>
             )}
-
             <MdKeyboardArrowLeft
               onClick={() => toggleCollapse(!collapse)}
               className={`${

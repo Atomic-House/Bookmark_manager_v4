@@ -38,7 +38,7 @@ export default function ListMain({ ...list }: List) {
             isSuccess={createBookmark.isSuccess}
             error={createBookmark.error}
           />
-          <EditListOptions trigger={<BiDotsVerticalRounded />} />
+          <EditListOptions id={list.id!} trigger={<BiDotsVerticalRounded />} />
         </span>
       </div>
       {/* bookmarks */}

@@ -1,7 +1,6 @@
 //Custom popover component made only with TailwindCSS
 "use client";
 import { ReactNode, useEffect, useRef, useState } from "react";
-import { Transition } from "@headlessui/react";
 import { BsUpload } from "@react-icons/all-files/bs/BsUpload";
 import { IoIosShare } from "@react-icons/all-files/io/IoIosShare";
 import { BiAlarmSnooze } from "@react-icons/all-files/bi/BiAlarmSnooze";
@@ -10,17 +9,23 @@ import { AiOutlineStar } from "@react-icons/all-files/ai/AiOutlineStar";
 import { BiDuplicate } from "@react-icons/all-files/bi/BiDuplicate";
 import { BiCollapse } from "@react-icons/all-files/bi/BiCollapse";
 import { BiTrashAlt } from "@react-icons/all-files/bi/BiTrashAlt";
+import { useTrash } from "@/hooks/mutations";
+import { List } from "@/schema/list";
+
 export default function EditListOptions({
   text,
   contentStyle,
+  id,
   trigger,
 }: {
   text?: string;
   contentStyle?: string;
   trigger?: string | ReactNode;
+  id: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const overLayRef = useRef<HTMLDivElement | null>(null);
+  const listTrash = useTrash<List>("list", id, true);
   useEffect(() => {
     function handleOverlayClose(event: MouseEvent) {
       if (
@@ -116,14 +121,13 @@ export default function EditListOptions({
           id: 1,
           title: "Move to trash",
           onClick: (e: any) => {
-            /* Your click event handler function */
+            listTrash.mutateAsync();
           },
           icon: <BiTrashAlt />,
         },
       ],
     },
   ];
-
   return (
     <>
       <div className="dropdown dropdown-left ">

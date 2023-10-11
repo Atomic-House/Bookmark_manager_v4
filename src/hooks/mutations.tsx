@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FormEvent } from "react";
-
+import _ from "lodash";
 export function useCreate<T, B>(
   mutationKey: "workspace" | "board" | "view" | "list" | "inbox" | "bookmark",
   body: B,
@@ -36,10 +36,11 @@ export function useTrash<T>(
   mutationKey: "workspace" | "board" | "view" | "list" | "inbox" | "bookmark",
   id: string,
   isDeleting: boolean,
+  prevData?: T[],
 ) {
   const queryClient = useQueryClient();
   const mutate = useMutation<T>({
-    mutationKey: [mutationKey, id],
+    mutationKey: [mutationKey, "trash"],
     mutationFn: async () => {
       const d = await fetch(`/api/trash/${mutationKey}/${id}/trash`, {
         method: "PATCH",
@@ -50,14 +51,18 @@ export function useTrash<T>(
       });
       return await d.json();
     },
-    onSuccess() {
+    onSuccess(data) {
       console.log(
         `Successfully ${isDeleting ? "deleted" : "restored"}`,
         mutationKey,
         id,
       );
       console.log("Invalidating...", mutationKey, id);
-      queryClient.invalidateQueries([mutationKey, { id: id }]);
+      queryClient.invalidateQueries([mutationKey, "trash"]);
+      queryClient.setQueryData(
+        [mutationKey, "trash"],
+        _.without(prevData, data),
+      );
     },
   });
   return mutate;

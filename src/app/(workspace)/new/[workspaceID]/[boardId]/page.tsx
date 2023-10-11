@@ -1,7 +1,7 @@
 "use client";
 
 import ThemeProvider from "@/components/Theme/themeProvider";
-import { useAddMembers, useCreate } from "@/hooks/mutations";
+import { useAddMembers } from "@/hooks/mutations";
 import _ from "lodash";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -111,6 +111,13 @@ export default function Page({ params }: { params: { boardId: string } }) {
               />
             </svg>
           )}
+        </button>
+
+        <button
+          className="btn btn-primary w-full mt-5"
+          onClick={() => router.push(`/board?id=${params.boardId}`)}
+        >
+          I&apos;ll do it later
         </button>
       </div>
     </main>
