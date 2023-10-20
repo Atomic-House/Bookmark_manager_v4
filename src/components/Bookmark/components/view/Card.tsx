@@ -27,7 +27,7 @@ export default function Card({
           />
           {title}
         </h2>
-        <p>{nURL.hostname}</p>
+        <div>{nURL.hostname}</div>
       </div>
     </Link>
   );
