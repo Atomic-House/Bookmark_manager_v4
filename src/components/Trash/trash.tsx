@@ -3,7 +3,6 @@ import Link from "next/link";
 import { useTrashFunction } from "@/hooks/trashFunction";
 import { useEffect } from "react";
 
-<<<<<<< HEAD
 type TrashType = "Bookmarks" | "Lists" | "Boards" | "Members";
 export default function Trash({ type }: { type: TrashType }) {
   const {
@@ -81,16 +80,7 @@ export default function Trash({ type }: { type: TrashType }) {
         </div>
       );
   }
-=======
+}
 interface ITrash {
   type: "bookmark" | "list" | "board" | "member";
-}
-export default function Trash() {
-  const [id, setId] = useState("");
-  // const lists = useFetch("");
-  const trashBookmark = useTrash<Bookmark>("bookmark", id, true);
-  const trashList = useTrash<List>("list", id, true);
-  const trashBoard = useTrash<Board>("board", id, true);
-  return <div></div>;
->>>>>>> main
 }
