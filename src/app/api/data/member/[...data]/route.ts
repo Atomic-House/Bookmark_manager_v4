@@ -5,7 +5,10 @@ import { and, eq } from "drizzle-orm";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import _ from "lodash";
-export async function GET({ params }: { params: { data: string[] } }) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { data: string[] } },
+) {
   return NextResponse.json("Hello");
 }
 
@@ -34,13 +37,22 @@ export async function POST(
   return NextResponse.json(access[0]);
 }
 
-export async function PUT({ params }: { params: { data: string[] } }) {
+export async function PUT(
+  request: Request,
+  { params }: { params: { data: string[] } },
+) {
   const session = await getServerSession(authOptions);
   if (!session) {
     return NextResponse.json("Unauthorized");
   }
 }
 
-export async function PATCH({ params }: { params: { data: string[] } }) {}
+export async function PATCH(
+  request: Request,
+  { params }: { params: { data: string[] } },
+) {}
 
-export async function DELETE({ params }: { params: { data: string[] } }) {}
+export async function DELETE(
+  request: Request,
+  { params }: { params: { data: string[] } },
+) {}

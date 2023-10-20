@@ -6,6 +6,7 @@ export function useFetch<T>(
   queryKey: "list" | "workspace" | "board" | "bookmark" | "view" | "inbox",
   isDeleted?: boolean,
   refetchInterval?: number | false,
+  enabled?: boolean,
 ) {
   const data = useQuery<T>({
     queryKey: [queryKey, { id: id }],
@@ -22,6 +23,7 @@ export function useFetch<T>(
       return await data.json();
     },
     refetchInterval: refetchInterval,
+    enabled: enabled,
   });
   return data;
 }

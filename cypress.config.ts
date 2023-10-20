@@ -7,8 +7,8 @@ export default defineConfig({
       bundler: "webpack",
     },
   },
-
-  // e2e: {
-  //   // experimentalModifyObstructiveThirdPartyCode: true,
-  //   baseUrl: "http://localhost:3000",
+  e2e: {
+    experimentalModifyObstructiveThirdPartyCode: true,
+    baseUrl: "http://localhost:3000",
+  },
 });

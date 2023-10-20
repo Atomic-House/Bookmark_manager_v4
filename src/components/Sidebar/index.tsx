@@ -4,7 +4,7 @@ import Select from "./components/Select";
 import SelectBoards from "./components/SelectBoards";
 import { MdKeyboardArrowLeft } from "@react-icons/all-files/md/MdKeyboardArrowLeft";
 import { SiLighthouse } from "@react-icons/all-files/si/SiLighthouse";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useState } from "react";
 import { WorkspaceContext } from "@/context/workspace";
 import { useSidebarDataHandle } from "@/hooks/sidebarFunctions";
 export default function Sidebar({ children }: { children: ReactNode }) {

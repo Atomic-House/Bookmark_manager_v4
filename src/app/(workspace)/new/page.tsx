@@ -20,7 +20,7 @@ export default function Page() {
     isError,
     error,
     failureReason,
-  } = useCreate<string, { name: string; icon: string }>(
+  } = useCreate(
     "workspace",
     {
       name: name,
@@ -29,7 +29,6 @@ export default function Page() {
     "read",
   );
   console.log(name, icon);
-
   useEffect(() => {
     if (isLoading) {
       setCurrState("loading");

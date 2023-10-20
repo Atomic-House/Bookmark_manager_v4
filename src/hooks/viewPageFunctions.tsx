@@ -4,10 +4,9 @@ import { useCreate } from "./mutations";
 import { useFetch } from "./queries";
 import { ViewWithLists } from "@/schema/view";
 import { useSearchParams } from "next/navigation";
-export function usePageData() {
+export function usePageData(boardId: string) {
   const [view, setView] = useState({ name: "" });
   const searchParams = useSearchParams();
-  const boardId = searchParams.get("id");
   const boardName = searchParams.get("name");
   const icon = searchParams.get("icon");
   const viewsData = useFetch<ViewWithLists[]>(boardId!, "view", false);

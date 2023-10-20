@@ -2,9 +2,9 @@
 import ViewTabs from "@/components/View";
 import { usePageData } from "@/hooks/viewPageFunctions";
 import Add from "@/components/Add";
-export default function Page() {
+export default function Page({ params }: { params: { id: string } }) {
   const { viewsData, boardName, icon, setView, view, createViews } =
-    usePageData();
+    usePageData(params.id);
 
   return (
     <div className="">
@@ -13,7 +13,7 @@ export default function Page() {
         <span>{icon}</span>
         <span>{boardName}</span>
       </div>
-      {viewsData.data?.length === 0 ? (
+      {viewsData?.data?.length === 0 ? (
         <span className="absolute ml-auto mr-auto left-0 right-0 text-center">
           <Add
             key={"add-view"}

@@ -30,7 +30,7 @@ export default function Page({ params }: { params: { boardId: string } }) {
       setCurrState("success");
       console.log("successfull done");
 
-      router.push(`/board?id=${params.boardId}`);
+      router.push(`/board/${params.boardId}`);
     } else if (isError) {
       setCurrState("error");
       console.error(error, failureReason);

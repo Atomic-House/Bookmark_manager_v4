@@ -1,6 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { board } from "@/schema/board";
-import { workspace } from "@/schema/workspace";
 import { db } from "@/server/db";
 import { and, arrayContains, eq, or } from "drizzle-orm";
 import { getServerSession } from "next-auth";
@@ -20,15 +19,12 @@ export async function GET(
     .where(
       or(
         and(
-          eq(board.workspaceId, workspaceId.toString()),
-          eq(board.isDeleted, isDeleted != "false"),
-        ),
-        and(
-          arrayContains(board.hasAccess, [session.user?.email!]),
+          eq(board.workspaceId, workspaceId),
           eq(board.isDeleted, isDeleted != "false"),
         ),
       ),
     );
+
   return NextResponse.json(boards);
 }
 export async function POST(

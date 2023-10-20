@@ -4,13 +4,19 @@ import { WorkspaceAndBoards } from "@/schema/workspace";
 import { Board } from "@/schema/board";
 import { useCreate } from "./mutations";
 import { useFetch } from "./queries";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export function useSidebarDataHandle() {
   const workspaceData = useFetch<WorkspaceAndBoards[]>("", "workspace");
-  const defaultId = window.localStorage.getItem("defaultWs");
+  const defaultId = useCallback(() => {
+    if (typeof window === "undefined") {
+      return "";
+    }
+    return window.localStorage.getItem("defaultWs");
+  }, []);
+  // const defaultId = window.localStorage.getItem("defaultWs");
   const [defaultWorkspace, setDefaultWorkspace] = useState(
-    workspaceData.data?.find((workspace) => workspace.id === defaultId) ||
+    workspaceData.data?.find((workspace) => workspace.id === defaultId()) ||
       workspaceData.data?.at(0),
   );
 
@@ -34,7 +40,7 @@ export function useSidebarDataHandle() {
 
   useEffect(() => {
     setDefaultWorkspace(
-      workspaceData.data?.find((workspace) => workspace.id === defaultId),
+      workspaceData.data?.find((workspace) => workspace.id === defaultId()),
     );
     setBoards(boardData.data);
   }, [

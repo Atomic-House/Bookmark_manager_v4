@@ -1,5 +1,4 @@
 "use client";
-import Add from "@/components/Add";
 import { Board } from "@/schema/board";
 import { Transition } from "@headlessui/react";
 import Link from "next/link";
@@ -12,10 +11,6 @@ export default function SelectBoards({
   boards,
   collapse,
   isFetching,
-  isSuccess,
-  isError,
-  error,
-  isMutating,
   wsId,
   currBoard,
 }: {
@@ -95,7 +90,7 @@ export default function SelectBoards({
         {boards?.map((board) => (
           <Link
             key={board.id}
-            href={`/board?id=${board.id}&name=${board.name}&icon=${board.icon}`}
+            href={`/board/{board.id}&name=${board.name}&icon=${board.icon}`}
             className={collapse ? "" : `flex gap-4`}
           >
             <span>{board.icon}</span>

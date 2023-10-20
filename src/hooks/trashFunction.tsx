@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import { useGetTrash } from "./queries";
 import { useTrash } from "./mutations";

@@ -34,11 +34,11 @@ export function fakerBoards(length: number) {
   let boards: Board[] = [];
 
   for (let i = 0; i < length; i++) {
-    boards.push({
-      name: faker.science.unit().name,
-      id: faker.database.mongodbObjectId(),
-      icon: faker.image.avatar(),
-    });
+    // boards.push({
+    //   name: faker.science.unit().name,
+    //   id: faker.database.mongodbObjectId(),
+    //   icon: faker.image.avatar(),
+    // });
   }
   return boards;
 }

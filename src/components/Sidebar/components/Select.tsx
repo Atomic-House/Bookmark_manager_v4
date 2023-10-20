@@ -58,6 +58,9 @@ export default function Select({
             className="flex gap-2 cursor-pointer hover:bg-slate-100   p-1 rounded-lg duration-300"
             key={workspace.id}
             onClick={() => {
+              if (typeof window === "undefined") {
+                return;
+              }
               window.localStorage.setItem("defaultWs", workspace.id!);
               setSelected(workspace);
             }}

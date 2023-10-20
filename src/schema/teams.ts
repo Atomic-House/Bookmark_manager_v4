@@ -1,13 +1,50 @@
-import { text, pgTable } from "drizzle-orm/pg-core";
+import { text, pgTable, timestamp, primaryKey } from "drizzle-orm/pg-core";
 import { createId } from "@paralleldrive/cuid2";
-import { board } from "./board";
 import { relations } from "drizzle-orm";
 import { users } from "./auth";
-export const team = pgTable("team", {
-  id: text("id").$defaultFn(() => createId()),
-  name: text("name").notNull(),
-  boardId: text("boardId").references(() => board.id),
+export const teams = pgTable("team", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => createId()),
+  name: text("name"),
+  createdBy: text("createdBy"),
+  createdAt: timestamp("createdAt", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
 });
-const teamToMembersRelation = relations(team, ({ many }) => ({
-  members: many(users),
+
+export const usersRelation = relations(users, ({ many }) => ({
+  usersToTeams: many(usersToTeams),
 }));
+export const teamsRelation = relations(teams, ({ many }) => ({
+  usersToTeams: many(usersToTeams),
+}));
+
+export const usersToTeams = pgTable(
+  "usersToTeams",
+  {
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id),
+    teamId: text("team_id")
+      .notNull()
+      .references(() => teams.id),
+  },
+  (t) => ({
+    pk: primaryKey(t.userId, t.teamId),
+  }),
+);
+
+export const usersToTeamsRelation = relations(usersToTeams, ({ one }) => ({
+  team: one(teams, {
+    fields: [usersToTeams.teamId],
+    references: [teams.id],
+  }),
+  user: one(users, {
+    fields: [usersToTeams.userId],
+    references: [users.id],
+  }),
+}));
+
+export type Team = typeof teams.$inferSelect;
+export type UsersToTeams = typeof usersToTeams.$inferSelect;

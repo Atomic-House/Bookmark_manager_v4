@@ -1,13 +1,15 @@
+"use client";
+
 import { FcGoogle } from "@react-icons/all-files/fc/FcGoogle";
 import ThemeProvider from "@/components/Theme/themeProvider";
 import Link from "next/link";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { redirect } from "next/navigation";
-export default async function Page() {
-  const session = await getServerSession(authOptions);
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+export default function Page() {
+  const { data: session } = useSession();
+  const router = useRouter();
   if (session) {
-    redirect("/board/default");
+    router.push("/board/default");
   }
   return (
     <div className="grid grid-cols-2 h-[100vh] ">

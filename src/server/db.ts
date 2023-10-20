@@ -9,6 +9,7 @@ import * as inbox from "@/schema/inbox";
 import * as bookmarks from "@/schema/bookmarks";
 import * as profile from "@/schema/profile";
 import * as enums from "@/schema/enums";
+import * as teams from "@/schema/teams";
 declare module global {
   let postgresSqlClient: ReturnType<typeof postgres> | undefined;
 }
@@ -37,5 +38,6 @@ export const db = drizzle(postgresSqlClient, {
     ...bookmarks,
     ...profile,
     ...enums,
+    ...teams,
   },
 });
