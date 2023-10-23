@@ -10,7 +10,7 @@ export default function Page() {
   const { data: session } = useSession();
   const router = useRouter();
   if (session) {
-    router.push("/board/default");
+    router.push("/board");
   }
   return (
     <div className="grid grid-cols-2 h-[100vh] ">

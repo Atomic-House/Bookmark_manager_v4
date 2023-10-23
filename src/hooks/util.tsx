@@ -28,8 +28,9 @@ export function useAuth() {
   useEffect(() => {
     if (status === "unauthenticated") {
       router.push("/signin");
-    } else {
+    } else if (status === "authenticated") {
       router.push(`/board`);
+    } else {
     }
   }, [router, status]);
 }
