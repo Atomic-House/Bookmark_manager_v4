@@ -27,7 +27,6 @@ export default function SelectBoards({
   currBoard?: { icon: string; name: string };
 }) {
   const [open, toggleOpen] = useState(true);
-  console.log(currBoard);
 
   return (
     <div>
@@ -90,7 +89,7 @@ export default function SelectBoards({
         {boards?.map((board) => (
           <Link
             key={board.id}
-            href={`/board/{board.id}&name=${board.name}&icon=${board.icon}`}
+            href={`/board/${board.id}?name=${board.name}&icon=${board.icon}`}
             className={collapse ? "" : `flex gap-4`}
           >
             <span>{board.icon}</span>

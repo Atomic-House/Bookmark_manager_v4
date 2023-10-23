@@ -33,6 +33,7 @@ export async function PATCH(
     id: string;
     isDeleting: boolean;
   } = await request.json();
+
   const views = await db
     .update(view)
     .set({ isDeleted: body.isDeleting })

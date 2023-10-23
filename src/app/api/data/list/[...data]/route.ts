@@ -18,7 +18,6 @@ export async function GET(
     where: and(
       eq(list.viewId, viewId),
       eq(list.isDeleted, isDeleted === "true"),
-      eq(list.createdBy, session.user?.email!),
     ),
     with: {
       bookmarks: true,

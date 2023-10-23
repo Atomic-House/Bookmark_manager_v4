@@ -28,7 +28,6 @@ export default function Page() {
     },
     "read",
   );
-  console.log(name, icon);
   useEffect(() => {
     if (isLoading) {
       setCurrState("loading");

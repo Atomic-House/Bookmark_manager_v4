@@ -39,6 +39,7 @@ export default function Page({ params }: { params: { id: string } }) {
         </span>
       ) : (
         <ViewTabs
+          key={params.id}
           views={viewsData.data}
           onChange={(e) => setView({ ...view, name: e.target.value })}
           createView={createViews.mutateAsync}

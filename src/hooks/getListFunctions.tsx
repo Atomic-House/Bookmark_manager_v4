@@ -10,10 +10,8 @@ export function useGetLists(viewId: string) {
     ListWithBookmarks,
     { name: string; viewId: string }
   >("list", { name: list.name, viewId: viewId }, viewId, data.data);
-
-  useEffect(() => {
-    data.refetch();
-  }, [viewId, data]);
+  console.log(data.data);
+  console.log("View id", viewId);
 
   return {
     data,

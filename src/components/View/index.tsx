@@ -105,8 +105,11 @@ export default function ViewTabs({
         />
       </div>
       <div>
-        <ul className="grid lg:grid-cols-4 place-items-center  md:grid-cols-3 sm:grid-cols-2 ">
-          {lists.data?.map((l) => <List {...l} key={l.id} />)}
+        <ul
+          className="grid lg:grid-cols-4 place-items-center  md:grid-cols-3 sm:grid-cols-2 "
+          key={viewId}
+        >
+          {lists?.data?.map((l) => <List {...l} key={l.id} />)}
         </ul>
       </div>
     </div>

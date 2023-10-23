@@ -36,11 +36,10 @@ export function useTrash<T>(
   mutationKey: "workspace" | "board" | "view" | "list" | "inbox" | "bookmark",
   id: string,
   isDeleting: boolean,
-  prevData?: T[],
 ) {
   const queryClient = useQueryClient();
   const mutate = useMutation<T>({
-    mutationKey: [mutationKey, "trash"],
+    mutationKey: [mutationKey, id, "trash"],
     mutationFn: async () => {
       const d = await fetch(`/api/trash/${mutationKey}/${id}/trash`, {
         method: "PATCH",
@@ -51,18 +50,17 @@ export function useTrash<T>(
       });
       return await d.json();
     },
-    onSuccess(data) {
+    onSuccess() {
       console.log(
         `Successfully ${isDeleting ? "deleted" : "restored"}`,
         mutationKey,
         id,
       );
       console.log("Invalidating...", mutationKey, id);
-      queryClient.invalidateQueries([mutationKey, "trash"]);
-      queryClient.setQueryData(
-        [mutationKey, "trash"],
-        _.without(prevData, data),
-      );
+      queryClient.invalidateQueries([mutationKey, { id: id }]);
+    },
+    onError(error, variables, context) {
+      console.log(error, variables, context);
     },
   });
   return mutate;
