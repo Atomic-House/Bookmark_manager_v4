@@ -1,11 +1,8 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "types": ["node", "cypress"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -23,22 +20,17 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     }
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "src"
   ],
-  "exclude": [
-    "node_modules",
-    "cypress",
-    "cypress.config.ts"
-  ],
+  "exclude": ["node_modules", "cypress", "cypress.config.ts"],
   "ts-node": {
     "compilerOptions": {
       "module": "ESNext",

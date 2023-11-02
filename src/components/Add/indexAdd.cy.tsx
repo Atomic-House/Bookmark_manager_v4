@@ -5,7 +5,7 @@ import ThemeProvider from "../Theme/themeProvider";
 describe("<Add />", () => {
   it("renders", () => {
     // see: https://on.cypress.io/mounting-react
-    cy.viewport("macbook-13")
+    cy.viewport("macbook-13");
     cy.mount(
       <>
         <ThemeProvider />
@@ -17,8 +17,7 @@ describe("<Add />", () => {
           confirmBtnText="Send Request"
           cancelBtnText="Reset"
         />
-      </>
-      ,
+      </>,
     );
   });
 });

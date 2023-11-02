@@ -1,11 +1,7 @@
 "use client";
-
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useState } from "react";
-import { List } from "@/schema/list";
-import { Bookmark } from "@/schema/bookmarks";
-import { Board } from "@/schema/board";
 import Trash from "@/components/Trash/trash";
 
 type TrashType = "Bookmarks" | "Lists" | "Boards" | "Members";
