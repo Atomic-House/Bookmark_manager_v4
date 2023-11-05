@@ -28,9 +28,10 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src"
+    "src",
+    "cypress"
   ],
-  "exclude": ["node_modules", "cypress", "cypress.config.ts"],
+  "exclude": ["node_modules", "cypress.config.ts"],
   "ts-node": {
     "compilerOptions": {
       "module": "ESNext",
