@@ -31,7 +31,7 @@
     "src",
     "cypress"
   ],
-  "exclude": ["node_modules", "cypress.config.ts"],
+  "exclude": ["node_modules", "cypress.config.ts", "tailwind.config.ts"],
   "ts-node": {
     "compilerOptions": {
       "module": "ESNext",
