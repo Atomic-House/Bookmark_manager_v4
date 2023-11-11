@@ -25,9 +25,9 @@
 - The REST API where all the requests are made is inside the src/app/api
   directory
 - Inside the main folder/route our main user dashboard exists where most of the
-  functionalities occour
+  functionalities occour.
 - Inside the user folder/route our Authentication System exists
-- Next-auth is used for Authentication with Email and Google Oauth as providers
+- Next-Auth is used for Authentication with Email and Google OAuth as providers
 - Our Database is PostgreSQL which is hosted in a Debian Linode server
 - Drizzle ORM is used for REST API Client in the backend :-> Also
   used to avoid the risk of SQL injection
