@@ -149,7 +149,7 @@
 ### Frameworks and tools used:
 
     Full Stack: Next.js(App router and Server compoenents)
-    Styling and UI: TailwindCSS, ChakraUI, HeadlessUI
+    Styling and UI: TailwindCSS, DaisyUI
     Backend: Linode, Docker, PostgreSQL, Drizzle ORM
     Testing: Cypess, Jest
     Authentication: Next-Auth, OAuthGoogle, Nodemailer for Email
